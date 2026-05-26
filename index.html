@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Passport - Soi quán miễn phí cho Google & AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    body { font-family: 'Segoe UI', system-ui, sans-serif; }
+    .hero-bg { background: linear-gradient(135deg, #f59e0b, #b45309); }
+  </style>
+</head>
+<body class="bg-neutral-50 text-neutral-800">
+
+  <!-- Hero -->
+  <section class="hero-bg text-white py-16 px-6">
+    <div class="max-w-2xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-black leading-tight mb-4">
+        Quán anh/chị đang bị AI và khách mới… <span class="underline">không hiểu</span>?
+      </h1>
+      <p class="text-xl mb-8">
+        Soi miễn phí hiện diện AI của quán trong 2 phút.<br>
+        Nhận bản nháp hồ sơ thật của chính quán anh/chị.
+      </p>
+      <button onclick="document.getElementById('chat-widget').scrollIntoView({behavior: 'smooth'})" 
+              class="bg-white text-amber-700 font-bold text-lg px-10 py-4 rounded-2xl shadow-xl hover:scale-105 transition">
+        SOI QUÁN MIỄN PHÍ NGAY →
+      </button>
+    </div>
+  </section>
+
+  <!-- Trust Bar -->
+  <div class="bg-white py-4 border-b">
+    <div class="max-w-4xl mx-auto flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-neutral-600">
+      <div class="flex items-center gap-2"><i class="fa-solid fa-shield-halved text-green-600"></i> Không hỏi mật khẩu, OTP, ngân hàng</div>
+      <div class="flex items-center gap-2"><i class="fa-solid fa-clock"></i> Pilot 14 ngày - Không ký dài hạn</div>
+      <div class="flex items-center gap-2"><i class="fa-solid fa-eye"></i> Xem bản nháp trước khi trả tiền</div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="max-w-4xl mx-auto px-6 py-12">
+    <h2 class="text-3xl font-bold text-center mb-10">Không cần tin AI. Chỉ cần nhìn bản nháp thật.</h2>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="bg-white p-6 rounded-3xl shadow">
+        <h3 class="font-semibold text-xl mb-4">Trước khi có AI Passport</h3>
+        <ul class="space-y-3 text-neutral-600">
+          <li>✓ Menu chỉ là ảnh mờ</li>
+          <li>✓ Khách mới không hiểu quán bán gì</li>
+          <li>✓ Google & AI không có dữ liệu sạch</li>
+        </ul>
+      </div>
+      <div class="bg-amber-50 p-6 rounded-3xl shadow border border-amber-200">
+        <h3 class="font-semibold text-xl mb-4 text-amber-800">Sau khi có AI Passport</h3>
+        <ul class="space-y-3 text-amber-800">
+          <li>✓ Link hồ sơ rõ ràng, đẹp trên điện thoại</li>
+          <li>✓ Menu chữ sạch, FAQ, nút Zalo/Gọi/Chỉ đường</li>
+          <li>✓ QR code dán bàn, tracking click thật</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Dummy Preview -->
+    <div class="mt-12">
+      <p class="text-center text-sm text-neutral-500 mb-4">Ví dụ bản nháp (Quán Đồng Quê Ven Kênh - Nhà Bè)</p>
+      <div class="max-w-md mx-auto border-4 border-amber-300 rounded-3xl overflow-hidden shadow-2xl">
+        <!-- Có thể embed iframe preview JSX sau hoặc ảnh screenshot -->
+        <div class="bg-white p-4 text-center">
+          <p class="font-bold">Quán nhậu đồng quê ven kênh Nhà Bè</p>
+          <p class="text-sm text-neutral-600 mt-2">Chuột đồng - Vịt đồng - Gà thả vườn</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Widget Area -->
+  <div id="chat-widget" class="max-w-2xl mx-auto px-6 pb-20">
+    <h2 class="text-3xl font-bold text-center mb-6">Chat ngay với AI Passport Auditor</h2>
+    <p class="text-center text-neutral-600 mb-8">Gửi tên quán + link Google Maps là có bản soi miễn phí luôn</p>
+    
+    <!-- Coze Widget sẽ nhúng ở đây -->
+    <div id="coze-widget" class="border-2 border-amber-400 rounded-3xl overflow-hidden shadow-xl bg-white min-h-[600px]"></div>
+  </div>
+
+  <footer class="bg-neutral-900 text-white py-8 text-center text-sm">
+    <p>AI Passport - Hồ sơ số cho quán nhậu & business local</p>
+    <p class="mt-2">Không hứa tăng khách. Chỉ hứa làm rõ ràng hơn, đo được hơn.</p>
+  </footer>
+
+</body>
+</html>
