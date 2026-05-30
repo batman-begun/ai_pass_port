@@ -804,24 +804,21 @@
     const introStartAudit = document.getElementById('introStartAudit');
 
 
-    const INTRO_STORAGE_KEY = 'aipass_intro_seen_v2';
-    function openIntro(force = false) {
-      if (!force && localStorage.getItem(INTRO_STORAGE_KEY) === '1') return;
+    function openIntro() {
       introModal.classList.add('open');
       introModal.setAttribute('aria-hidden', 'false');
       body.classList.add('intro-open');
       bottomCta.classList.add('hide');
       setTimeout(() => introContinue.focus(), 120);
     }
-    function closeIntro(markSeen = true) {
+    function closeIntro() {
       introModal.classList.remove('open');
       introModal.setAttribute('aria-hidden', 'true');
       body.classList.remove('intro-open');
-      if (markSeen) localStorage.setItem(INTRO_STORAGE_KEY, '1');
       if (!body.classList.contains('audit-open')) bottomCta.classList.remove('hide');
     }
     function closeIntroAndOpenAudit() {
-      closeIntro(true);
+      closeIntro();
       setTimeout(openAudit, 80);
     }
 
@@ -850,11 +847,13 @@
       auditPanel.setAttribute('aria-hidden', 'true'); body.classList.remove('audit-open');
       auditResult.classList.remove('show'); bottomCta.classList.remove('hide');
     }
-    introClose.addEventListener('click', () => closeIntro(true));
-    introContinue.addEventListener('click', () => closeIntro(true));
+    introClose.addEventListener('click', closeIntro);
+    introContinue.addEventListener('click', closeIntro);
     introStartAudit.addEventListener('click', closeIntroAndOpenAudit);
-    introModal.addEventListener('click', e => { if (e.target === introModal) closeIntro(true); });
-    setTimeout(() => openIntro(false), 360);
+    introModal.addEventListener('click', e => { if (e.target === introModal) closeIntro(); });
+    window.addEventListener('load', () => {
+      setTimeout(openIntro, 1200);
+    });
 
     document.querySelectorAll('.js-open-audit').forEach(btn => btn.addEventListener('click', openAudit));
     closeAudit.addEventListener('click', closeAuditPanel);
