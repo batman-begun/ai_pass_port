@@ -1,728 +1,784 @@
 <!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#fff8ee">
-  <meta name="description" content="AI Passport giúp business local soi hiện diện AI, dọn lại thông tin quán và tạo bản nháp rõ ràng để khách mới, Google Maps và AI hiểu đúng hơn.">
-  <title>AI Passport — Soi hiện diện AI cho quán local</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#fff8ec" />
+  <title>AI Passport — Soi hiện diện AI cho quán/business local</title>
+  <meta name="description" content="AI Passport giúp business local dọn lại thông tin, menu, FAQ, CTA, QR và tracking để khách mới, Google Maps và AI hiểu rõ hơn." />
+  <meta property="og:title" content="AI Passport — Soi hiện diện AI cho quán/business local" />
+  <meta property="og:description" content="Soi thử xem khách mới, Google Maps và AI đang hiểu business của bạn ra sao. Không mật khẩu, không OTP, không ngân hàng." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/page-01-hook.webp" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23be5a24'/%3E%3Cpath d='M18 18h28v28H18z' fill='none' stroke='white' stroke-width='4'/%3E%3Cpath d='M25 26h14M25 32h14M25 38h8' stroke='white' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
   <style>
     :root {
-      --bg: #fff8ee;
-      --card: #ffffff;
-      --ink: #282523;
-      --muted: #726a62;
-      --line: rgba(120, 82, 48, 0.16);
-      --brand: #c65f24;
-      --brand-dark: #9f4316;
-      --soft: #fff1df;
-      --green: #15803d;
-      --shadow: 0 18px 48px rgba(80, 46, 19, 0.13);
-      --radius: 28px;
-      --topbar: 58px;
-      --bottomcta: 82px;
-      font-family: ui-rounded, "Nunito Sans", "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      --bg: #fff8ec;
+      --paper: #fffdf8;
+      --paper-2: #fff2dc;
+      --ink: #2b2926;
+      --muted: #70675d;
+      --line: rgba(190, 90, 36, .16);
+      --orange: #be5a24;
+      --orange-2: #ee6e2d;
+      --orange-dark: #8e3f17;
+      --green: #198754;
+      --red: #d8483a;
+      --blue: #3478f6;
+      --shadow: 0 20px 56px rgba(95, 52, 20, .14);
+      --soft-shadow: 0 10px 28px rgba(95, 52, 20, .08);
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      font-family: ui-rounded, "Nunito Sans", "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    * { box-sizing: border-box; }
-
-    html {
-      scroll-behavior: smooth;
-      background: #f6efe6;
-    }
-
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; background: #f3eadc; }
     body {
       margin: 0;
       color: var(--ink);
-      background:
-        radial-gradient(circle at 20% 0%, rgba(255, 225, 175, 0.5), transparent 34%),
-        linear-gradient(180deg, #fffaf1 0%, #fff7ec 56%, #fff1df 100%);
-      min-height: 100svh;
+      background: #f3eadc;
       overflow-x: hidden;
     }
-
+    body.menu-open, body.audit-open { overflow: hidden; }
     a { color: inherit; text-decoration: none; }
     button, input, textarea { font: inherit; }
-    button { cursor: pointer; }
-    img { max-width: 100%; display: block; }
+    button { cursor: pointer; border: 0; }
 
-    .phone-shell {
-      width: 100%;
-      min-height: 100svh;
-      background: var(--bg);
-      margin: 0 auto;
+    /* Mobile app shell: the page is designed for iPhone/Samsung first. On desktop it stays as a centered phone-like canvas. */
+    .app {
       position: relative;
-      overflow: hidden;
-    }
-
-    @media (min-width: 520px) {
-      body {
-        display: flex;
-        justify-content: center;
-        background: #ece2d6;
-      }
-      .phone-shell {
-        width: 430px;
-        min-height: 100svh;
-        box-shadow: 0 0 0 1px rgba(80,46,19,.08), 0 30px 100px rgba(60,40,20,.24);
-      }
+      width: min(100vw, 480px);
+      min-height: 100svh;
+      margin: 0 auto;
+      background:
+        radial-gradient(circle at 20% -8%, rgba(239, 110, 45, .18), transparent 38%),
+        radial-gradient(circle at 92% 10%, rgba(255, 224, 170, .52), transparent 32%),
+        linear-gradient(180deg, #fffaf0 0%, #fff7ea 45%, #fffaf4 100%);
+      box-shadow: 0 0 0 1px rgba(0,0,0,.03), 0 24px 80px rgba(0,0,0,.12);
+      overflow-x: hidden;
     }
 
     .topbar {
       position: fixed;
-      z-index: 50;
       top: 0;
-      left: 0;
-      right: 0;
-      height: calc(var(--topbar) + env(safe-area-inset-top));
-      padding: env(safe-area-inset-top) 14px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 248, 238, 0.86);
-      border-bottom: 1px solid rgba(120, 82, 48, 0.12);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-
-    @media (min-width: 520px) {
-      .topbar {
-        left: 50%;
-        right: auto;
-        width: 430px;
-        transform: translateX(-50%);
-      }
-    }
-
-    .topbar-inner {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(100vw, 480px);
+      height: calc(56px + var(--safe-top));
+      padding: calc(8px + var(--safe-top)) 12px 8px;
+      z-index: 50;
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
       gap: 10px;
-    }
-
-    .icon-btn {
-      width: 40px;
-      height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(255,255,255,.68);
-      display: grid;
-      place-items: center;
-      color: var(--ink);
-      box-shadow: 0 8px 20px rgba(80, 46, 19, 0.06);
-    }
-
-    .hamburger-lines, .hamburger-lines::before, .hamburger-lines::after {
-      content: "";
-      width: 18px;
-      height: 2px;
-      border-radius: 999px;
-      background: var(--ink);
-      display: block;
-      position: relative;
-    }
-    .hamburger-lines::before { position: absolute; top: -6px; }
-    .hamburger-lines::after { position: absolute; top: 6px; }
-
-    .brand {
-      display: flex;
       align-items: center;
-      gap: 9px;
-      min-width: 0;
-      flex: 1;
+      background: rgba(255, 248, 236, .90);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
     }
-
-    .brand-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #d66f2e, #a64012);
-      color: #fff;
+    .icon-btn {
+      width: 42px;
+      height: 40px;
+      border-radius: 16px;
+      background: rgba(255, 253, 248, .78);
+      border: 1px solid rgba(190, 90, 36, .14);
+      color: var(--ink);
       display: grid;
       place-items: center;
-      font-weight: 900;
-      letter-spacing: -0.06em;
-      box-shadow: 0 8px 20px rgba(198, 95, 36, .26);
+      box-shadow: 0 8px 20px rgba(95, 52, 20, .06);
+      flex: 0 0 auto;
     }
-
-    .brand-name {
-      line-height: 1.05;
-      min-width: 0;
+    .hamburger { width: 19px; display: grid; gap: 5px; }
+    .hamburger span { height: 2px; border-radius: 99px; background: currentColor; }
+    .brand { min-width: 0; display: flex; align-items: center; gap: 8px; }
+    .brand-mark {
+      width: 30px; height: 30px; border-radius: 11px;
+      display: grid; place-items: center;
+      font-size: 12px; font-weight: 950; color: white;
+      background: linear-gradient(135deg, #a94b19, #ee6e2d);
+      box-shadow: 0 10px 22px rgba(190, 90, 36, .23);
+      flex: 0 0 auto;
     }
-    .brand-name strong {
-      display: block;
-      font-size: 15px;
-      letter-spacing: .02em;
-    }
-    .brand-name span {
-      display: block;
-      font-size: 10px;
-      color: var(--brand);
-      letter-spacing: .14em;
-      font-weight: 800;
-      text-transform: uppercase;
-      margin-top: 2px;
-    }
-
+    .brand-text { min-width: 0; line-height: 1.05; }
+    .brand-text b { display: block; font-size: 15px; letter-spacing: -.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .brand-text small { display: block; margin-top: 2px; font-size: 9px; letter-spacing: .16em; font-weight: 950; color: var(--orange-dark); }
     .top-cta {
-      border: 0;
+      height: 36px;
+      padding: 0 12px;
       border-radius: 999px;
-      background: #f3e1d2;
-      color: var(--brand-dark);
-      font-weight: 900;
       font-size: 12px;
-      padding: 10px 13px;
+      font-weight: 950;
+      color: var(--orange-dark);
+      background: rgba(190, 90, 36, .10);
       white-space: nowrap;
     }
 
-    main {
-      padding-top: calc(var(--topbar) + env(safe-area-inset-top));
-      padding-bottom: calc(var(--bottomcta) + env(safe-area-inset-bottom));
-    }
+    main { padding-top: calc(56px + var(--safe-top)); }
 
     .screen {
-      min-height: calc(100svh - var(--topbar));
-      padding: 22px 16px 28px;
+      min-height: calc(100svh - 56px - var(--safe-top));
+      padding: 20px 14px calc(92px + var(--safe-bottom));
       display: flex;
       flex-direction: column;
       justify-content: center;
       gap: 16px;
+      border-bottom: 1px solid rgba(190, 90, 36, .10);
       position: relative;
-      scroll-margin-top: calc(var(--topbar) + 10px);
+      isolation: isolate;
     }
-
-    .screen.compact { min-height: auto; padding-top: 30px; }
-
+    .screen:nth-child(even) { background: rgba(255, 253, 248, .38); }
+    .screen.algorithm::before {
+      content: "";
+      position: absolute; inset: 0;
+      z-index: -1; opacity: .13;
+      background-image:
+        linear-gradient(90deg, rgba(52,120,246,.22) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(52,120,246,.22) 1px, transparent 1px),
+        radial-gradient(circle at 18% 35%, rgba(52,120,246,.8) 0 2px, transparent 3px),
+        radial-gradient(circle at 84% 18%, rgba(190,90,36,.75) 0 2px, transparent 3px),
+        radial-gradient(circle at 80% 76%, rgba(25,135,84,.65) 0 2px, transparent 3px);
+      background-size: 38px 38px, 38px 38px, 170px 170px, 210px 210px, 240px 240px;
+    }
+    .story-head { display: grid; gap: 10px; }
     .eyebrow {
-      align-self: flex-start;
+      width: fit-content;
       display: inline-flex;
       align-items: center;
       gap: 7px;
+      padding: 7px 10px;
+      border: 1px solid rgba(190, 90, 36, .17);
       border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.66);
-      color: var(--brand);
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: .09em;
+      background: rgba(255, 255, 255, .70);
+      color: var(--orange-dark);
+      box-shadow: 0 8px 20px rgba(95, 52, 20, .04);
+      font-size: 10px;
+      font-weight: 950;
+      letter-spacing: .10em;
       text-transform: uppercase;
-      padding: 8px 11px;
-      box-shadow: 0 8px 20px rgba(80, 46, 19, 0.05);
     }
-
-    h1, h2, p { margin: 0; }
-    h1, h2 {
-      letter-spacing: -0.055em;
-      line-height: .98;
-      font-weight: 950;
-      text-wrap: balance;
-    }
-    h1 { font-size: clamp(41px, 12vw, 56px); }
-    h2 { font-size: clamp(34px, 10vw, 48px); }
-
+    h1, h2 { margin: 0; line-height: 1.02; letter-spacing: -.055em; text-wrap: balance; }
+    h1 { font-size: clamp(35px, 11vw, 48px); }
+    h2 { font-size: clamp(31px, 9.2vw, 42px); }
+    .accent { color: var(--orange-2); }
     .lead {
-      color: #67615d;
-      font-size: 16px;
-      line-height: 1.52;
-      letter-spacing: .01em;
-      max-width: 34em;
-    }
-
-    .orange { color: var(--brand); }
-    .muted { color: var(--muted); }
-
-    .hero-visual {
-      position: relative;
-      border-radius: 30px;
-      background: rgba(255, 255, 255, .58);
-      border: 1px solid var(--line);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    .hero-visual img { width: 100%; height: auto; }
-
-    .image-card {
-      border-radius: 30px;
-      background: rgba(255,255,255,.7);
-      border: 1px solid var(--line);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    .image-card img { width: 100%; }
-
-    .note-card {
-      background: rgba(255,255,255,.78);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 14px 15px;
-      color: var(--muted);
+      margin: 0;
+      color: #655c53;
+      font-size: 15.5px;
       line-height: 1.45;
-      font-size: 14px;
+      letter-spacing: -.01em;
     }
-    .note-card b { color: var(--ink); }
+    .lead.small { font-size: 14px; color: #786e64; }
 
-    .quick-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .question-card {
-      min-height: 118px;
-      background: rgba(255,255,255,.76);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 16px;
-      box-shadow: 0 12px 30px rgba(80,46,19,.08);
-    }
-    .question-card .num {
-      width: 30px;
-      height: 30px;
-      border-radius: 999px;
-      background: var(--soft);
-      color: var(--brand-dark);
-      font-weight: 950;
-      display: grid;
-      place-items: center;
-      font-size: 13px;
-      margin-bottom: 12px;
-    }
-    .question-card strong {
-      display: block;
-      font-size: 17px;
-      letter-spacing: -.03em;
-      line-height: 1.18;
-    }
-
-    .score-card {
-      background: #fff;
-      border: 1px solid var(--line);
+    .mockup {
+      position: relative;
+      width: 100%;
+      margin: 2px auto 0;
       border-radius: 28px;
-      padding: 20px;
+      overflow: hidden;
+      background: rgba(255, 253, 248, .80);
+      border: 1px solid rgba(190, 90, 36, .15);
       box-shadow: var(--shadow);
     }
-    .score-main {
+    .mockup img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: min(53svh, 520px);
+      object-fit: cover;
+      object-position: top center;
+      background: #fff8ec;
+    }
+    .mockup.contain img { object-fit: contain; background: #fff8ec; }
+    .tagline-row {
       display: flex;
-      align-items: baseline;
       gap: 8px;
-      color: #d6402e;
-      margin: 10px 0 14px;
+      overflow-x: auto;
+      padding: 1px 0 2px;
+      scrollbar-width: none;
     }
-    .score-main strong { font-size: 58px; line-height: .9; letter-spacing: -.08em; }
-    .score-main span { font-size: 18px; font-weight: 800; color: #8e8a86; }
-    .issue-list { display: grid; gap: 10px; margin-top: 14px; }
-    .issue {
-      border-radius: 18px;
-      border: 1px solid rgba(214, 64, 46, .22);
-      background: #fff4f1;
-      padding: 12px;
-      font-size: 14px;
-      line-height: 1.35;
-    }
-    .issue b { display: block; font-size: 15px; margin-bottom: 3px; }
-
-    .good-score {
-      color: #176d36;
-    }
-    .good-score-card {
-      background: linear-gradient(180deg, #f3fff5 0%, #fff 100%);
-      border-color: rgba(21,128,61,.18);
-    }
-    .good-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
+    .tagline-row::-webkit-scrollbar { display: none; }
+    .chip {
+      flex: 0 0 auto;
+      display: inline-flex;
       align-items: center;
-      padding: 11px 0;
-      border-bottom: 1px solid rgba(21,128,61,.12);
-      font-size: 14px;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(190, 90, 36, .15);
+      background: rgba(255,255,255,.68);
+      color: #665d53;
+      font-size: 12px;
+      font-weight: 850;
+      box-shadow: 0 6px 18px rgba(95, 52, 20, .05);
+      white-space: nowrap;
     }
-    .good-row:last-child { border-bottom: 0; }
-    .check { color: var(--green); font-weight: 900; }
-
-    .trust-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+    .chip::before {
+      content: ""; width: 7px; height: 7px; border-radius: 99px; background: var(--green);
     }
-    .trust-card {
-      background: rgba(255,255,255,.78);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 14px;
-      min-height: 132px;
-      box-shadow: 0 10px 28px rgba(80,46,19,.07);
+    .quick-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .quick-card {
+      min-height: 86px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.68);
+      border: 1px solid rgba(190, 90, 36, .13);
+      box-shadow: var(--soft-shadow);
+      padding: 13px;
     }
-    .trust-icon {
-      font-size: 28px;
-      margin-bottom: 9px;
+    .quick-card b { display: block; font-size: 14px; letter-spacing: -.02em; }
+    .quick-card span { display: block; margin-top: 5px; color: var(--muted); font-size: 12px; line-height: 1.32; }
+    .result-note {
+      display: flex; gap: 10px; align-items: flex-start;
+      border-radius: 20px;
+      padding: 13px 14px;
+      background: rgba(255, 242, 220, .75);
+      border: 1px solid rgba(190, 90, 36, .14);
+      box-shadow: 0 8px 22px rgba(95, 52, 20, .04);
+      color: #695f56;
+      font-size: 13px;
+      line-height: 1.38;
+      font-weight: 750;
     }
-    .trust-card strong { display: block; font-size: 17px; line-height: 1.14; letter-spacing: -.03em; }
-    .trust-card span { display: block; color: var(--muted); font-size: 13px; line-height: 1.35; margin-top: 7px; }
+    .result-note strong { color: var(--ink); }
+    .icon-bubble {
+      width: 30px; height: 30px; border-radius: 12px;
+      background: rgba(190,90,36,.12); color: var(--orange-dark);
+      display: grid; place-items: center; flex: 0 0 auto; font-weight: 950;
+    }
 
     .bottom-cta {
       position: fixed;
-      z-index: 45;
-      left: 0;
-      right: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(100vw, 480px);
       bottom: 0;
-      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-      pointer-events: none;
-      display: flex;
-      justify-content: center;
-      transition: transform .2s ease, opacity .2s ease;
+      z-index: 45;
+      padding: 10px 14px calc(10px + var(--safe-bottom));
+      background: linear-gradient(180deg, rgba(255,248,236,0), rgba(255,248,236,.96) 24%, rgba(255,248,236,.99));
+      transition: transform .22s ease, opacity .22s ease;
     }
-    .bottom-cta.hide { transform: translateY(110%); opacity: 0; }
+    .bottom-cta.hide { transform: translateX(-50%) translateY(120%); opacity: 0; pointer-events: none; }
     .bottom-cta button {
-      pointer-events: auto;
       width: 100%;
-      max-width: 398px;
-      border: 0;
-      color: #fff;
-      background: linear-gradient(135deg, #e2722f, #b94818);
-      box-shadow: 0 16px 32px rgba(181, 72, 24, .30);
+      min-height: 58px;
       border-radius: 20px;
-      padding: 15px 16px;
-      font-size: 15px;
+      color: #fff;
+      background: linear-gradient(135deg, #b65320, #f06d2f);
+      box-shadow: 0 18px 42px rgba(170, 75, 24, .34);
       font-weight: 950;
-      letter-spacing: -.01em;
+      letter-spacing: -.02em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
     .bottom-cta small {
       display: block;
+      text-align: center;
+      margin-top: 5px;
+      color: rgba(44,41,38,.65);
       font-size: 11px;
-      opacity: .88;
-      margin-top: 3px;
-      font-weight: 700;
+      font-weight: 850;
     }
 
     .drawer-backdrop, .audit-backdrop {
       position: fixed;
-      z-index: 80;
       inset: 0;
-      background: rgba(34, 25, 18, .42);
+      z-index: 80;
+      background: rgba(35, 31, 27, .38);
       opacity: 0;
       pointer-events: none;
       transition: opacity .2s ease;
     }
-    .drawer-backdrop.show, .audit-backdrop.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
+    .drawer-backdrop.open, .audit-backdrop.open { opacity: 1; pointer-events: auto; }
     .drawer {
       position: fixed;
+      top: 0; bottom: 0; left: 50%;
+      transform: translateX(calc(-50% - 105%));
+      width: min(90vw, 420px);
       z-index: 90;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: min(88vw, 340px);
-      transform: translateX(-103%);
+      background: #fffdf8;
+      border-right: 1px solid var(--line);
+      box-shadow: 26px 0 80px rgba(35,31,27,.26);
       transition: transform .24s ease;
-      background: #fffaf2;
-      box-shadow: 30px 0 70px rgba(40,25,10,.2);
-      padding: calc(18px + env(safe-area-inset-top)) 16px 18px;
-      overflow-y: auto;
+      padding: calc(16px + var(--safe-top)) 16px 18px;
+      overflow: auto;
     }
-    .drawer.show { transform: translateX(0); }
-
-    .drawer-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-    .drawer-title strong { display:block; font-size: 18px; }
-    .drawer-title span { display:block; color: var(--muted); font-size: 12px; margin-top: 3px; }
-    .drawer-section { margin: 18px 0; }
-    .drawer-label {
-      font-size: 11px;
-      color: var(--brand);
-      font-weight: 950;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      margin-bottom: 8px;
-    }
-    .drawer a, .drawer button.menu-cta {
-      width: 100%;
-      border: 0;
-      text-align: left;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 11px 10px;
+    .drawer.open { transform: translateX(-50%); }
+    .drawer-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .drawer-head strong { display: block; font-size: 20px; letter-spacing: -.04em; }
+    .drawer-head small { display: block; margin-top: 3px; color: var(--orange-dark); font-size: 10px; font-weight: 950; letter-spacing: .14em; }
+    .drawer-section { margin: 20px 0; }
+    .drawer-section h3 { margin: 0 0 9px; font-size: 11px; color: #8d4f2d; font-weight: 950; letter-spacing: .12em; text-transform: uppercase; }
+    .drawer-link {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 8px;
       border-radius: 15px;
-      color: var(--ink);
-      background: transparent;
-      font-weight: 800;
+      font-size: 15px;
+      font-weight: 850;
     }
-    .drawer a:hover, .drawer button.menu-cta:hover { background: var(--soft); }
-    .drawer .menu-cta.primary {
-      background: var(--brand);
-      color: #fff;
-      justify-content: center;
-      text-align: center;
-      margin-top: 10px;
-    }
-    .trust-strip {
+    .drawer-link:active { background: rgba(190,90,36,.08); }
+    .drawer-link span { color: var(--muted); font-size: 12px; }
+    .trust-box {
+      display: grid; gap: 8px;
+      padding: 14px;
       border-radius: 18px;
-      background: #fff;
-      border: 1px solid var(--line);
-      padding: 12px;
-      color: var(--muted);
+      background: rgba(25,135,84,.08);
+      border: 1px solid rgba(25,135,84,.15);
+      color: #245d43;
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.35;
+      font-weight: 850;
     }
-    .trust-strip b { color: var(--green); }
+    .drawer-cta { width: 100%; min-height: 52px; border-radius: 18px; background: linear-gradient(135deg,#b65320,#f06d2f); color: white; font-weight: 950; }
 
     .audit-panel {
       position: fixed;
+      left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      bottom: 0;
       z-index: 95;
-      inset: auto 0 0 0;
-      max-height: 92svh;
-      background: #fffaf2;
+      width: min(100vw, 480px);
+      height: calc(100svh - 8px);
       border-radius: 30px 30px 0 0;
-      box-shadow: 0 -30px 80px rgba(40,25,10,.28);
-      transform: translateY(106%);
-      transition: transform .26s ease;
+      background: #fffdf8;
+      box-shadow: 0 -28px 80px rgba(35,31,27,.28);
+      border: 1px solid rgba(190,90,36,.15);
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform .26s ease, opacity .2s ease;
     }
-    .audit-panel.show { transform: translateY(0); }
-    @media (min-width:520px) {
-      .audit-panel {
-        left: 50%;
-        right: auto;
-        width: 430px;
-        transform: translate(-50%, 106%);
-      }
-      .audit-panel.show { transform: translate(-50%, 0); }
-    }
-    .audit-head {
-      padding: 14px 16px 10px;
-      border-bottom: 1px solid var(--line);
-      display: flex;
+    .audit-panel.open { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
+    .audit-header {
+      padding: calc(12px + var(--safe-top)) 14px 12px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
-      justify-content: space-between;
       gap: 10px;
+      background: rgba(255,248,236,.92);
+      border-bottom: 1px solid rgba(190,90,36,.13);
     }
-    .audit-head strong { font-size: 18px; letter-spacing: -.03em; }
-    .audit-body {
-      padding: 15px 16px calc(16px + env(safe-area-inset-bottom));
-      overflow-y: auto;
-    }
-    .field { margin: 12px 0; }
-    .field label {
-      display: block;
-      font-size: 12px;
-      font-weight: 900;
-      color: var(--muted);
-      margin: 0 0 6px;
-    }
+    .back-btn { font-size: 19px; }
+    .audit-title b { display: block; font-size: 17px; letter-spacing: -.03em; }
+    .audit-title small { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; font-weight: 800; }
+    .audit-body { overflow: auto; padding: 16px 14px calc(28px + var(--safe-bottom)); }
+    .audit-step { display: grid; gap: 14px; }
+    .audit-step h3 { margin: 0; font-size: clamp(29px, 9vw, 39px); line-height: 1.02; letter-spacing: -.055em; }
+    .field { display: grid; gap: 7px; }
+    .field label { color: #665c52; font-size: 13px; font-weight: 950; }
     .field input, .field textarea {
       width: 100%;
-      border: 1px solid rgba(120,82,48,.22);
-      background: #fff;
-      border-radius: 16px;
-      padding: 13px 14px;
-      color: var(--ink);
-      outline: none;
-    }
-    .field textarea { min-height: 76px; resize: vertical; }
-    .field input:focus, .field textarea:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(198,95,36,.12); }
-    .audit-primary {
-      width: 100%;
-      margin-top: 12px;
-      border: 0;
-      border-radius: 18px;
-      padding: 15px;
-      color: #fff;
-      background: linear-gradient(135deg, #e2722f, #b94818);
-      font-weight: 950;
-    }
-    .audit-result {
-      display: none;
-      margin-top: 14px;
-      border-radius: 22px;
-      border: 1px solid rgba(214,64,46,.22);
-      background: #fff4f1;
+      border: 1px solid rgba(190,90,36,.22);
+      border-radius: 17px;
+      background: #fff8ec;
+      outline: 0;
       padding: 14px;
-      line-height: 1.45;
+      color: var(--ink);
     }
-    .audit-result.show { display: block; }
+    .field textarea { min-height: 90px; resize: vertical; }
+    .field input:focus, .field textarea:focus { border-color: rgba(190,90,36,.62); box-shadow: 0 0 0 4px rgba(190,90,36,.10); }
+    .audit-actions { display: grid; gap: 10px; }
+    .audit-actions button { min-height: 54px; border-radius: 18px; font-weight: 950; }
+    .run-btn { color: white; background: linear-gradient(135deg,#b65320,#f06d2f); box-shadow: 0 16px 32px rgba(170,75,24,.25); }
+    .ghost-btn { color: var(--orange-dark); background: rgba(190,90,36,.09); border: 1px solid rgba(190,90,36,.14); }
+    .audit-result { display: none; gap: 10px; }
+    .audit-result.show { display: grid; }
+    .loading-row { display: flex; gap: 10px; align-items: center; padding: 13px; border-radius: 17px; background: rgba(255,242,220,.8); font-weight: 850; color: #665d53; }
+    .pulse { width: 10px; height: 10px; border-radius: 99px; background: var(--orange-2); box-shadow: 0 0 0 rgba(239,110,45,.42); animation: pulse 1.45s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(239,110,45,.42);} 70% { box-shadow: 0 0 0 12px rgba(239,110,45,0);} 100% { box-shadow: 0 0 0 0 rgba(239,110,45,0);} }
+    .prototype-card { border-radius: 18px; padding: 14px; background: #fff8ec; border: 1px solid rgba(190,90,36,.14); }
+    .prototype-card b { display: block; margin-bottom: 5px; }
+    .prototype-card p { margin: 0; color: var(--muted); line-height: 1.4; font-size: 13px; }
 
-    .fade-up {
+
+    /* Intro manifesto popup: appears on first visit, then hands off to the existing story page. */
+    body.intro-open { overflow: hidden; }
+    .intro-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      display: grid;
+      place-items: center;
+      padding: calc(14px + var(--safe-top)) 12px calc(14px + var(--safe-bottom));
+      background:
+        radial-gradient(circle at 16% 8%, rgba(238, 110, 45, .28), transparent 34%),
+        radial-gradient(circle at 92% 18%, rgba(255, 216, 141, .35), transparent 32%),
+        rgba(43, 41, 38, .42);
+      backdrop-filter: blur(14px);
       opacity: 0;
-      transform: translateY(16px);
-      transition: opacity .48s ease, transform .48s ease;
+      pointer-events: none;
+      transition: opacity .24s ease;
     }
-    .fade-up.in-view { opacity: 1; transform: translateY(0); }
+    .intro-modal.open { opacity: 1; pointer-events: auto; }
+    .intro-card {
+      width: min(100%, 456px);
+      max-height: min(92svh, 820px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+      border-radius: 30px;
+      background:
+        linear-gradient(180deg, rgba(255,253,248,.98), rgba(255,248,236,.98));
+      border: 1px solid rgba(255, 255, 255, .65);
+      box-shadow: 0 30px 90px rgba(35, 31, 27, .34);
+      transform: translateY(16px) scale(.98);
+      transition: transform .24s ease;
+    }
+    .intro-modal.open .intro-card { transform: translateY(0) scale(1); }
+    .intro-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: start;
+      padding: 18px 16px 12px;
+      border-bottom: 1px solid rgba(190,90,36,.12);
+      background:
+        radial-gradient(circle at 14% 0%, rgba(238,110,45,.16), transparent 34%),
+        rgba(255,248,236,.72);
+    }
+    .intro-kicker {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 10px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(190,90,36,.10);
+      color: var(--orange-dark);
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .intro-title {
+      margin: 0;
+      max-width: 330px;
+      font-size: clamp(25px, 7vw, 34px);
+      line-height: 1.03;
+      letter-spacing: -.052em;
+      text-wrap: balance;
+    }
+    .intro-close {
+      width: 40px;
+      height: 40px;
+      border-radius: 16px;
+      color: var(--ink);
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(190,90,36,.13);
+      font-size: 25px;
+      line-height: 1;
+      box-shadow: 0 8px 18px rgba(95,52,20,.06);
+    }
+    .intro-body {
+      overflow: auto;
+      padding: 14px 16px 16px;
+      color: #4c453e;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(190,90,36,.34) transparent;
+    }
+    .intro-body p {
+      margin: 0 0 12px;
+      font-size: 14.5px;
+      line-height: 1.55;
+      letter-spacing: -.01em;
+    }
+    .intro-body p strong { color: var(--ink); }
+    .intro-callout {
+      margin: 4px 0 14px;
+      padding: 13px 14px;
+      border-radius: 20px;
+      background: rgba(255, 242, 220, .86);
+      border: 1px solid rgba(190,90,36,.14);
+      color: #5f3823;
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 850;
+    }
+    .intro-sources {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(190,90,36,.24);
+    }
+    .intro-sources h3 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      letter-spacing: -.02em;
+    }
+    .intro-source {
+      display: block;
+      margin: 0 0 10px;
+      padding: 10px 11px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(190,90,36,.12);
+      color: #5c5147;
+      font-size: 12.5px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+    .intro-source b { display: block; margin-bottom: 5px; color: var(--ink); font-size: 12.5px; }
+    .intro-source span { display: block; color: var(--orange-dark); font-weight: 850; }
+    .intro-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 9px;
+      padding: 12px 16px calc(14px + var(--safe-bottom));
+      background: rgba(255,253,248,.95);
+      border-top: 1px solid rgba(190,90,36,.13);
+    }
+    .intro-primary, .intro-secondary {
+      min-height: 52px;
+      border-radius: 18px;
+      font-weight: 950;
+      letter-spacing: -.01em;
+    }
+    .intro-primary {
+      color: white;
+      background: linear-gradient(135deg,#b65320,#f06d2f);
+      box-shadow: 0 16px 32px rgba(170,75,24,.24);
+    }
+    .intro-secondary {
+      color: var(--orange-dark);
+      background: rgba(190,90,36,.09);
+      border: 1px solid rgba(190,90,36,.14);
+    }
+
+
+    @media (max-width: 360px) {
+      .brand-text b { font-size: 14px; }
+      .top-cta { padding: 0 10px; min-width: auto; }
+      h1 { font-size: 34px; }
+      h2 { font-size: 30px; }
+      .screen { padding-left: 12px; padding-right: 12px; }
+      .quick-card { min-height: 80px; }
+    }
+
+    @media (min-width: 481px) {
+      .app { min-height: 100svh; }
+      .topbar, .bottom-cta, .audit-panel { width: 480px; }
+      .drawer { width: 420px; }
+    }
 
     @media (prefers-reduced-motion: reduce) {
-      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+      *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
     }
   </style>
 </head>
 <body>
-  <div class="phone-shell" id="top">
-    <header class="topbar" aria-label="AI Passport navigation">
-      <div class="topbar-inner">
-        <button class="icon-btn" id="openDrawer" type="button" aria-label="Mở menu">
-          <span class="hamburger-lines"></span>
-        </button>
-        <a class="brand" href="#top" aria-label="AI Passport home">
-          <span class="brand-mark">AI</span>
-          <span class="brand-name">
-            <strong>AI Passport</strong>
-            <span>aipass.io.vn</span>
-          </span>
-        </a>
-        <button class="top-cta js-open-audit" type="button">Soi ngay</button>
+
+  <div class="intro-modal" id="introModal" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-hidden="true">
+    <article class="intro-card">
+      <header class="intro-top">
+        <div>
+          <div class="intro-kicker">Lời mở đầu</div>
+          <h2 class="intro-title" id="introTitle">Khách hàng đang đổi cách tìm kiếm. Quán mình đã kịp đổi chưa?</h2>
+        </div>
+        <button class="intro-close" id="introClose" aria-label="Đóng lời mở đầu">×</button>
+      </header>
+
+      <div class="intro-body">
+        <p>Trước đây, khách muốn tìm quán ăn, tiệm spa, garage, cửa hàng hay dịch vụ gần nhà thì họ lên Google, gõ vài chữ: “quán nhậu Nhà Bè”, “spa quận 7”, “sửa xe điện gần đây”. Nhưng hành vi đó đang đổi rất nhanh.</p>
+
+        <p>Bây giờ, nhất là với người trẻ, họ không chỉ “search Google” nữa. Họ hỏi AI như hỏi một người quen: “Cuối tuần đi đâu ăn món đồng quê gần Sài Gòn?”, “Có quán nào hợp nhóm bạn, có chỗ đậu xe, giá vừa phải không?”, “Tiệm nào gần tôi, có review ổn, dễ đặt lịch?”. Câu hỏi dài hơn, tự nhiên hơn, và AI sẽ cố hiểu ý định thật sự phía sau câu hỏi.</p>
+
+        <p>Ngay cả Google Search cũng đang chuyển mạnh sang hướng này. Sau Google I/O 2026, Google nói rất rõ: tìm kiếm không còn chỉ là gõ từ khóa rồi xem danh sách link. Search đang trở thành trải nghiệm hỏi đáp bằng AI, có khả năng hiểu câu hỏi phức tạp, chia nhỏ nhu cầu, tổng hợp thông tin và gợi ý lựa chọn phù hợp hơn.</p>
+
+        <p>Điều đó nghĩa là: cách hiện diện cũ trên mạng đang yếu dần. Chỉ nhồi vài keyword, đăng menu bằng ảnh mờ, để thông tin mỗi nơi một kiểu, hoặc chỉ trông chờ vào Facebook/Google Maps là chưa đủ nữa. Trong kỷ nguyên tìm kiếm ngữ nghĩa, AI và thuật toán cần hiểu rõ: business của anh/chị là ai, ở đâu, bán gì, mạnh điểm nào, khách nên liên hệ ra sao, có bằng chứng gì để tin.</p>
+
+        <p>Nếu thông tin quán/cửa hàng/doanh nghiệp còn rời rạc, mờ, thiếu mô tả, thiếu FAQ, thiếu menu dạng chữ, thiếu nút gọi/Zalo/chỉ đường rõ ràng, thì khách có thể lướt qua. AI cũng có thể không đủ dữ liệu để cân nhắc nhắc tới mình khi người dùng hỏi đúng nhu cầu.</p>
+
+        <div class="intro-callout">AI Passport ra đời để xử lý chuyện đó.</div>
+
+        <p>Đây không bán lời hứa “lên top Google” hay “chắc chắn được ChatGPT nhắc tên”. Tụi em giúp chủ quán, chủ cửa hàng và SME dọn lại mặt tiền số của mình: gom thông tin rời rạc &amp; mờ mịt thành một hồ sơ rõ ràng, dễ đọc, dễ bấm, dễ chia sẻ, và dễ được Google/AI hiểu đúng hơn.</p>
+
+        <p><strong>Nói đơn giản:</strong> trước khi mong khách chọn mình, hãy làm cho khách — và cả AI — hiểu đúng mình trước.</p>
+
+        <section class="intro-sources" aria-label="Nguồn đọc thêm">
+          <h3>Đọc thêm về xu hướng này</h3>
+          <a class="intro-source" href="https://vtv.vn/ai-dang-thay-doi-internet-nhu-the-nao-100260525191040361.htm" target="_blank" rel="noopener noreferrer"><b>VTV: AI đang thay đổi cách Internet vận hành</b><span>https://vtv.vn/ai-dang-thay-doi-internet-nhu-the-nao-100260525191040361.htm</span></a>
+          <a class="intro-source" href="https://vov.vn/cong-nghe/tin-cong-nghe/google-tim-kiem-trai-qua-su-thay-doi-lon-nhat-trong-25-nam-post1293515.vov" target="_blank" rel="noopener noreferrer"><b>VOV: Google Tìm kiếm thay đổi lớn nhất trong 25 năm</b><span>https://vov.vn/cong-nghe/tin-cong-nghe/google-tim-kiem-trai-qua-su-thay-doi-lon-nhat-trong-25-nam-post1293515.vov</span></a>
+          <a class="intro-source" href="https://vtv.vn/google-i-o-2026-tat-ca-cong-bo-dang-chu-y-100260520143442551.htm" target="_blank" rel="noopener noreferrer"><b>VTV: Google I/O 2026 — các công bố đáng chú ý</b><span>https://vtv.vn/google-i-o-2026-tat-ca-cong-bo-dang-chu-y-100260520143442551.htm</span></a>
+          <a class="intro-source" href="https://vov.vn/cong-nghe/tin-cong-nghe/chatbot-ai-bung-no-trong-gioi-tre-cha-me-lo-ngai-he-luy-post1271124.vov" target="_blank" rel="noopener noreferrer"><b>VOV: Chatbot AI bùng nổ trong giới trẻ</b><span>https://vov.vn/cong-nghe/tin-cong-nghe/chatbot-ai-bung-no-trong-gioi-tre-cha-me-lo-ngai-he-luy-post1271124.vov</span></a>
+        </section>
       </div>
+
+      <footer class="intro-actions">
+        <button class="intro-primary" id="introStartAudit">Soi quán miễn phí</button>
+        <button class="intro-secondary" id="introContinue">Đọc tiếp câu chuyện</button>
+      </footer>
+    </article>
+  </div>
+
+  <div class="app">
+    <header class="topbar" aria-label="AI Passport navigation">
+      <button class="icon-btn" id="openMenu" aria-label="Mở menu">
+        <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+      <a class="brand" href="#s1" aria-label="AI Passport home">
+        <span class="brand-mark">AI</span>
+        <span class="brand-text"><b>AI Passport</b><small>AIPASS.IO.VN</small></span>
+      </a>
+      <button class="top-cta js-open-audit">Soi ngay</button>
     </header>
 
     <main>
-      <section class="screen" id="screen-1" data-cta="Soi thử xem AI thấy gì về quán mình">
-        <div class="eyebrow fade-up">01 / 07 · First hook</div>
-        <div class="fade-up">
-          <h1>Khách có thể thấy quán mình.<br><span class="orange">Nhưng họ có hiểu quán mình không?</span></h1>
+      <section class="screen" id="s1" data-cta="Soi thử xem AI thấy gì về quán mình">
+        <div class="story-head">
+          <span class="eyebrow">01 / 07 · First hook</span>
+          <h1>Khách có thể thấy quán mình. Nhưng họ có <span class="accent">hiểu quán mình</span> không?</h1>
+          <p class="lead">AI Passport dọn lại thông tin rời rạc thành một hồ sơ rõ ràng để khách mới, Google Maps và AI dễ hiểu hơn.</p>
         </div>
-        <p class="lead fade-up">Thông tin của quán đang rải rác khắp Maps, Facebook, ảnh menu và inbox. Khách mới và AI có thể thấy, nhưng hiểu sai hoặc hiểu rất ít.</p>
-        <div class="hero-visual fade-up"><img src="assets/page-01-hook.webp" alt="Màn hình giới thiệu AI Passport cho quán local" loading="eager"></div>
-      </section>
-
-      <section class="screen" id="screen-2" data-cta="Bắt đầu tự soi quán">
-        <div class="eyebrow fade-up">02 / 07 · Self-check</div>
-        <div class="fade-up"><h2>Quán mình có đang bị hiểu mờ đi không?</h2></div>
-        <p class="lead fade-up">Tự trả lời nhanh vài câu. Nếu gật đầu 2–3 câu, quán rất đáng được soi AI Passport.</p>
-        <div class="quick-grid fade-up" aria-label="Các câu hỏi tự soi nhanh">
-          <div class="question-card"><div class="num">01</div><strong>Menu vẫn nằm trong ảnh?</strong></div>
-          <div class="question-card"><div class="num">02</div><strong>Khách hay hỏi đường đi / chỗ đậu xe?</strong></div>
-          <div class="question-card"><div class="num">03</div><strong>Maps, Facebook, Zalo đang ghi mỗi nơi một kiểu?</strong></div>
-          <div class="question-card"><div class="num">04</div><strong>Inbox rồi vẫn hỏi lại từ đầu?</strong></div>
+        <figure class="mockup">
+          <img src="assets/page-01-hook.webp" alt="Màn 1: AI Passport giải thích vì sao khách và AI có thể chưa hiểu rõ quán" fetchpriority="high" />
+        </figure>
+        <div class="tagline-row" aria-label="Cam kết nhanh">
+          <span class="chip">Không phải làm website</span><span class="chip">Không hứa lên top</span><span class="chip">Soi thử trước</span>
         </div>
-        <div class="note-card fade-up"><b>Nếu có:</b> không phải quán tệ. Chỉ là mặt tiền số đang chưa rõ.</div>
       </section>
 
-      <section class="screen" id="screen-31" data-cta="Soi hiện trạng quán của tôi">
-        <div class="eyebrow fade-up">03.1 / 07 · Poor visibility</div>
-        <div class="fade-up"><h2>Ví dụ: quán đồng quê Nhà Bè đang hiện ra khá mờ.</h2></div>
-        <p class="lead fade-up">Ảnh menu lóa, vị trí lẫn lộn, số điện thoại chưa thống nhất, inbox chưa rõ câu trả lời.</p>
-        <div class="image-card fade-up"><img src="assets/page-03-poor-visibility.webp" alt="Mockup hiện trạng thông tin quán bị rời rạc và mờ" loading="lazy"></div>
-      </section>
-
-      <section class="screen" id="screen-32" data-cta="Xem quán tôi bị mờ ở đâu">
-        <div class="eyebrow fade-up">03.2 / 07 · AI score thấp</div>
-        <div class="fade-up"><h2>AI soi lại những gì khách và máy đang thấy.</h2></div>
-        <div class="score-card fade-up">
-          <p class="muted">Quán Đồng Quê Ven Kênh · Nhà Bè</p>
-          <div class="score-main"><strong>42</strong><span>/100 · thấp</span></div>
-          <div class="issue-list">
-            <div class="issue"><b>Menu dạng ảnh bị mù chữ</b>AI khó đọc món, giá và mô tả.</div>
-            <div class="issue"><b>Thông tin chưa đồng nhất</b>Tên quán, địa chỉ, giờ mở cửa chưa khớp giữa các kênh.</div>
-            <div class="issue"><b>CTA chưa rõ</b>Khách không biết nên gọi, nhắn Zalo hay đi đường nào.</div>
-          </div>
+      <section class="screen" id="s2" data-cta="Bắt đầu tự soi quán miễn phí">
+        <div class="story-head">
+          <span class="eyebrow">02 / 07 · Self-check</span>
+          <h2>Business của mày có thật sự cần một “passport” không?</h2>
+          <p class="lead">Tự soi nhanh vài dấu hiệu. Nếu dính 2–3 câu, quán rất đáng được AI Passport dọn lại.</p>
         </div>
-        <div class="note-card fade-up">Điểm này là kiểm tra nội bộ của AI Passport, không phải điểm chính thức từ Google hay OpenAI.</div>
-      </section>
-
-      <section class="screen" id="screen-41" data-cta="Tạo bản nháp cho quán tôi">
-        <div class="eyebrow fade-up">04.1 / 07 · Clean preview</div>
-        <div class="fade-up"><h2>Từ dữ liệu lộn xộn thành một bản nháp dễ hiểu.</h2></div>
-        <p class="lead fade-up">AI Passport gom menu, địa chỉ, giờ mở cửa, câu hỏi thường gặp và nút liên hệ thành một trang nháp để chủ quán duyệt trước.</p>
-        <div class="image-card fade-up"><img src="assets/page-05-clean-preview.webp" alt="Mockup bản nháp AI Passport đã được dọn rõ" loading="lazy"></div>
-      </section>
-
-      <section class="screen" id="screen-42" data-cta="Dọn dữ liệu để AI hiểu quán tốt hơn">
-        <div class="eyebrow fade-up">04.2 / 07 · Algorithmic clarity</div>
-        <div class="fade-up"><h2>Dữ liệu sạch giúp Google Maps và AI hiểu quán tốt hơn.</h2></div>
-        <div class="score-card good-score-card fade-up">
-          <p class="muted">Sau khi dọn lại · minh họa</p>
-          <div class="score-main good-score"><strong>86</strong><span>/100 · rõ hơn</span></div>
-          <div class="good-row"><span><b>Menu</b> có chữ, món, giá</span><span class="check">✓</span></div>
-          <div class="good-row"><span><b>Maps/Zalo</b> liên hệ rõ</span><span class="check">✓</span></div>
-          <div class="good-row"><span><b>FAQ</b> trả lời câu khách hay hỏi</span><span class="check">✓</span></div>
-          <div class="good-row"><span><b>AI summary</b> ngắn, đúng, dễ đọc</span><span class="check">✓</span></div>
+        <figure class="mockup contain"><img src="assets/page-02-self-check.webp" alt="Màn 2: tự soi nhanh 4 câu hỏi cho chủ quán" loading="lazy" /></figure>
+        <div class="quick-cards">
+          <div class="quick-card"><b>Menu trong ảnh?</b><span>Máy khó đọc món, giá, mô tả.</span></div>
+          <div class="quick-card"><b>Khách hỏi lặp lại?</b><span>Đường đi, giá, đặt bàn, chỗ đậu xe.</span></div>
         </div>
-        <div class="image-card fade-up"><img src="assets/page-06-high-score.webp" alt="Màn hình AI chấm điểm tốt hơn sau khi dữ liệu được chuẩn hóa" loading="lazy"></div>
       </section>
 
-      <section class="screen" id="screen-5" data-cta="Bắt đầu miễn phí — không cần mật khẩu">
-        <div class="eyebrow fade-up">05 / 07 · Trust layer</div>
-        <div class="fade-up"><h2>4 nỗi sợ high-tech, xử lý gọn.</h2></div>
-        <p class="lead fade-up">AI Passport làm theo cách an toàn nhất: pilot trước, duyệt trước, không hỏi mật khẩu.</p>
-        <div class="trust-grid fade-up">
-          <div class="trust-card"><div class="trust-icon">💸</div><strong>Sợ mất tiền vô ích</strong><span>Pilot nhỏ, có số đo, không ép duy trì.</span></div>
-          <div class="trust-card"><div class="trust-icon">🛡️</div><strong>Sợ bị lừa</strong><span>Có bản nháp trước khi quyết định.</span></div>
-          <div class="trust-card"><div class="trust-icon">🔒</div><strong>Sợ lộ info</strong><span>Không mật khẩu, OTP, ngân hàng.</span></div>
-          <div class="trust-card"><div class="trust-icon">💬</div><strong>Sợ phiền</strong><span>Update bằng Zalo, không học app mới.</span></div>
+      <section class="screen" id="s31" data-cta="Soi quán của tôi ngay">
+        <div class="story-head">
+          <span class="eyebrow">03.1 / 07 · Poor visibility</span>
+          <h2>Ví dụ: quán đồng quê Nhà Bè đang hiện ra khá <span class="accent">mờ</span>.</h2>
+          <p class="lead">Có tên, có ảnh, có review. Nhưng menu mờ, địa chỉ nhiễu, inbox chưa rõ, số liên hệ chưa thống nhất.</p>
         </div>
-        <div class="image-card fade-up"><img src="assets/page-07-trust.webp" alt="Màn hình trust layer của AI Passport" loading="lazy"></div>
+        <figure class="mockup"><img src="assets/page-03-poor-visibility.webp" alt="Màn 3.1: mockup hiện trạng poor visibility của quán Đồng Quê Ven Kênh" loading="lazy" /></figure>
+        <div class="result-note"><span class="icon-bubble">!</span><span><strong>Kết quả:</strong> khách khó hiểu nhanh, AI thiếu dữ liệu sạch để đọc.</span></div>
+      </section>
+
+      <section class="screen" id="s32" data-cta="Xem quán mình đang bị mờ ở đâu">
+        <div class="story-head">
+          <span class="eyebrow">03.2 / 07 · AI score thấp</span>
+          <h2>AI soi lại những gì khách và máy đang thấy.</h2>
+          <p class="lead">Score này là checklist nội bộ của AI Passport, không phải điểm chính thức từ Google/OpenAI.</p>
+        </div>
+        <figure class="mockup contain"><img src="assets/page-04-low-score.webp" alt="Màn 3.2: AI chấm điểm thấp vì menu mờ, thông tin không thống nhất, CTA yếu" loading="lazy" /></figure>
+        <div class="quick-cards">
+          <div class="quick-card"><b>42/100</b><span>Thông tin còn mờ và rời rạc.</span></div>
+          <div class="quick-card"><b>3 lỗi chính</b><span>Menu, thống nhất thông tin, CTA.</span></div>
+        </div>
+      </section>
+
+      <section class="screen" id="s41" data-cta="Tạo bản nháp cho quán tôi">
+        <div class="story-head">
+          <span class="eyebrow">04.1 / 07 · Clean preview</span>
+          <h2>Sau khi dọn lại: một bản nháp <span class="accent">dễ hiểu hơn</span>.</h2>
+          <p class="lead">Menu dạng chữ, địa chỉ chuẩn, giờ mở cửa, FAQ và nút Zalo/Gọi/Chỉ đường nằm ngay trước mắt.</p>
+        </div>
+        <figure class="mockup"><img src="assets/page-05-clean-preview.webp" alt="Màn 4.1: mockup bản nháp AI Passport sau khi dữ liệu được chuẩn hóa" loading="lazy" /></figure>
+        <div class="result-note"><span class="icon-bubble">✓</span><span><strong>Lưu ý:</strong> đây là demo minh họa. Thông tin thật chỉ public sau khi chủ business duyệt.</span></div>
+      </section>
+
+      <section class="screen algorithm" id="s42" data-cta="Soi và dọn dữ liệu quán tôi">
+        <div class="story-head">
+          <span class="eyebrow">04.2 / 07 · Algorithmic clarity</span>
+          <h2>Dữ liệu sạch giúp Google Maps & AI <span class="accent">hiểu quán tốt hơn</span>.</h2>
+          <p class="lead">Không phải phép thuật. Chỉ là thông tin rõ hơn, nhất quán hơn, có ngữ cảnh hơn.</p>
+        </div>
+        <figure class="mockup contain"><img src="assets/page-06-high-score.webp" alt="Màn 4.2: AI chấm điểm cao hơn khi dữ liệu quán được dọn sạch" loading="lazy" /></figure>
+        <div class="quick-cards">
+          <div class="quick-card"><b>86/100</b><span>AI hiểu rõ hơn vì dữ liệu sạch hơn.</span></div>
+          <div class="quick-card"><b>Không cam kết top</b><span>Chỉ cam kết rõ hơn và đo được hơn.</span></div>
+        </div>
+      </section>
+
+      <section class="screen" id="s5" data-cta="Bắt đầu miễn phí — không cần mật khẩu">
+        <div class="story-head">
+          <span class="eyebrow">05 / 07 · Trust layer</span>
+          <h2>4 nỗi sợ high-tech, xử lý gọn.</h2>
+          <p class="lead">AI Passport phải an toàn trước khi “ngầu”: không mật khẩu, không OTP, không ngân hàng, không bắt học app.</p>
+        </div>
+        <figure class="mockup contain"><img src="assets/page-07-trust.webp" alt="Màn 5: trust layer giải thích 4 nỗi sợ high-tech và cách xử lý" loading="lazy" /></figure>
+        <div class="tagline-row" aria-label="Trust summary">
+          <span class="chip">Pilot nhỏ</span><span class="chip">Có bản nháp</span><span class="chip">Update qua Zalo</span><span class="chip">Chủ quán duyệt trước</span>
+        </div>
       </section>
     </main>
 
     <div class="bottom-cta" id="bottomCta">
-      <button class="js-open-audit" type="button">
-        <span id="bottomCtaText">Soi thử xem AI thấy gì về quán mình</span>
-        <small>Không cần app · Không mật khẩu</small>
-      </button>
+      <button class="js-open-audit"><span id="ctaText">Soi thử xem AI thấy gì về quán mình</span><span aria-hidden="true">→</span></button>
+      <small>Toàn bộ flow nằm trong aipass.io.vn · Không qua Google Form</small>
     </div>
   </div>
 
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
-  <nav class="drawer" id="drawer" aria-label="Menu AI Passport">
+  <aside class="drawer" id="drawer" aria-label="Menu AI Passport" aria-hidden="true">
     <div class="drawer-head">
-      <div class="drawer-title"><strong>AI Passport</strong><span>Đi nhanh trong story</span></div>
-      <button class="icon-btn" id="closeDrawer" type="button" aria-label="Đóng menu">×</button>
+      <div><strong>AI Passport</strong><small>AIPASS.IO.VN</small></div>
+      <button class="icon-btn" id="closeMenu" aria-label="Đóng menu">×</button>
     </div>
-
     <div class="drawer-section">
-      <div class="drawer-label">7 màn chính</div>
-      <a href="#screen-1">01 · Vì sao nên quan tâm</a>
-      <a href="#screen-2">02 · Tự soi nhanh</a>
-      <a href="#screen-31">03.1 · Hiện trạng mờ</a>
-      <a href="#screen-32">03.2 · AI chấm điểm thấp</a>
-      <a href="#screen-41">04.1 · Bản nháp sau khi dọn</a>
-      <a href="#screen-42">04.2 · AI hiểu rõ hơn</a>
-      <a href="#screen-5">05 · An toàn & không phiền</a>
+      <h3>Đi nhanh trong story</h3>
+      <a class="drawer-link" href="#s1">Vì sao nên quan tâm <span>1/7</span></a>
+      <a class="drawer-link" href="#s2">Tự soi nhanh <span>2/7</span></a>
+      <a class="drawer-link" href="#s31">Hiện trạng mờ <span>3.1</span></a>
+      <a class="drawer-link" href="#s32">AI chấm điểm thấp <span>3.2</span></a>
+      <a class="drawer-link" href="#s41">Bản nháp sạch hơn <span>4.1</span></a>
+      <a class="drawer-link" href="#s42">AI hiểu rõ hơn <span>4.2</span></a>
+      <a class="drawer-link" href="#s5">An toàn & không phiền <span>5/7</span></a>
     </div>
-
     <div class="drawer-section">
-      <div class="drawer-label">Cần biết trước</div>
-      <div class="trust-strip">
-        <b>Không hỏi mật khẩu.</b><br>
-        Không OTP · Không ngân hàng · Không cần cài app · Chủ quán duyệt trước khi public.
+      <h3>Cần biết trước</h3>
+      <div class="trust-box">
+        <span>✓ Không hỏi mật khẩu / OTP / ngân hàng</span>
+        <span>✓ Không cam kết lên top Google hay doanh số tức thì</span>
+        <span>✓ Bản nháp trước, chủ business duyệt trước</span>
+        <span>✓ Soi quán chạy trong aipass.io.vn, không kéo qua Google Form</span>
       </div>
-      <button class="menu-cta primary js-open-audit" type="button">Bắt đầu soi quán</button>
     </div>
-  </nav>
+    <button class="drawer-cta js-open-audit">Bắt đầu soi quán →</button>
+  </aside>
 
   <div class="audit-backdrop" id="auditBackdrop"></div>
-  <section class="audit-panel" id="auditPanel" aria-label="Soi quán AI">
-    <div class="audit-head">
-      <strong>Soi quán AI</strong>
-      <button class="icon-btn" id="closeAudit" type="button" aria-label="Đóng màn soi quán">×</button>
-    </div>
+  <section class="audit-panel" id="auditPanel" aria-label="Soi quán AI" aria-hidden="true">
+    <header class="audit-header">
+      <button class="icon-btn back-btn" id="closeAudit" aria-label="Quay lại story">←</button>
+      <div class="audit-title"><b>Soi quán AI</b><small>Mini app nằm trong landing page</small></div>
+      <button class="icon-btn" id="closeAuditX" aria-label="Đóng">×</button>
+    </header>
     <div class="audit-body">
-      <p class="lead" style="font-size:15px">Nhập vài thông tin public. AI Passport sẽ soi thử hiện khách mới, Google Maps và AI đang hiểu quán ra sao.</p>
-      <div class="field">
-        <label for="bizName">Tên quán / business</label>
-        <input id="bizName" type="text" placeholder="Ví dụ: Quán Đồng Quê Ven Kênh">
-      </div>
-      <div class="field">
-        <label for="bizLinks">Link Google Maps / Facebook nếu có</label>
-        <textarea id="bizLinks" placeholder="Dán link public tại đây"></textarea>
-      </div>
-      <div class="field">
-        <label for="bizNotes">Món/dịch vụ chính hoặc điều khách hay hỏi</label>
-        <textarea id="bizNotes" placeholder="Ví dụ: món đồng quê, có đậu xe không, đặt bàn qua Zalo..."></textarea>
-      </div>
-      <button class="audit-primary" id="fakeAuditBtn" type="button">Chạy demo flow →</button>
-      <div class="audit-result" id="auditResult">
-        <b>Prototype v1:</b> ở bước sau nút này sẽ gọi Gemini API/search/backend để tạo audit thật ngay trong landing page. Hiện tại đây là shell UI để giữ đúng flow: nhập thông tin → AI soi hiện trạng → demo bản dọn sạch → để lại Zalo nếu muốn tiếp.
+      <div class="audit-step">
+        <span class="eyebrow">Prototype v1</span>
+        <h3>Nhập vài thông tin public để AI soi thử.</h3>
+        <p class="lead small">Phase sau sẽ nối Gemini API/search/backend để tạo: hiện trạng mờ → score thấp → bản dọn sạch → score tốt hơn, tất cả ngay tại đây.</p>
+        <div class="field">
+          <label for="bizName">Tên quán / business</label>
+          <input id="bizName" placeholder="Ví dụ: Quán Đồng Quê Ven Kênh" autocomplete="organization" />
+        </div>
+        <div class="field">
+          <label for="bizLink">Link Google Maps/Facebook nếu có</label>
+          <input id="bizLink" placeholder="Dán link public để AI đọc dấu hiệu hiện diện" inputmode="url" />
+        </div>
+        <div class="field">
+          <label for="bizNotes">Món/dịch vụ chính hoặc điều khách hay hỏi</label>
+          <textarea id="bizNotes" placeholder="Ví dụ: quán nhậu đồng quê, khách hay hỏi đường đi, giá, chỗ đậu xe"></textarea>
+        </div>
+        <div class="audit-actions">
+          <button class="run-btn" id="runDemo">Chạy demo flow →</button>
+          <button class="ghost-btn" id="laterBtn">Để tao xem tiếp story</button>
+        </div>
+        <div class="audit-result" id="auditResult">
+          <div class="loading-row"><span class="pulse"></span> Đang đọc dữ liệu public & dấu hiệu hiện diện...</div>
+          <div class="prototype-card"><b>Prototype note</b><p>V1 này mới là UI shell. Bản thật sẽ trả về “hiện trạng mờ”, AI score thấp, rồi dựng demo “dọn lại sạch đẹp” ngay trong site.</p></div>
+          <div class="prototype-card"><b>Backend hook sau này</b><p>/api/audit/start → Gemini Search/Maps/Facebook parsing → staging preview → owner approval.</p></div>
+        </div>
       </div>
     </div>
   </section>
@@ -731,73 +787,100 @@
     const body = document.body;
     const drawer = document.getElementById('drawer');
     const drawerBackdrop = document.getElementById('drawerBackdrop');
+    const openMenuBtn = document.getElementById('openMenu');
+    const closeMenuBtn = document.getElementById('closeMenu');
     const auditPanel = document.getElementById('auditPanel');
     const auditBackdrop = document.getElementById('auditBackdrop');
+    const closeAudit = document.getElementById('closeAudit');
+    const closeAuditX = document.getElementById('closeAuditX');
+    const laterBtn = document.getElementById('laterBtn');
     const bottomCta = document.getElementById('bottomCta');
-    const bottomCtaText = document.getElementById('bottomCtaText');
+    const ctaText = document.getElementById('ctaText');
+    const runDemo = document.getElementById('runDemo');
     const auditResult = document.getElementById('auditResult');
+    const introModal = document.getElementById('introModal');
+    const introClose = document.getElementById('introClose');
+    const introContinue = document.getElementById('introContinue');
+    const introStartAudit = document.getElementById('introStartAudit');
+
+
+    const INTRO_STORAGE_KEY = 'aipass_intro_seen_v2';
+    function openIntro(force = false) {
+      if (!force && localStorage.getItem(INTRO_STORAGE_KEY) === '1') return;
+      introModal.classList.add('open');
+      introModal.setAttribute('aria-hidden', 'false');
+      body.classList.add('intro-open');
+      bottomCta.classList.add('hide');
+      setTimeout(() => introContinue.focus(), 120);
+    }
+    function closeIntro(markSeen = true) {
+      introModal.classList.remove('open');
+      introModal.setAttribute('aria-hidden', 'true');
+      body.classList.remove('intro-open');
+      if (markSeen) localStorage.setItem(INTRO_STORAGE_KEY, '1');
+      if (!body.classList.contains('audit-open')) bottomCta.classList.remove('hide');
+    }
+    function closeIntroAndOpenAudit() {
+      closeIntro(true);
+      setTimeout(openAudit, 80);
+    }
 
     function openDrawer() {
-      drawer.classList.add('show');
-      drawerBackdrop.classList.add('show');
+      drawer.classList.add('open'); drawerBackdrop.classList.add('open');
+      drawer.setAttribute('aria-hidden', 'false'); body.classList.add('menu-open');
     }
     function closeDrawer() {
-      drawer.classList.remove('show');
-      drawerBackdrop.classList.remove('show');
+      drawer.classList.remove('open'); drawerBackdrop.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true'); body.classList.remove('menu-open');
     }
+    openMenuBtn.addEventListener('click', openDrawer);
+    closeMenuBtn.addEventListener('click', closeDrawer);
+    drawerBackdrop.addEventListener('click', closeDrawer);
+    document.querySelectorAll('.drawer-link').forEach(a => a.addEventListener('click', closeDrawer));
+
     function openAudit() {
       closeDrawer();
-      auditPanel.classList.add('show');
-      auditBackdrop.classList.add('show');
+      auditPanel.classList.add('open'); auditBackdrop.classList.add('open');
+      auditPanel.setAttribute('aria-hidden', 'false'); body.classList.add('audit-open');
       bottomCta.classList.add('hide');
-      setTimeout(() => document.getElementById('bizName').focus(), 260);
+      setTimeout(() => document.getElementById('bizName').focus(), 180);
     }
-    function closeAudit() {
-      auditPanel.classList.remove('show');
-      auditBackdrop.classList.remove('show');
-      bottomCta.classList.remove('hide');
+    function closeAuditPanel() {
+      auditPanel.classList.remove('open'); auditBackdrop.classList.remove('open');
+      auditPanel.setAttribute('aria-hidden', 'true'); body.classList.remove('audit-open');
+      auditResult.classList.remove('show'); bottomCta.classList.remove('hide');
     }
-
-    document.getElementById('openDrawer').addEventListener('click', openDrawer);
-    document.getElementById('closeDrawer').addEventListener('click', closeDrawer);
-    drawerBackdrop.addEventListener('click', closeDrawer);
-    document.querySelectorAll('.drawer a').forEach(a => a.addEventListener('click', closeDrawer));
+    introClose.addEventListener('click', () => closeIntro(true));
+    introContinue.addEventListener('click', () => closeIntro(true));
+    introStartAudit.addEventListener('click', closeIntroAndOpenAudit);
+    introModal.addEventListener('click', e => { if (e.target === introModal) closeIntro(true); });
+    setTimeout(() => openIntro(false), 360);
 
     document.querySelectorAll('.js-open-audit').forEach(btn => btn.addEventListener('click', openAudit));
-    document.getElementById('closeAudit').addEventListener('click', closeAudit);
-    auditBackdrop.addEventListener('click', closeAudit);
-    document.getElementById('fakeAuditBtn').addEventListener('click', () => {
+    closeAudit.addEventListener('click', closeAuditPanel);
+    closeAuditX.addEventListener('click', closeAuditPanel);
+    laterBtn.addEventListener('click', closeAuditPanel);
+    auditBackdrop.addEventListener('click', closeAuditPanel);
+    runDemo.addEventListener('click', () => {
       auditResult.classList.add('show');
       auditResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
 
-    const sections = [...document.querySelectorAll('.screen')];
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.querySelectorAll('.fade-up').forEach((el, idx) => {
-            setTimeout(() => el.classList.add('in-view'), idx * 70);
-          });
-          if (entry.intersectionRatio > 0.45 && entry.target.dataset.cta) {
-            bottomCtaText.textContent = entry.target.dataset.cta;
-          }
-        }
-      });
-    }, { threshold: [0.2, 0.45, 0.7] });
-    sections.forEach(section => observer.observe(section));
+    const screens = [...document.querySelectorAll('.screen')];
+    const observer = new IntersectionObserver(entries => {
+      const active = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!active) return;
+      ctaText.textContent = active.target.dataset.cta || 'Soi quán ngay';
+    }, { threshold: [.42, .58, .72] });
+    screens.forEach(s => observer.observe(s));
 
     document.querySelectorAll('input, textarea').forEach(el => {
       el.addEventListener('focus', () => bottomCta.classList.add('hide'));
-      el.addEventListener('blur', () => {
-        if (!auditPanel.classList.contains('show')) bottomCta.classList.remove('hide');
-      });
+      el.addEventListener('blur', () => { if (!body.classList.contains('audit-open')) bottomCta.classList.remove('hide'); });
     });
 
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        closeDrawer();
-        closeAudit();
-      }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeIntro(true); closeDrawer(); closeAuditPanel(); }
     });
   </script>
 </body>
