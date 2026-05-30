@@ -733,6 +733,140 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
     }
+
+
+    /* v5 responsive refinements requested:
+       - Eyebrow marker pills stay as empty visual placeholders.
+       - Desktop uses a wider Facebook-like feed.
+       - Desktop side panel is hidden behind hamburger and, when opened, pushes/reserves space instead of covering the main story. */
+    .eyebrow:empty {
+      min-width: 88px;
+      min-height: 31px;
+      color: transparent;
+    }
+
+    @media (min-width: 900px) {
+      body.menu-open { overflow: auto; }
+
+      .app {
+        width: min(calc(100vw - 32px), 1520px);
+        transition: padding-left .24s ease;
+      }
+
+      .topbar {
+        width: min(calc(100vw - 32px), 1520px);
+        height: 72px;
+        padding: 12px 16px;
+        grid-template-columns: 46px 1fr auto;
+      }
+
+      #openMenu {
+        display: grid !important;
+      }
+
+      main {
+        width: min(1120px, calc(100vw - 48px));
+        min-width: 0;
+        margin: 0 auto;
+        padding-top: 94px;
+      }
+
+      .screen {
+        padding: 42px clamp(28px, 4.2vw, 56px) 44px;
+        border-radius: 34px;
+      }
+
+      .screen:first-child {
+        min-height: calc(100svh - 118px);
+      }
+
+      .mockup img {
+        max-height: none;
+      }
+
+      .bottom-cta {
+        width: min(1120px, calc(100vw - 48px));
+        min-width: 0;
+      }
+
+      .drawer-backdrop {
+        display: none !important;
+      }
+
+      .drawer {
+        left: 24px;
+        top: 92px;
+        bottom: auto;
+        width: 292px;
+        max-height: calc(100svh - 116px);
+        transform: translateX(calc(-100% - 36px)) !important;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 42;
+        padding: 18px;
+        border-radius: 30px;
+        border: 1px solid rgba(190,90,36,.13);
+        background: rgba(255,253,248,.86);
+        backdrop-filter: blur(18px);
+        box-shadow: 0 18px 54px rgba(95,52,20,.10);
+        transition: transform .24s ease, opacity .2s ease;
+      }
+
+      .drawer.open {
+        transform: translateX(0) !important;
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .drawer-head .icon-btn {
+        display: grid;
+      }
+
+      body.menu-open .app {
+        padding-left: 324px;
+      }
+
+      body.menu-open .topbar {
+        padding-left: 340px;
+      }
+
+      body.menu-open main {
+        width: min(1040px, calc(100vw - 388px));
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      body.menu-open .bottom-cta {
+        left: auto;
+        right: 16px;
+        transform: none;
+        width: min(1040px, calc(100vw - 388px));
+      }
+
+      body.menu-open .bottom-cta.hide {
+        transform: translateY(120%);
+      }
+    }
+
+    @media (min-width: 1180px) {
+      main, .bottom-cta { width: min(1120px, calc(100vw - 48px)); }
+      .screen { padding-left: clamp(34px, 4.4vw, 64px); padding-right: clamp(34px, 4.4vw, 64px); }
+      .drawer { width: 300px; }
+      body.menu-open .app { padding-left: 332px; }
+      body.menu-open .topbar { padding-left: 348px; }
+      body.menu-open main, body.menu-open .bottom-cta { width: min(1060px, calc(100vw - 404px)); }
+    }
+
+    @media (min-width: 900px) and (max-width: 1050px) {
+      .app { width: min(calc(100vw - 24px), 1026px); }
+      .topbar { width: min(calc(100vw - 24px), 1026px); padding-left: 12px; padding-right: 12px; }
+      main, .bottom-cta { width: min(900px, calc(100vw - 32px)); margin-left: auto; margin-right: auto; }
+      .drawer { left: 12px; width: 272px; }
+      body.menu-open .app { padding-left: 292px; }
+      body.menu-open .topbar { padding-left: 304px; }
+      body.menu-open main, body.menu-open .bottom-cta { width: min(760px, calc(100vw - 332px)); }
+    }
+
   </style>
 </head>
 <body>
@@ -795,7 +929,7 @@
     <main>
       <section class="screen" id="s1" data-cta="Soi thử xem AI thấy gì về quán mình">
         <div class="story-head">
-          <span class="eyebrow">01 / 07 · First hook</span>
+          <span class="eyebrow" aria-hidden="true"></span>
           <h1>Khách có thể thấy quán mình. Nhưng họ có <span class="accent">hiểu quán mình</span> không?</h1>
           <p class="lead">AI Passport dọn lại thông tin rời rạc thành một hồ sơ rõ ràng để khách mới, Google Maps và AI dễ hiểu hơn.</p>
         </div>
@@ -809,7 +943,7 @@
 
       <section class="screen" id="s2" data-cta="Bắt đầu tự soi quán miễn phí">
         <div class="story-head">
-          <span class="eyebrow">02 / 07 · Self-check</span>
+          <span class="eyebrow" aria-hidden="true"></span>
           <h2>Business của mày có thật sự cần một “passport” không?</h2>
           <p class="lead">Tự soi nhanh vài dấu hiệu. Nếu dính 2–3 câu, quán rất đáng được AI Passport dọn lại.</p>
         </div>
@@ -822,7 +956,7 @@
 
       <section class="screen" id="s31" data-cta="Soi quán của tôi ngay">
         <div class="story-head">
-          <span class="eyebrow">03.1 / 07 · Poor visibility</span>
+          <span class="eyebrow" aria-hidden="true"></span>
           <h2>Ví dụ: quán đồng quê Nhà Bè đang hiện ra khá <span class="accent">mờ</span>.</h2>
           <p class="lead">Có tên, có ảnh, có review. Nhưng menu mờ, địa chỉ nhiễu, inbox chưa rõ, số liên hệ chưa thống nhất.</p>
         </div>
@@ -832,7 +966,7 @@
 
       <section class="screen" id="s32" data-cta="Xem quán mình đang bị mờ ở đâu">
         <div class="story-head">
-          <span class="eyebrow">03.2 / 07 · AI score thấp</span>
+          <span class="eyebrow" aria-hidden="true"></span>
           <h2>AI soi lại những gì khách và máy đang thấy.</h2>
           <p class="lead">Score này là checklist nội bộ của AI Passport, không phải điểm chính thức từ Google/OpenAI.</p>
         </div>
@@ -845,7 +979,7 @@
 
       <section class="screen" id="s41" data-cta="Tạo bản nháp cho quán tôi">
         <div class="story-head">
-          <span class="eyebrow">04.1 / 07 · Clean preview</span>
+          <span class="eyebrow" aria-hidden="true"></span>
           <h2>Sau khi dọn lại: một bản nháp <span class="accent">dễ hiểu hơn</span>.</h2>
           <p class="lead">Menu dạng chữ, địa chỉ chuẩn, giờ mở cửa, FAQ và nút Zalo/Gọi/Chỉ đường nằm ngay trước mắt.</p>
         </div>
@@ -855,7 +989,7 @@
 
       <section class="screen algorithm" id="s42" data-cta="Soi và dọn dữ liệu quán tôi">
         <div class="story-head">
-          <span class="eyebrow">04.2 / 07 · Algorithmic clarity</span>
+          <span class="eyebrow" aria-hidden="true"></span>
           <h2>Dữ liệu sạch giúp Google Maps & AI <span class="accent">hiểu quán tốt hơn</span>.</h2>
           <p class="lead">Không phải phép thuật. Chỉ là thông tin rõ hơn, nhất quán hơn, có ngữ cảnh hơn.</p>
         </div>
@@ -868,7 +1002,7 @@
 
       <section class="screen" id="s5" data-cta="Bắt đầu miễn phí — không cần mật khẩu">
         <div class="story-head">
-          <span class="eyebrow">05 / 07 · Trust layer</span>
+          <span class="eyebrow" aria-hidden="true"></span>
           <h2>4 nỗi sợ high-tech, xử lý gọn.</h2>
           <p class="lead">AI Passport phải an toàn trước khi “ngầu”: không mật khẩu, không OTP, không ngân hàng, không bắt học app.</p>
         </div>
@@ -922,7 +1056,7 @@
     </header>
     <div class="audit-body">
       <div class="audit-step">
-        <span class="eyebrow">Prototype v1</span>
+        <span class="eyebrow" aria-hidden="true"></span>
         <h3>Nhập vài thông tin public để AI soi thử.</h3>
         <p class="lead small">Phase sau sẽ nối Gemini API/search/backend để tạo: hiện trạng mờ → score thấp → bản dọn sạch → score tốt hơn, tất cả ngay tại đây.</p>
         <div class="field">
