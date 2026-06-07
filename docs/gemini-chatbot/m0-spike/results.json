@@ -1,0 +1,3378 @@
+{
+  "started_at_utc": "2026-06-07T05:25:06Z",
+  "finished_at_utc": "2026-06-07T05:33:09Z",
+  "models": {
+    "option_b_single_pass": "gemini-3-flash-preview",
+    "option_a_discovery": "gemini-2.5-flash",
+    "option_a_normalize": "gemini-2.5-flash"
+  },
+  "fixtures_count": 12,
+  "aggregates": {
+    "option_b": {
+      "runs": 12,
+      "json_valid": 12,
+      "json_valid_pct": 100.0,
+      "resolve_expected_pass": 11,
+      "no_fake_critical_pass": 12,
+      "latency_ms_avg": 14184,
+      "latency_ms_p50": 11256,
+      "latency_ms_max": 32413,
+      "total_tokens": 35423,
+      "prompt_tokens": 2603,
+      "candidate_tokens": 15859,
+      "thoughts_tokens": 16961,
+      "grounded_runs": 3
+    },
+    "option_a": {
+      "runs": 12,
+      "json_valid": 12,
+      "json_valid_pct": 100.0,
+      "resolve_expected_pass": 11,
+      "no_fake_critical_pass": 12,
+      "latency_ms_avg": 26048,
+      "latency_ms_p50": 26534,
+      "latency_ms_max": 31525,
+      "total_tokens": 52025,
+      "prompt_tokens": 8712,
+      "candidate_tokens": 17109,
+      "thoughts_tokens": 26204,
+      "grounded_runs": 11
+    }
+  },
+  "results": [
+    {
+      "fixture": {
+        "id": "F01",
+        "industry": "restaurant",
+        "input_type": "name_area",
+        "seed": "Pizza 4P's Ben Thanh Ho Chi Minh City",
+        "expected_behavior": "resolve",
+        "notes": "Known public restaurant branch; should resolve without inventing owner-only facts."
+      },
+      "option_b": {
+        "ok": true,
+        "latency_ms": 11259,
+        "usage": {
+          "promptTokenCount": 218,
+          "candidatesTokenCount": 1371,
+          "totalTokenCount": 2519,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 218
+            }
+          ],
+          "thoughtsTokenCount": 930,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "Pizza 4P's Ben Thanh",
+          "area_or_address": "8 Thủ Khoa Huân, Phường Bến Thành, Quận 1, Thành phố Hồ Chí Minh",
+          "category_guess": "Nhà hàng Pizza",
+          "match_confidence": "high",
+          "resolve_reason_vi": "Địa điểm được xác định chính xác dựa trên tên thương hiệu và vị trí đặc thù gần Chợ Bến Thành với dữ liệu số phong phú.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Ẩm thực Pizza thủ công & Phô mai tự sản xuất",
+              "example_query_vi": "Pizza 4P's có món nào ngon nhất?",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên các đánh giá phổ biến về món Pizza Burrata và phô mai tươi."
+            },
+            {
+              "label_vi": "Không gian kiến trúc và trải nghiệm khách hàng",
+              "example_query_vi": "Không gian Pizza 4P's Bến Thành có đẹp không?",
+              "relevance": "high",
+              "inference_notice_vi": "Chi nhánh này thường được nhắc đến với thiết kế nội thất đặc trưng và phong cách phục vụ Omotenashi."
+            },
+            {
+              "label_vi": "Phát triển bền vững và Farm-to-table",
+              "example_query_vi": "Pizza 4P's có sử dụng nguyên liệu sạch không?",
+              "relevance": "medium",
+              "inference_notice_vi": "Thương hiệu có định hướng bền vững rõ nét trên các kênh truyền thông chính thức."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "brand_presence",
+              "label_vi": "Sự hiện diện thương hiệu",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Pizza 4P's là thương hiệu có độ nhận diện rất cao trên các nền tảng tìm kiếm và mạng xã hội.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "location_context",
+              "label_vi": "Vị trí địa lý",
+              "status": "public_observation",
+              "customer_copy_vi": "Tọa lạc tại khu vực sầm uất gần Chợ Bến Thành, thuận tiện cho khách du lịch và dân văn phòng.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "popular_dishes",
+              "label_vi": "Món ăn đặc trưng",
+              "status": "public_observation",
+              "customer_copy_vi": "Các dòng Pizza phô mai Burrata và mì Ý cua là những món được khách hàng nhắc đến nhiều nhất.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "booking_status",
+              "label_vi": "Tình trạng đặt bàn",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Do lượng khách đông, nhà hàng thường xuyên trong tình trạng cần đặt trước để có chỗ ngồi ưng ý.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "parking_info",
+              "label_vi": "Tiện ích đỗ xe",
+              "status": "missing_signal",
+              "customer_copy_vi": "Thông tin về bãi đỗ xe ô tô riêng biệt tại chi nhánh này chưa được hiển thị rõ ràng trên các kênh công cộng.",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "service_style",
+              "label_vi": "Phong cách phục vụ",
+              "status": "public_observation",
+              "customer_copy_vi": "Được ghi nhận áp dụng tiêu chuẩn phục vụ tận tâm kiểu Nhật (Omotenashi).",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 88,
+            "evidence_confidence": "high",
+            "confidence_explanation_vi": "Điểm số cao nhờ sự nhất quán thông tin trên Google Maps, mạng xã hội và các trang review ẩm thực uy tín.",
+            "disclaimer_vi": "Điểm số này là đánh giá nội bộ của AI Passport dựa trên dữ liệu số hiện có, không thay thế cho xếp hạng chính thức của các nền tảng khác."
+          },
+          "gap_questions": [
+            "Nhà hàng có khu vực phòng riêng dành cho hội họp hoặc tiệc nhỏ không?",
+            "Chính sách hỗ trợ đỗ xe máy và ô tô cho khách hàng cụ thể như thế nào?",
+            "Hiện tại chi nhánh Bến Thành có các món đặc sản theo mùa (seasonal menu) nào mới không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Pizza thủ công tinh tế ngay trái tim Sài Gòn",
+            "summary_vi": "Chi nhánh Pizza 4P's Bến Thành nổi bật với không gian thiết kế ấn tượng, chuyên phục vụ các dòng Pizza thủ công và phô mai tươi tự sản xuất theo triết lý bền vững.",
+            "watermark_vi": "Dữ liệu được phân tích bởi Soi Gương AI"
+          },
+          "hallucination_guard_notes": [
+            "Không cung cấp số điện thoại hoặc link Zalo cá nhân.",
+            "Không đưa ra bảng giá chi tiết của thực đơn.",
+            "Không khẳng định về tình trạng chỗ trống trong thời gian thực.",
+            "Mọi thông tin về tiện ích đỗ xe đều được gắn nhãn cần xác nhận lại."
+          ]
+        },
+        "raw_text_excerpt": null
+      },
+      "option_a": {
+        "ok": true,
+        "latency_ms": 17051,
+        "usage": {
+          "promptTokenCount": 552,
+          "candidatesTokenCount": 1225,
+          "totalTokenCount": 4339,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 552
+            }
+          ],
+          "thoughtsTokenCount": 2562,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "Pizza 4P's Ben Thanh",
+          "area_or_address": "Khu vực Chợ Bến Thành, Thành phố Hồ Chí Minh",
+          "category_guess": "Nhà hàng pizza phong cách Ý-Nhật",
+          "match_confidence": "high",
+          "resolve_reason_vi": "Tên doanh nghiệp và vị trí được xác nhận nhất quán qua nhiều nguồn công khai, cho thấy đây là một địa điểm nổi bật và được biết đến rộng rãi.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Ẩm thực Ý-Nhật độc đáo",
+              "example_query_vi": "pizza 4p's ben thanh menu",
+              "relevance": "high",
+              "inference_notice_vi": "Được biết đến với sự kết hợp hương vị Ý và Nhật Bản."
+            },
+            {
+              "label_vi": "Vị trí đắc địa",
+              "example_query_vi": "pizza 4p's ben thanh gần chợ bến thành",
+              "relevance": "high",
+              "inference_notice_vi": "Nằm ngay cạnh và đối diện Chợ Bến Thành nổi tiếng."
+            },
+            {
+              "label_vi": "Dịch vụ và không gian cao cấp",
+              "example_query_vi": "pizza 4p's ben thanh review",
+              "relevance": "high",
+              "inference_notice_vi": "Nhà hàng trong biệt thự Pháp cổ, dịch vụ xuất sắc."
+            },
+            {
+              "label_vi": "Điểm đến phổ biến",
+              "example_query_vi": "pizza 4p's ben thanh đặt bàn",
+              "relevance": "medium",
+              "inference_notice_vi": "Là địa điểm ăn uống được cả người dân địa phương và du khách yêu thích."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "business_name",
+              "label_vi": "Tên doanh nghiệp",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Tên 'Pizza 4P's Ben Thanh' được nhắc đến nhất quán trên nhiều nguồn.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "location_proximity",
+              "label_vi": "Vị trí",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Nằm ở Thành phố Hồ Chí Minh, ngay cạnh và đối diện Chợ Bến Thành.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "cuisine_type",
+              "label_vi": "Loại hình ẩm thực",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Nhà hàng pizza với phong cách ẩm thực Ý-Nhật kết hợp.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "service_quality",
+              "label_vi": "Chất lượng dịch vụ",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Được biết đến với dịch vụ đặc biệt, nhân viên chu đáo và am hiểu.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "popularity_recommendation",
+              "label_vi": "Mức độ phổ biến",
+              "status": "public_observation",
+              "customer_copy_vi": "Là điểm ăn uống được khuyến nghị cao và phổ biến cho cả người dân địa phương và du khách.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "price_point",
+              "label_vi": "Mức giá",
+              "status": "public_observation",
+              "customer_copy_vi": "Mức giá được ghi nhận là ở phân khúc cao hơn.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "exact_address",
+              "label_vi": "Địa chỉ chính xác",
+              "status": "missing_signal",
+              "customer_copy_vi": "Địa chỉ đường phố cụ thể chưa được cung cấp rõ ràng trong các tín hiệu công khai.",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "operating_hours",
+              "label_vi": "Giờ hoạt động",
+              "status": "missing_signal",
+              "customer_copy_vi": "Thông tin về giờ mở cửa cụ thể chưa có trong các tín hiệu công khai.",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 90,
+            "evidence_confidence": "high",
+            "confidence_explanation_vi": "Điểm số cao dựa trên sự nhất quán của tên doanh nghiệp, vị trí và loại hình kinh doanh được xác nhận từ nhiều nguồn đáng tin cậy. Các tín hiệu công khai mạnh mẽ hỗ trợ việc nhận diện doanh nghiệp này.",
+            "disclaimer_vi": "Điểm số này là đánh giá nội bộ của AI Passport về mức độ rõ ràng và đầy đủ của thông tin công khai, không phải điểm xếp hạng chính thức từ Google hay bất kỳ nền tảng AI nào khác."
+          },
+          "gap_questions": [
+            "Địa chỉ đường phố chính xác của chi nhánh Pizza 4P's Bến Thành là gì?",
+            "Giờ hoạt động hiện tại của chi nhánh này là bao nhiêu?",
+            "Có số điện thoại liên hệ trực tiếp để đặt bàn hoặc hỏi thông tin không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Trải nghiệm Pizza Ý-Nhật độc đáo giữa lòng Sài Gòn.",
+            "summary_vi": "Pizza 4P's Bến Thành là nhà hàng pizza Ý-Nhật nổi tiếng, tọa lạc tại một biệt thự Pháp cổ gần Chợ Bến Thành. Nơi đây được đánh giá cao về dịch vụ và không gian, là điểm đến lý tưởng cho thực khách tìm kiếm trải nghiệm ẩm thực cao cấp.",
+            "watermark_vi": "AI Passport - Soi Gương AI"
+          },
+          "hallucination_guard_notes": [
+            "Đảm bảo không bịa đặt thông tin về số điện thoại, Zalo, giá cả, menu, giờ mở cửa, chứng nhận, chỗ đậu xe hoặc quyền hình ảnh.",
+            "Chỉ sử dụng dữ kiện từ 'Discovery notes' và 'Pass 1 normalize'.",
+            "Tách biệt rõ ràng các loại trạng thái tín hiệu (confirmed_fact, public_observation, missing_signal).",
+            "Không hứa hẹn tăng doanh số, lên top Google hay AI chắc chắn nhắc tên business."
+          ]
+        },
+        "raw_text_excerpt": null,
+        "discovery_ok": true,
+        "discovery_latency_ms": 8184,
+        "discovery_usage": {
+          "promptTokenCount": 239,
+          "candidatesTokenCount": 355,
+          "totalTokenCount": 2159,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 239
+            }
+          ],
+          "toolUsePromptTokenCount": 547,
+          "toolUsePromptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 547
+            }
+          ],
+          "thoughtsTokenCount": 1018,
+          "serviceTier": "standard"
+        },
+        "discovery_grounding_count": 7,
+        "discovery_excerpt": "- **candidate(s):** Pizza 4P's Ben Thanh, Ho Chi Minh City. Category: Italian-Japanese fusion pizza restaurant.\n- **evidence signals:**\n    - **confirmed_fact:** The business name \"Pizza 4P's Ben Thanh\" is consistently mentioned across multiple sources. It is located in Ho Chi Minh City, Vietnam, specifically described as being right next to and opposite the famous Ben Thanh Market. The restaurant is housed in a three-level, colonial-style building, a former French villa, with an industrial or classic-yet-modern interior design. It is known for exceptional service with attentive, knowledgeable staff and a variety of pizzas and pastas, including house-made cheeses from their own farms.\n    - **public_observation:** It is a highly recommended and popular dining spot for both locals and travelers, often considered a premium Italian-style cuisine experience in Saigon. The price point is note",
+        "total_latency_ms": 25235
+      }
+    },
+    {
+      "fixture": {
+        "id": "F02",
+        "industry": "restaurant",
+        "input_type": "name_area",
+        "seed": "Quán Bụi Original Ngô Văn Năm Quận 1",
+        "expected_behavior": "resolve",
+        "notes": "Vietnamese restaurant with public footprint and branch-specific address signals."
+      },
+      "option_b": {
+        "ok": true,
+        "latency_ms": 10287,
+        "usage": {
+          "promptTokenCount": 219,
+          "candidatesTokenCount": 1435,
+          "totalTokenCount": 2372,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 219
+            }
+          ],
+          "thoughtsTokenCount": 718,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "Quán Bụi - Original (Ngô Văn Năm)",
+          "area_or_address": "19 Ngô Văn Năm, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh",
+          "category_guess": "Nhà hàng món ăn Việt Nam",
+          "match_confidence": "high",
+          "resolve_reason_vi": "Xác định chính xác địa điểm dựa trên tên thương hiệu 'Quán Bụi Original' và địa chỉ cụ thể tại đường Ngô Văn Năm, Quận 1. Đây là cơ sở đầu tiên và nổi tiếng nhất của hệ thống Quán Bụi.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Ẩm thực truyền thống ba miền",
+              "example_query_vi": "Thực đơn món Việt thuần túy tại Quán Bụi Ngô Văn Năm",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên các đánh giá công khai về phong cách chế biến không sử dụng bột ngọt và giữ hương vị nguyên bản."
+            },
+            {
+              "label_vi": "Không gian Indochine hoài cổ",
+              "example_query_vi": "Nhà hàng có không gian đẹp để tiếp khách tại Quận 1",
+              "relevance": "high",
+              "inference_notice_vi": "Quan sát từ hình ảnh thực tế và phản hồi của khách hàng về thiết kế nội thất đặc trưng."
+            },
+            {
+              "label_vi": "Điểm đến cho khách quốc tế và ngoại giao",
+              "example_query_vi": "Nhà hàng món Việt sang trọng cho người nước ngoài tại Sài Gòn",
+              "relevance": "medium",
+              "inference_notice_vi": "Suy luận từ vị trí đắc địa và tần suất xuất hiện trên các trang du lịch quốc tế như TripAdvisor."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "brand_identity",
+              "label_vi": "Nhận diện thương hiệu",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Thương hiệu Quán Bụi đã khẳng định được vị thế với phong cách 'cơm nhà' cao cấp.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "location_advantage",
+              "label_vi": "Vị trí địa lý",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Tọa lạc tại khu vực Ngô Văn Năm sầm uất, thuận tiện cho việc di chuyển và tiếp khách tại trung tâm Quận 1.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "service_style",
+              "label_vi": "Phong cách phục vụ",
+              "status": "public_observation",
+              "customer_copy_vi": "Được đánh giá cao về sự chuyên nghiệp, phù hợp cho cả bữa ăn gia đình và gặp gỡ đối tác.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "parking_availability",
+              "label_vi": "Tiện ích đỗ xe",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Khu vực trung tâm có thể hạn chế chỗ đỗ xe ô tô trực tiếp; cần xác nhận vị trí bãi đỗ gần nhất.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "seasonal_menu",
+              "label_vi": "Thực đơn theo mùa",
+              "status": "missing_signal",
+              "customer_copy_vi": "Chưa có thông tin cập nhật về các món đặc sản theo mùa hoặc chương trình ưu đãi hiện tại.",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "private_room_capacity",
+              "label_vi": "Sức chứa phòng riêng",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Có không gian phòng riêng nhưng cần xác nhận số lượng khách tối đa để đảm bảo tính riêng tư.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 88,
+            "evidence_confidence": "high",
+            "confidence_explanation_vi": "Điểm số cao nhờ sự hiện diện mạnh mẽ trên các nền tảng số, lượng đánh giá thực tế lớn và thông tin địa điểm nhất quán.",
+            "disclaimer_vi": "Chỉ số này phản ánh mức độ sẵn sàng của dữ liệu trên môi trường số theo tiêu chuẩn AI Passport, không thay thế cho xếp hạng chuyên môn của các nền tảng ẩm thực."
+          },
+          "gap_questions": [
+            "Nhà hàng có hỗ trợ xuất hóa đơn điện tử VAT ngay trong ngày không?",
+            "Số lượng phòng riêng tối đa và sức chứa mỗi phòng là bao nhiêu khách?",
+            "Quán có chính sách hỗ trợ phí gửi xe ô tô cho khách hàng không?",
+            "Thực đơn hiện tại có các tùy chọn món chay đặc sắc nào không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Quán Bụi Original: Tinh hoa cơm nhà Việt giữa lòng Quận 1",
+            "summary_vi": "Một không gian ẩm thực đậm chất Indochine, nơi những món ăn dân dã được nâng tầm thành trải nghiệm cao cấp, thu hút cả thực khách địa phương lẫn quốc tế.",
+            "watermark_vi": "Dữ liệu được chuẩn hóa bởi AI Passport"
+          },
+          "hallucination_guard_notes": [
+            "Không hiển thị số điện thoại hoặc Zalo cá nhân để tránh sai sót dữ liệu.",
+            "Thông tin về bãi đỗ xe và phòng riêng được gắn nhãn cần xác nhận lại với chủ cơ sở.",
+            "Giá cả và thực đơn chi tiết không được liệt kê để đảm bảo tính cập nhật."
+          ]
+        },
+        "raw_text_excerpt": null
+      },
+      "option_a": {
+        "ok": true,
+        "latency_ms": 17466,
+        "usage": {
+          "promptTokenCount": 697,
+          "candidatesTokenCount": 1692,
+          "totalTokenCount": 4586,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 697
+            }
+          ],
+          "thoughtsTokenCount": 2197,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "Quán Bụi Original",
+          "area_or_address": "19 Ngô Văn Năm, Phường Bến Nghé, Quận 1, TP.HCM",
+          "category_guess": "Nhà hàng Món Việt",
+          "match_confidence": "high",
+          "resolve_reason_vi": "Thông tin khớp chính xác với 'Quán Bụi Original' tại địa chỉ 19 Ngô Văn Năm, Quận 1. Mặc dù có một số nguồn nhắc đến địa chỉ 17 Ngô Văn Năm, nhưng 19 Ngô Văn Năm là địa chỉ được xác nhận rộng rãi. Tên 'Original' giúp phân biệt rõ ràng với các chi nhánh khác.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Ẩm thực Việt truyền thống",
+              "example_query_vi": "món ăn ba miền quán bụi original",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên mô tả về nhà hàng phục vụ ẩm thực Việt truyền thống từ ba miền."
+            },
+            {
+              "label_vi": "Không gian Indochine",
+              "example_query_vi": "thiết kế quán bụi original",
+              "relevance": "medium",
+              "inference_notice_vi": "Dựa trên mô tả về không gian mang phong cách Indochine."
+            },
+            {
+              "label_vi": "Nhà hàng lâu đời",
+              "example_query_vi": "lịch sử quán bụi original",
+              "relevance": "medium",
+              "inference_notice_vi": "Dựa trên thông tin là chi nhánh đầu tiên của chuỗi Quán Bụi Group đã hoạt động hơn 15 năm."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "address_19_ngovan_nam",
+              "label_vi": "Địa chỉ chính xác",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Quán Bụi Original tọa lạc tại 19 Ngô Văn Năm, Phường Bến Nghé, Quận 1, TP.HCM.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "cuisine_type",
+              "label_vi": "Loại hình ẩm thực",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Nhà hàng chuyên phục vụ các món ăn truyền thống Việt Nam từ ba miền.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "ambiance_style",
+              "label_vi": "Phong cách không gian",
+              "status": "public_observation",
+              "customer_copy_vi": "Không gian nhà hàng được thiết kế theo phong cách Indochine.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "operating_hours",
+              "label_vi": "Giờ hoạt động",
+              "status": "public_observation",
+              "customer_copy_vi": "Quán mở cửa hàng ngày từ 07:00 đến 23:00.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "contact_number",
+              "label_vi": "Số điện thoại liên hệ",
+              "status": "public_observation",
+              "customer_copy_vi": "Số điện thoại liên hệ của quán là 02838291515.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "price_range",
+              "label_vi": "Khoảng giá",
+              "status": "public_observation",
+              "customer_copy_vi": "Mức giá trung bình cho mỗi người dao động từ 250.000 - 350.000 VNĐ.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "address_conflict",
+              "label_vi": "Xung đột địa chỉ nhỏ",
+              "status": "conflict",
+              "customer_copy_vi": "Một số nguồn thông tin có thể đề cập địa chỉ 17 Ngô Văn Năm, trong khi đa số xác nhận là 19 Ngô Văn Năm.",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "missing_zalo_account",
+              "label_vi": "Thiếu thông tin Zalo",
+              "status": "missing_signal",
+              "customer_copy_vi": "Hiện chưa tìm thấy thông tin về tài khoản Zalo chính thức của doanh nghiệp.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 88,
+            "evidence_confidence": "high",
+            "confidence_explanation_vi": "Điểm số cao do có nhiều tín hiệu xác nhận về địa chỉ, loại hình kinh doanh và các thông tin cơ bản khác. Mặc dù có một điểm xung đột nhỏ về địa chỉ, nhưng thông tin chính vẫn rất rõ ràng.",
+            "disclaimer_vi": "Điểm số này là đánh giá nội bộ của AI Passport về mức độ đầy đủ và rõ ràng của dữ liệu công khai, không phải xếp hạng chính thức từ Google hay các nền tảng AI khác."
+          },
+          "gap_questions": [
+            "Vui lòng xác nhận địa chỉ chính xác của 'Quán Bụi Original' là 19 Ngô Văn Năm hay 17 Ngô Văn Năm?",
+            "Quán Bụi Original có những món ăn đặc trưng hoặc điểm nhấn độc đáo nào để phân biệt với các chi nhánh khác, đặc biệt là Quán Bụi Central cùng đường?",
+            "Quán có tài khoản Zalo Business chính thức không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Hương vị Việt truyền thống trong không gian Indochine.",
+            "summary_vi": "Quán Bụi Original tại 19 Ngô Văn Năm là chi nhánh đầu tiên của chuỗi Quán Bụi, nổi tiếng với ẩm thực Việt ba miền và không gian mang phong cách Indochine cổ điển.",
+            "watermark_vi": "Thông tin được tổng hợp từ dữ liệu công khai và có thể cần xác nhận từ chủ doanh nghiệp."
+          },
+          "hallucination_guard_notes": [
+            "Đảm bảo tuân thủ schema JSON và các ràng buộc về kiểu dữ liệu.",
+            "Không thêm thông tin ngoài 'Discovery notes từ pass 1'.",
+            "Không đưa ra các cam kết về doanh số, thứ hạng tìm kiếm hoặc việc AI nhắc tên.",
+            "Phân loại rõ ràng các tín hiệu thành confirmed_fact, public_observation, inference_needs_confirmation, missing_signal, conflict.",
+            "Tránh bịa đặt thông tin như số điện thoại, Zalo, giá, menu, giờ mở cửa, chứng nhận, chỗ đậu xe hoặc quyền hình ảnh."
+          ]
+        },
+        "raw_text_excerpt": null,
+        "discovery_ok": true,
+        "discovery_latency_ms": 9154,
+        "discovery_usage": {
+          "promptTokenCount": 240,
+          "candidatesTokenCount": 500,
+          "totalTokenCount": 2368,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 240
+            }
+          ],
+          "toolUsePromptTokenCount": 554,
+          "toolUsePromptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 554
+            }
+          ],
+          "thoughtsTokenCount": 1074,
+          "serviceTier": "standard"
+        },
+        "discovery_grounding_count": 11,
+        "discovery_excerpt": "- **candidate(s):** Quán Bụi Original, 19 Ngô Văn Năm, Phường Bến Nghé, Quận 1, TP.HCM. Category: Vietnamese Restaurant (Món Việt).\n\n- **evidence signals:**\n    - Confirmed address: 19 Ngô Văn Năm, P. Bến Nghé, Q.1, TP.HCM.\n    - Business type: Restaurant serving traditional Vietnamese cuisine from three regions, with an Indochine-style ambiance.\n    - Operating hours: 07:00 – 23:00 daily.\n    - Contact number: 02838291515.\n    - Price range: 250,000 - 350,000 đ/person.\n    - Part of Quán Bụi Group, established over 15 years with 8 branches, and \"Original\" is the first restaurant.\n    - Services include reservations, catering, delivery, and amenities like AC, WiFi, VAT invoice, and parking.\n\n- **uncertainty:** The existence of \"Quán Bụi Central\" at 1B Ngô Văn Năm, also in Quận 1, could lead to confusion if \"Original\" was not specified.\n\n- **missing/conflicting signals:**\n    - **Missing:",
+        "total_latency_ms": 26620
+      }
+    },
+    {
+      "fixture": {
+        "id": "F03",
+        "industry": "restaurant",
+        "input_type": "thin_footprint",
+        "seed": "Quán Đồng Quê Ven Kênh Nhà Bè món đồng quê chỗ đậu xe",
+        "expected_behavior": "insufficient_or_low_confidence",
+        "notes": "Project demo-like seed; must not hallucinate critical contact/menu facts."
+      },
+      "option_b": {
+        "ok": true,
+        "latency_ms": 13176,
+        "usage": {
+          "promptTokenCount": 223,
+          "candidatesTokenCount": 1381,
+          "totalTokenCount": 2721,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 223
+            }
+          ],
+          "thoughtsTokenCount": 1117,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "Quán Đồng Quê (Khu vực Nhà Bè)",
+          "area_or_address": "Huyện Nhà Bè, TP. Hồ Chí Minh",
+          "category_guess": "Nhà hàng ẩm thực đồng quê",
+          "match_confidence": "medium",
+          "resolve_reason_vi": "Hệ thống tìm thấy một số địa điểm có tên 'Đồng Quê' tại khu vực Nhà Bè (đặc biệt là trục đường Lê Văn Lương và Phước Kiển) có đặc điểm ven kênh và không gian rộng. Tuy nhiên, do tên gọi phổ biến, cần xác định địa chỉ chính xác để tách biệt với các hộ kinh doanh cùng tên.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Ẩm thực dân dã Nam Bộ",
+              "example_query_vi": "Quán ăn món đồng quê ngon ở Nhà Bè",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên tên gọi và mô tả của khách hàng về các món ăn đặc sản địa phương."
+            },
+            {
+              "label_vi": "Không gian ven sông/kênh",
+              "example_query_vi": "Nhà hàng có view sông thoáng mát Nhà Bè",
+              "relevance": "high",
+              "inference_notice_vi": "Phù hợp với đặc điểm địa lý ven kênh rạch đặc trưng của khu vực Nhà Bè."
+            },
+            {
+              "label_vi": "Tiện ích bãi đỗ xe",
+              "example_query_vi": "Quán ăn có chỗ đậu xe ô tô tại Nhà Bè",
+              "relevance": "medium",
+              "inference_notice_vi": "Khách hàng có đề cập đến nhu cầu đỗ xe, thường xuất hiện tại các quán có diện tích rộng ven kênh."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "business_name_match",
+              "label_vi": "Tên thương hiệu",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Tên quán 'Đồng Quê' khớp với các dữ liệu phổ biến tại địa phương.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "location_context",
+              "label_vi": "Vị trí địa lý",
+              "status": "public_observation",
+              "customer_copy_vi": "Nằm trong khu vực có nhiều kênh rạch tại Nhà Bè, phù hợp với mô tả 'ven kênh'.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "parking_availability",
+              "label_vi": "Tiện ích đỗ xe",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Cần xác nhận quy mô bãi xe có thể chứa được ô tô hay chỉ xe máy theo yêu cầu của bạn.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "menu_specialty",
+              "label_vi": "Đặc trưng thực đơn",
+              "status": "public_observation",
+              "customer_copy_vi": "Các nền tảng trực tuyến ghi nhận phong cách phục vụ món ăn dân dã, miền Tây.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "opening_hours",
+              "label_vi": "Giờ hoạt động",
+              "status": "missing_signal",
+              "customer_copy_vi": "Chưa có dữ liệu chính xác về khung giờ mở cửa hàng ngày.",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "contact_info",
+              "label_vi": "Thông tin liên hệ",
+              "status": "missing_signal",
+              "customer_copy_vi": "Thiếu số điện thoại chính thức để khách hàng đặt bàn trước.",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 55,
+            "evidence_confidence": "medium",
+            "confidence_explanation_vi": "Điểm số phản ánh việc quán có sự hiện diện trên bản đồ số nhưng thông tin chi tiết về tiện ích (bãi xe) và thực đơn cụ thể chưa được đồng bộ hóa đầy đủ.",
+            "disclaimer_vi": "Đây là đánh giá dựa trên dữ liệu công khai tại thời điểm tra cứu, không thay thế cho xác thực chính thức từ chủ sở hữu."
+          },
+          "gap_questions": [
+            "Địa chỉ chính xác của quán là số bao nhiêu, đường nào ở Nhà Bè?",
+            "Bãi đậu xe của quán có thể chứa tối đa bao nhiêu xe ô tô cùng lúc?",
+            "Quán có các món ăn đặc sản (signature) nào cụ thể mà bạn muốn AI nhấn mạnh không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Thưởng thức vị quê giữa không gian ven kênh thoáng đãng",
+            "summary_vi": "Quán Đồng Quê tại Nhà Bè mang đến trải nghiệm ẩm thực dân dã trong không gian gần gũi thiên nhiên, đáp ứng nhu cầu tìm kiếm địa điểm ăn uống có chỗ đậu xe cho nhóm gia đình và bạn bè.",
+            "watermark_vi": "Dữ liệu được phân tích bởi Soi Gương AI"
+          },
+          "hallucination_guard_notes": [
+            "Không tự ý gán số điện thoại hoặc Zalo nếu không có nguồn xác thực.",
+            "Không khẳng định bãi đậu xe là miễn phí hay có bảo vệ.",
+            "Tránh liệt kê danh mục món ăn cụ thể nếu chưa có menu chính thức."
+          ]
+        },
+        "raw_text_excerpt": null
+      },
+      "option_a": {
+        "ok": true,
+        "latency_ms": 11855,
+        "usage": {
+          "promptTokenCount": 1080,
+          "candidatesTokenCount": 1056,
+          "totalTokenCount": 3694,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1080
+            }
+          ],
+          "thoughtsTokenCount": 1558,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "disambiguation",
+          "business_name": "Quán Đồng Quê Ven Kênh Nhà Bè",
+          "area_or_address": "Huyện Nhà Bè, TP. Hồ Chí Minh",
+          "category_guess": "Ẩm thực đồng quê",
+          "match_confidence": "low",
+          "resolve_reason_vi": "Tên 'Quán Đồng Quê Ven Kênh Nhà Bè' là một cụm từ mô tả chung, không phải tên riêng của một doanh nghiệp cụ thể, dẫn đến nhiều quán ăn tiềm năng phù hợp với mô tả này trong khu vực Nhà Bè.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Món đồng quê",
+              "example_query_vi": "quán ăn đồng quê ngon Nhà Bè",
+              "relevance": "high",
+              "inference_notice_vi": "Nhiều quán ăn tại Nhà Bè được tìm thấy chuyên về các món ăn đồng quê."
+            },
+            {
+              "label_vi": "Vị trí ven kênh/sông",
+              "example_query_vi": "quán ăn ven sông Nhà Bè",
+              "relevance": "medium",
+              "inference_notice_vi": "Một số quán có không gian 'ven sông' hoặc 'sân vườn' phù hợp với mô tả 'ven kênh'."
+            },
+            {
+              "label_vi": "Chỗ đậu xe",
+              "example_query_vi": "quán có chỗ đậu xe Nhà Bè",
+              "relevance": "medium",
+              "inference_notice_vi": "Sự hiện diện của 'sân vườn' hoặc 'không gian rộng rãi' gợi ý khả năng có chỗ đậu xe, nhưng cần xác nhận."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "countryside_dishes_availability",
+              "label_vi": "Có món đồng quê",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Nhiều quán ăn tại Huyện Nhà Bè chuyên phục vụ các món ăn đồng quê, đáp ứng yêu cầu của bạn.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "riverside_location_match",
+              "label_vi": "Vị trí ven sông/kênh",
+              "status": "public_observation",
+              "customer_copy_vi": "Một số quán có không gian 'ven sông' hoặc 'sân vườn', rất phù hợp với mô tả 'ven kênh' trong yêu cầu của bạn.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "parking_availability",
+              "label_vi": "Chỗ đậu xe",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Các quán có không gian sân vườn hoặc rộng rãi thường có chỗ đậu xe, nhưng thông tin cụ thể về chỗ đậu xe riêng cần được xác nhận thêm.",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "unique_business_name",
+              "label_vi": "Tên quán cụ thể",
+              "status": "missing_signal",
+              "customer_copy_vi": "Tên 'Quán Đồng Quê Ven Kênh Nhà Bè' có vẻ là mô tả chung, không phải tên riêng của một quán cụ thể, nên chúng tôi không thể xác định một doanh nghiệp duy nhất.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "multiple_candidates",
+              "label_vi": "Nhiều lựa chọn phù hợp",
+              "status": "conflict",
+              "customer_copy_vi": "Có nhiều quán ăn ở Nhà Bè phù hợp với mô tả 'món đồng quê' và 'ven kênh/sông', gây khó khăn trong việc xác định quán bạn đang tìm kiếm.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 35,
+            "evidence_confidence": "low",
+            "confidence_explanation_vi": "Thông tin tìm kiếm cho thấy nhiều quán ăn tại Nhà Bè có đặc điểm tương tự, khiến việc xác định một quán cụ thể trở nên khó khăn.",
+            "disclaimer_vi": "Điểm số này là đánh giá nội bộ của AI Passport về mức độ rõ ràng của thông tin công khai, không phải xếp hạng chính thức từ các nền tảng khác."
+          },
+          "gap_questions": [
+            "Tên chính xác của quán là gì?",
+            "Quán có chỗ đậu xe ô tô/xe máy riêng không?",
+            "Quán có nằm cạnh kênh/sông cụ thể nào không?",
+            "Quán chuyên về những món đồng quê đặc trưng nào?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Nhiều lựa chọn ẩm thực đồng quê tại Nhà Bè.",
+            "summary_vi": "Khu vực Nhà Bè có nhiều quán ăn phục vụ món đồng quê với không gian sân vườn hoặc ven sông, nhưng tên quán cụ thể cần được xác định rõ hơn.",
+            "watermark_vi": "Dữ liệu được tổng hợp từ thông tin công khai."
+          },
+          "hallucination_guard_notes": [
+            "Không bịa tên quán cụ thể khi có nhiều ứng viên phù hợp với mô tả chung.",
+            "Không khẳng định có chỗ đậu xe khi thông tin chỉ là suy luận từ 'sân vườn' hoặc 'không gian rộng rãi'.",
+            "Không bịa tên kênh/sông cụ thể nếu chỉ có thông tin 'ven sông' chung chung.",
+            "Không hứa hẹn về việc tăng doanh số hay thứ hạng tìm kiếm trên Google."
+          ]
+        },
+        "raw_text_excerpt": null,
+        "discovery_ok": true,
+        "discovery_latency_ms": 14593,
+        "discovery_usage": {
+          "promptTokenCount": 244,
+          "candidatesTokenCount": 927,
+          "totalTokenCount": 3583,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 244
+            }
+          ],
+          "toolUsePromptTokenCount": 626,
+          "toolUsePromptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 626
+            }
+          ],
+          "thoughtsTokenCount": 1786,
+          "serviceTier": "standard"
+        },
+        "discovery_grounding_count": 0,
+        "discovery_excerpt": "Here's the Pass 1 discovery for \"Quán Đồng Quê Ven Kênh Nhà Bè món đồng quê chỗ đậu xe\":\n\n*   **candidate(s), area/address/category nếu thấy:**\n    *   **Nhà Bè Garden:** Huyện Nhà Bè, TP. Hồ Chí Minh. Category: Ẩm thực đồng quê ven sông. [cite: 2 (search 1), 2 (search 2)]\n    *   **Ẩm Thực Sân Vườn Hương Quê Nhà Bè:** 190B Lê Văn Lương, Nhà Bè, TP. HCM. Category: Quán ăn đồng quê, ẩm thực sân vườn. [cite: 3 (search 1), 3 (search 2), 5 (search 2)]\n    *   **Đồng Giao Quán - Món Đồng Quê & Hải Sản:** 915 Lê Văn Lương, Xã Phước Kiển, Huyện Nhà Bè, TP. HCM. Category: Quán nhậu, món đồng quê & hải sản. [cite: 1 (search 1), 4 (search 1)]\n    *   **Nhà hàng Thằng Bờm:** 105A Đ. Lê Thị Kỉnh, Phước Kiển, Nhà Bè, TP. Hồ Chí Minh. Category: Nhà hàng, đặc sản đồng quê, hải sản. [cite: 2 (search 2)]\n\n*   **evidence signals và uncertainty:**\n    *   `confirmed_fact`: Several establishments in Huyện N",
+        "total_latency_ms": 26448
+      }
+    },
+    {
+      "fixture": {
+        "id": "F04",
+        "industry": "cafe",
+        "input_type": "name_area",
+        "seed": "The Coffee House Cao Thắng Quận 3",
+        "expected_behavior": "resolve_or_disambiguate",
+        "notes": "Chain cafe; branch ambiguity should be handled cautiously."
+      },
+      "option_b": {
+        "ok": true,
+        "latency_ms": 11252,
+        "usage": {
+          "promptTokenCount": 215,
+          "candidatesTokenCount": 1328,
+          "totalTokenCount": 2510,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 215
+            }
+          ],
+          "thoughtsTokenCount": 967,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "The Coffee House - Cao Thắng",
+          "area_or_address": "19 Cao Thắng, Phường 2, Quận 3, TP. Hồ Chí Minh",
+          "category_guess": "Quán cà phê",
+          "match_confidence": "high",
+          "resolve_reason_vi": "Xác định chính xác chi nhánh thuộc chuỗi The Coffee House tại địa chỉ 19 Cao Thắng dựa trên dữ liệu bản đồ và nhận diện thương hiệu phổ biến.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Không gian làm việc và học tập",
+              "example_query_vi": "quán cà phê yên tĩnh làm việc quận 3",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên phong cách thiết kế chung của chuỗi, chi nhánh này thường được khách hàng lựa chọn để làm việc."
+            },
+            {
+              "label_vi": "Thức uống đặc trưng và xu hướng",
+              "example_query_vi": "trà đào cam sả the coffee house cao thắng",
+              "relevance": "high",
+              "inference_notice_vi": "Các món signature của chuỗi luôn có mặt, nhưng tính sẵn có của menu theo mùa cần xác nhận."
+            },
+            {
+              "label_vi": "Địa điểm gặp gỡ trung tâm",
+              "example_query_vi": "hẹn hò cà phê quận 3",
+              "relevance": "medium",
+              "inference_notice_vi": "Vị trí đắc địa tại Cao Thắng khiến đây là điểm hẹn phổ biến, tuy nhiên độ ồn có thể thay đổi tùy thời điểm."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "brand_consistency",
+              "label_vi": "Nhận diện thương hiệu",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Chi nhánh vận hành theo tiêu chuẩn nhận diện của hệ thống The Coffee House toàn quốc.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "location_footprint",
+              "label_vi": "Vị trí địa lý",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Nằm trên trục đường Cao Thắng sầm uất, dễ dàng tiếp cận từ nhiều hướng tại Quận 3.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "amenities_wifi",
+              "label_vi": "Tiện ích Wifi",
+              "status": "public_observation",
+              "customer_copy_vi": "Cung cấp kết nối internet miễn phí cho khách hàng sử dụng tại chỗ.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "parking_capacity",
+              "label_vi": "Khu vực gửi xe",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Có khu vực để xe máy phía trước, tuy nhiên khả năng đáp ứng cho ô tô cần được xác nhận lại.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "peak_hour_crowd",
+              "label_vi": "Mật độ khách hàng",
+              "status": "public_observation",
+              "customer_copy_vi": "Thường đông khách vào khung giờ tối và các ngày cuối tuần.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "digital_ordering",
+              "label_vi": "Đặt hàng trực tuyến",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Hỗ trợ đặt món qua ứng dụng The Coffee House và các nền tảng giao hàng phổ biến.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 88,
+            "evidence_confidence": "high",
+            "confidence_explanation_vi": "Điểm số cao nhờ vào sự hiện diện mạnh mẽ của thương hiệu mẹ và dữ liệu vị trí đồng nhất trên nhiều nền tảng số.",
+            "disclaimer_vi": "Điểm số này phản ánh mức độ sẵn sàng của dữ liệu trên hệ thống AI Passport, không thay thế cho đánh giá từ Google Maps."
+          },
+          "gap_questions": [
+            "Chi nhánh có khu vực phòng họp riêng hoặc không gian tách biệt cho nhóm đông người không?",
+            "Tình trạng bãi đỗ xe ô tô gần nhất có thuận tiện cho khách hàng không?",
+            "Cửa hàng có áp dụng các chương trình ưu đãi đặc thù cho cư dân hoặc nhân viên văn phòng khu vực Cao Thắng không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Không gian cà phê hiện đại giữa lòng Quận 3",
+            "summary_vi": "Chi nhánh The Coffee House Cao Thắng là điểm đến lý tưởng cho nhu cầu làm việc và gặp gỡ, với dịch vụ chuyên nghiệp và menu đa dạng theo tiêu chuẩn chuỗi.",
+            "watermark_vi": "Phân tích bởi AI Passport"
+          },
+          "hallucination_guard_notes": [
+            "Không cung cấp số điện thoại cá nhân của quản lý chi nhánh.",
+            "Không cam kết về tình trạng còn bàn trống tại các thời điểm cụ thể.",
+            "Cần xác nhận lại giờ mở cửa chính xác nếu có thay đổi theo quy định của tòa nhà hoặc khu vực."
+          ]
+        },
+        "raw_text_excerpt": null
+      },
+      "option_a": {
+        "ok": true,
+        "latency_ms": 18605,
+        "usage": {
+          "promptTokenCount": 829,
+          "candidatesTokenCount": 1297,
+          "totalTokenCount": 5195,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 829
+            }
+          ],
+          "thoughtsTokenCount": 3069,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "The Coffee House",
+          "area_or_address": "86-88 Cao Thắng, Phường 4, Quận 3, Thành phố Hồ Chí Minh",
+          "category_guess": "Quán cà phê",
+          "match_confidence": "high",
+          "resolve_reason_vi": "Địa chỉ cụ thể 86-88 Cao Thắng, Phường 4, Quận 3, Thành phố Hồ Chí Minh đã được xác nhận khớp với truy vấn.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Trải nghiệm không gian",
+              "example_query_vi": "Không gian The Coffee House Cao Thắng có gì đặc biệt?",
+              "relevance": "high",
+              "inference_notice_vi": "Thông tin được suy luận từ các đánh giá và mô tả công khai."
+            },
+            {
+              "label_vi": "Chất lượng sản phẩm",
+              "example_query_vi": "Cà phê và đồ uống ở The Coffee House Cao Thắng như thế nào?",
+              "relevance": "high",
+              "inference_notice_vi": "Thông tin được suy luận từ các đánh giá và mô tả công khai."
+            },
+            {
+              "label_vi": "Dịch vụ khách hàng",
+              "example_query_vi": "Nhân viên The Coffee House Cao Thắng có thân thiện không?",
+              "relevance": "high",
+              "inference_notice_vi": "Thông tin được suy luận từ các đánh giá và mô tả công khai."
+            },
+            {
+              "label_vi": "Tiện ích bổ sung",
+              "example_query_vi": "The Coffee House Cao Thắng có chỗ đậu xe không?",
+              "relevance": "high",
+              "inference_notice_vi": "Thông tin được suy luận từ các đánh giá và mô tả công khai."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "Địa chỉ",
+              "label_vi": "Địa chỉ kinh doanh",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "The Coffee House tọa lạc tại 86-88 Cao Thắng, Phường 4, Quận 3, Thành phố Hồ Chí Minh.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "Website",
+              "label_vi": "Website chính thức",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Bạn có thể tìm hiểu thêm thông tin tại website chính thức: http://www.thecoffeehouse.com/.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "Không gian quán",
+              "label_vi": "Không gian và thiết kế",
+              "status": "public_observation",
+              "customer_copy_vi": "Quán có không gian đẹp, ánh sáng dịu nhẹ, ban công nhìn ra đường và thiết kế độc đáo lấy cảm hứng từ bãi biển với cát trắng trên sàn.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "Chất lượng sản phẩm",
+              "label_vi": "Cà phê và đồ uống",
+              "status": "public_observation",
+              "customer_copy_vi": "Quán nổi tiếng với cà phê đậm đà, menu đa dạng và đồ ăn thức uống ổn định, trình bày đẹp mắt.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "Dịch vụ khách hàng",
+              "label_vi": "Thái độ phục vụ",
+              "status": "public_observation",
+              "customer_copy_vi": "Dịch vụ được đánh giá tốt, nhân viên thân thiện và nhiệt tình.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "Giá cả",
+              "label_vi": "Mức giá",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Giá cả được mô tả là phải chăng, tuy nhiên cũng có nhận xét cho rằng hơi cao so với đối tượng sinh viên.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "Số điện thoại",
+              "label_vi": "Số điện thoại liên hệ",
+              "status": "conflict",
+              "customer_copy_vi": "Có thông tin số điện thoại (+84 28 7303 9079) từ một nguồn, nhưng một nguồn khác lại ghi 'Đang cập nhật'.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "Giờ mở cửa",
+              "label_vi": "Giờ hoạt động",
+              "status": "missing_signal",
+              "customer_copy_vi": "Hiện chưa có thông tin cụ thể về giờ mở cửa của quán.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 85,
+            "evidence_confidence": "high",
+            "confidence_explanation_vi": "Điểm số cao nhờ có nhiều thông tin công khai được xác nhận về địa chỉ, website, không gian, chất lượng sản phẩm và dịch vụ. Tuy nhiên, vẫn còn một số tín hiệu cần xác nhận thêm từ chủ quán.",
+            "disclaimer_vi": "Đây là điểm số nội bộ của AI Passport, không phải điểm chính thức từ Google hoặc các nền tảng AI khác."
+          },
+          "gap_questions": [
+            "Giờ hoạt động hiện tại của quán là gì?",
+            "Vui lòng xác nhận số điện thoại chính thức của quán.",
+            "Quán có kênh liên hệ Zalo không?",
+            "Quán có thể cung cấp menu và bảng giá hiện tại không?",
+            "Quán có bất kỳ chứng nhận hoặc giải thưởng đặc biệt nào không?",
+            "Chính sách của quán về quyền hình ảnh cho các tài liệu quảng cáo là gì?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "The Coffee House Cao Thắng: Không gian làm việc lý tưởng, cà phê đậm đà.",
+            "summary_vi": "The Coffee House tại 86-88 Cao Thắng, Quận 3 nổi bật với không gian thiết kế độc đáo lấy cảm hứng từ bãi biển, là điểm đến lý tưởng cho những ai tìm kiếm một nơi làm việc hiệu quả hoặc thư giãn với cà phê chất lượng và dịch vụ thân thiện.",
+            "watermark_vi": "Dữ liệu được tổng hợp bởi AI Passport."
+          },
+          "hallucination_guard_notes": [
+            "Đảm bảo không bịa đặt giờ mở cửa, giá cả, menu, số Zalo.",
+            "Không khẳng định về chứng nhận hoặc giải thưởng khi không có thông tin.",
+            "Tránh đưa ra cam kết về tăng doanh số hoặc vị trí trên công cụ tìm kiếm.",
+            "Không tạo thông tin về quyền hình ảnh.",
+            "Xử lý cẩn thận các nhận định chủ quan về giá cả."
+          ]
+        },
+        "raw_text_excerpt": null,
+        "discovery_ok": true,
+        "discovery_latency_ms": 8967,
+        "discovery_usage": {
+          "promptTokenCount": 236,
+          "candidatesTokenCount": 632,
+          "totalTokenCount": 2355,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 236
+            }
+          ],
+          "toolUsePromptTokenCount": 536,
+          "toolUsePromptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 536
+            }
+          ],
+          "thoughtsTokenCount": 951,
+          "serviceTier": "standard"
+        },
+        "discovery_grounding_count": 15,
+        "discovery_excerpt": "Dưới đây là các tín hiệu công khai được tìm thấy cho \"The Coffee House Cao Thắng Quận 3\":\n\n*   **candidate(s), area/address/category:**\n    *   **Confirmed_fact:** The Coffee House, 86-88 Cao Thắng, Phường 4, Quận 3, Thành phố Hồ Chí Minh 700000, Vietnam.\n    *   **Category:** Quán cà phê.\n\n*   **evidence signals và uncertainty:**\n    *   **Confirmed_fact:**\n        *   Website: http://www.thecoffeehouse.com/\n        *   Số điện thoại: +84 28 7303 9079.\n    *   **Public_observation:**\n        *   Nổi tiếng với cà phê đậm đà và dịch vụ tốt.\n        *   Không gian đẹp, ánh sáng dịu nhẹ, có ban công nhìn ra đường, môi trường làm việc hiệu quả.\n        *   Thiết kế lấy cảm hứng từ bãi biển với cát trắng dày 15cm trên sàn, âm thanh sóng biển và chim hót.\n        *   Là nơi lý tưởng để làm việc bằng laptop và có không khí coworking.\n        *   Menu đa dạng, đồ ăn thức uống ổn định, trình bày ",
+        "total_latency_ms": 27572
+      }
+    },
+    {
+      "fixture": {
+        "id": "F05",
+        "industry": "cafe",
+        "input_type": "website_url",
+        "seed": "https://congcaphe.com/ Cộng Cà Phê Hồ Chí Minh",
+        "expected_behavior": "resolve_or_disambiguate",
+        "notes": "Website URL plus brand-level query; should avoid choosing one branch without evidence."
+      },
+      "option_b": {
+        "ok": true,
+        "latency_ms": 15979,
+        "usage": {
+          "promptTokenCount": 222,
+          "candidatesTokenCount": 1439,
+          "totalTokenCount": 3440,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 222
+            }
+          ],
+          "thoughtsTokenCount": 1779,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 12,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "Cộng Cà Phê",
+          "area_or_address": "TP. Hồ Chí Minh (Hệ thống 19 chi nhánh)",
+          "category_guess": "Chuỗi cửa hàng cà phê",
+          "match_confidence": "high",
+          "resolve_reason_vi": "Website chính thức xác nhận sự hiện diện của hệ thống 19 cửa hàng tại các vị trí trọng điểm của TP.HCM với nhận diện thương hiệu đồng nhất.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Cà phê cốt dừa & Đồ uống đặc trưng",
+              "example_query_vi": "Cà phê cốt dừa Cộng Cà Phê có ngon không?",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên sự phổ biến của món signature trên các nền tảng đánh giá ẩm thực."
+            },
+            {
+              "label_vi": "Không gian thời bao cấp & Hoài niệm",
+              "example_query_vi": "Quán cà phê phong cách vintage tại Sài Gòn",
+              "relevance": "high",
+              "inference_notice_vi": "Định vị thương hiệu cốt lõi được thể hiện rõ qua thiết kế nội thất và website."
+            },
+            {
+              "label_vi": "Địa điểm check-in & Văn hóa Việt",
+              "example_query_vi": "Quán cà phê đẹp để chụp ảnh ở Quận 1",
+              "relevance": "medium",
+              "inference_notice_vi": "Phân tích từ xu hướng người dùng trên Instagram và TikTok tại các chi nhánh TP.HCM."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "official_website",
+              "label_vi": "Website chính thức",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Website congcaphe.com hoạt động ổn định, cung cấp đầy đủ danh sách chi nhánh.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "brand_identity",
+              "label_vi": "Nhận diện thương hiệu",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Phong cách 'Vietnam Vintage' thời bao cấp được duy trì nhất quán trên toàn hệ thống.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "location_density",
+              "label_vi": "Mật độ chi nhánh",
+              "status": "public_observation",
+              "customer_copy_vi": "Sở hữu 19 chi nhánh tại các quận trung tâm TP.HCM như Quận 1, Bình Thạnh, Tân Bình.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "signature_drink",
+              "label_vi": "Món đặc trưng",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Cà phê cốt dừa là sản phẩm biểu tượng, được nhắc đến nhiều nhất trong các đánh giá.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "digital_footprint",
+              "label_vi": "Dấu ấn kỹ thuật số",
+              "status": "public_observation",
+              "customer_copy_vi": "Hiện diện mạnh mẽ trên các ứng dụng giao hàng (GrabFood, ShopeeFood) và mạng xã hội.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "parking_status",
+              "label_vi": "Thông tin bãi đỗ xe",
+              "status": "missing_signal",
+              "customer_copy_vi": "Chưa có thông tin cụ thể về bãi đỗ xe hơi cho từng chi nhánh trên trang chủ.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "service_consistency",
+              "label_vi": "Đồng nhất dịch vụ",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Giả định quy trình phục vụ và chất lượng đồ uống được chuẩn hóa trên toàn hệ thống TP.HCM.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 88,
+            "evidence_confidence": "high",
+            "confidence_explanation_vi": "Thương hiệu có độ phủ lớn, thông tin trên website chính thức minh bạch và có lượng thảo luận công cộng cao.",
+            "disclaimer_vi": "Điểm số dựa trên checklist nội bộ của AI Passport về sự hiện diện số, không phải đánh giá từ Google."
+          },
+          "gap_questions": [
+            "Chi nhánh nào tại TP.HCM có không gian phù hợp nhất để làm việc nhóm hoặc họp hành?",
+            "Cộng Cà Phê có chính sách đặt chỗ trước cho các nhóm khách du lịch lớn không?",
+            "Các chương trình khuyến mãi trên App 'Cộng Cà Phê' có áp dụng đồng thời tại tất cả chi nhánh TP.HCM không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Khơi nguồn cảm hứng từ sự hoài niệm.",
+            "summary_vi": "Chuỗi cà phê mang phong cách thời bao cấp độc đáo, nổi tiếng với món Cà phê Cốt dừa và không gian đậm chất di sản Việt Nam giữa lòng Sài Gòn.",
+            "watermark_vi": "AI Passport Verified"
+          },
+          "hallucination_guard_notes": [
+            "Không liệt kê giờ mở cửa cụ thể vì có sự khác biệt giữa chi nhánh sân bay và chi nhánh phố đi bộ.",
+            "Không khẳng định tình trạng chỗ đậu xe hơi tại các chi nhánh trung tâm Quận 1 do đặc thù mặt bằng.",
+            "Mọi thông tin về giá menu được tham chiếu từ các nền tảng giao hàng và có thể thay đổi theo thời điểm."
+          ]
+        },
+        "raw_text_excerpt": null
+      },
+      "option_a": {
+        "ok": true,
+        "latency_ms": 11706,
+        "usage": {
+          "promptTokenCount": 879,
+          "candidatesTokenCount": 1450,
+          "totalTokenCount": 3561,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 879
+            }
+          ],
+          "thoughtsTokenCount": 1232,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "disambiguation",
+          "business_name": "Cộng Cà Phê",
+          "area_or_address": "Hồ Chí Minh",
+          "category_guess": "Chuỗi cửa hàng cà phê",
+          "match_confidence": "low",
+          "resolve_reason_vi": "Tên 'Cộng Cà Phê Hồ Chí Minh' trong yêu cầu mơ hồ, không rõ là tên của một chi nhánh cụ thể hay chỉ chung cho toàn bộ các cửa hàng Cộng Cà Phê tại TP. Hồ Chí Minh. Cần làm rõ để xác định chính xác thực thể kinh doanh.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Thương hiệu chuỗi cà phê",
+              "example_query_vi": "Cộng Cà Phê có bao nhiêu chi nhánh?",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên thông tin từ trang web chính thức và sự hiện diện rộng khắp."
+            },
+            {
+              "label_vi": "Sự hiện diện tại TP. Hồ Chí Minh",
+              "example_query_vi": "Các chi nhánh Cộng Cà Phê ở Sài Gòn?",
+              "relevance": "high",
+              "inference_notice_vi": "Xác nhận có nhiều chi nhánh tại TP. Hồ Chí Minh từ các nguồn công khai."
+            },
+            {
+              "label_vi": "Thông tin từ website chính thức",
+              "example_query_vi": "Website chính thức của Cộng Cà Phê là gì?",
+              "relevance": "medium",
+              "inference_notice_vi": "Trang web cung cấp danh sách chi nhánh và thông tin thương hiệu."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "brand_identity",
+              "label_vi": "Cộng Cà Phê là chuỗi cửa hàng",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Cộng Cà Phê là một thương hiệu chuỗi cà phê nổi tiếng, có trụ sở chính tại Hà Nội.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "hcmc_presence",
+              "label_vi": "Nhiều chi nhánh tại TP. Hồ Chí Minh",
+              "status": "public_observation",
+              "customer_copy_vi": "Thương hiệu Cộng Cà Phê có sự hiện diện đáng kể với 19 chi nhánh tại TP. Hồ Chí Minh.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "seed_ambiguity",
+              "label_vi": "Tên 'Cộng Cà Phê Hồ Chí Minh' mơ hồ",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Tên gọi 'Cộng Cà Phê Hồ Chí Minh' trong yêu cầu không rõ là chi nhánh cụ thể hay tên chung cho các cửa hàng tại TP.HCM.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "specific_branch_missing",
+              "label_vi": "Không có chi nhánh 'Cộng Cà Phê Hồ Chí Minh' duy nhất",
+              "status": "missing_signal",
+              "customer_copy_vi": "Không tìm thấy thông tin rõ ràng về một chi nhánh duy nhất mang tên 'Cộng Cà Phê Hồ Chí Minh'.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "address_conflict",
+              "label_vi": "Chi nhánh Bình Dương trong danh sách TP.HCM",
+              "status": "conflict",
+              "customer_copy_vi": "Danh sách cửa hàng chính thức liệt kê 'Midori - Bình Dương' dưới mục Hồ Chí Minh, cần xác nhận lại vì Bình Dương là tỉnh riêng biệt.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 55,
+            "evidence_confidence": "medium",
+            "confidence_explanation_vi": "Điểm số phản ánh khả năng nhận diện thương hiệu Cộng Cà Phê cao, nhưng độ tin cậy thấp trong việc xác định một chi nhánh cụ thể mang tên 'Cộng Cà Phê Hồ Chí Minh' do sự mơ hồ của dữ liệu đầu vào.",
+            "disclaimer_vi": "Điểm số này là đánh giá nội bộ của AI Passport về mức độ rõ ràng của thông tin, không phải điểm xếp hạng chính thức từ Google hay các nền tảng khác."
+          },
+          "gap_questions": [
+            "\"Cộng Cà Phê Hồ Chí Minh\" có phải là tên gọi của một chi nhánh cụ thể, hay là cách gọi chung cho tất cả các cửa hàng Cộng Cà Phê tại TP. Hồ Chí Minh?",
+            "Nếu là một chi nhánh cụ thể, xin vui lòng cung cấp địa chỉ chính xác.",
+            "Vui lòng xác nhận thông tin về chi nhánh \"Midori - Bình Dương\" có thuộc danh sách các cửa hàng tại TP. Hồ Chí Minh hay không."
+          ],
+          "mini_preview": {
+            "tagline_vi": "Cộng Cà Phê: Thương hiệu cà phê chuỗi với nhiều chi nhánh tại TP. Hồ Chí Minh.",
+            "summary_vi": "Cộng Cà Phê là một chuỗi cà phê nổi tiếng, có sự hiện diện rộng khắp tại TP. Hồ Chí Minh với nhiều chi nhánh. Tuy nhiên, tên gọi 'Cộng Cà Phê Hồ Chí Minh' cần được làm rõ để xác định một địa điểm cụ thể.",
+            "watermark_vi": "AI Passport - Soi Gương AI"
+          },
+          "hallucination_guard_notes": [
+            "Không bịa đặt thông tin về số điện thoại, Zalo, giá cả, menu, giờ mở cửa, chứng nhận, chỗ đậu xe hoặc quyền hình ảnh.",
+            "Tách biệt rõ ràng các loại tín hiệu (confirmed_fact, public_observation, inference_needs_confirmation, missing_signal, conflict).",
+            "Đảm bảo match_status và match_confidence phản ánh đúng mức độ mơ hồ của seed."
+          ]
+        },
+        "raw_text_excerpt": null,
+        "discovery_ok": true,
+        "discovery_latency_ms": 13817,
+        "discovery_usage": {
+          "promptTokenCount": 243,
+          "candidatesTokenCount": 691,
+          "totalTokenCount": 7568,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 243
+            }
+          ],
+          "toolUsePromptTokenCount": 4571,
+          "toolUsePromptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 4571
+            }
+          ],
+          "thoughtsTokenCount": 2063,
+          "serviceTier": "standard"
+        },
+        "discovery_grounding_count": 7,
+        "discovery_excerpt": "**Pass 1 Discovery: Cộng Cà Phê Hồ Chí Minh**\n\n*   **candidate(s):** Cộng Cà Phê (thương hiệu chuỗi cà phê), với nhiều chi nhánh tại TP. Hồ Chí Minh.\n    *   **Area/Address/Category:** Chuỗi cửa hàng cà phê. Các chi nhánh được biết đến tại TP. Hồ Chí Minh bao gồm: Lý Tự Trọng (Quận 1), Điện Biên Phủ (Quận Bình Thạnh), Hai Bà Trưng, Chợ Lớn, Hồng Hà, Vinhomes Grand Park, Sân Bay Quốc Tế Tân Sơn Nhất, Ngô Thời Nhiệm, Nguyễn Gia Trí, Dragon Village, Xuân Thuỷ, Sương Nguyệt Ánh, Yersin, Trường Sa, Hồ Con Rùa, Vincom Đồng Khởi, Hưng Vượng.\n*   **evidence signals và uncertainty:**\n    *   **Evidence Signals:** Trang web chính thức `congcaphe.com` xác nhận Cộng Cà Phê là một chuỗi cà phê với trụ sở chính tại Hà Nội. Các kết quả tìm kiếm và danh sách cửa hàng chính thức xác nhận sự hiện diện đáng kể với 19 chi nhánh tại TP. Hồ Chí Minh. Một số địa chỉ cụ thể của các chi nhánh tại TP. Hồ Chí Minh",
+        "total_latency_ms": 25523
+      }
+    },
+    {
+      "fixture": {
+        "id": "F06",
+        "industry": "cafe",
+        "input_type": "duplicate_name",
+        "seed": "Highlands Coffee Nguyễn Huệ Hồ Chí Minh",
+        "expected_behavior": "disambiguation_or_resolve",
+        "notes": "Common brand and high-density area; branch matching may need clarification."
+      },
+      "option_b": {
+        "ok": true,
+        "latency_ms": 8956,
+        "usage": {
+          "promptTokenCount": 214,
+          "candidatesTokenCount": 1047,
+          "totalTokenCount": 2141,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 214
+            }
+          ],
+          "thoughtsTokenCount": 880,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "disambiguation",
+          "business_name": "Highlands Coffee Nguyễn Huệ",
+          "area_or_address": "Quận 1, TP. Hồ Chí Minh",
+          "category_guess": "Quán cà phê",
+          "match_confidence": "medium",
+          "resolve_reason_vi": "Có nhiều chi nhánh Highlands Coffee nằm trên hoặc ngay sát phố đi bộ Nguyễn Huệ (như số 68 Nguyễn Huệ hoặc trong Saigon Garden), cần xác định rõ địa chỉ cụ thể để đồng bộ dữ liệu chính xác.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Cà phê chuỗi tại trung tâm Quận 1",
+              "example_query_vi": "Highlands Coffee gần phố đi bộ Nguyễn Huệ",
+              "relevance": "high",
+              "inference_notice_vi": "Dữ liệu dựa trên sự phổ biến của thương hiệu tại khu vực lõi đô thị."
+            },
+            {
+              "label_vi": "Địa điểm dừng chân cho khách du lịch",
+              "example_query_vi": "Quán cà phê view đẹp Nguyễn Huệ",
+              "relevance": "medium",
+              "inference_notice_vi": "Giả định dựa trên lưu lượng khách tham quan tại phố đi bộ."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "brand_identity",
+              "label_vi": "Nhận diện thương hiệu",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Thuộc hệ thống Highlands Coffee toàn quốc với độ nhận diện rất cao.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "location_prime",
+              "label_vi": "Vị trí đắc địa",
+              "status": "public_observation",
+              "customer_copy_vi": "Nằm tại khu vực sầm uất nhất Sài Gòn, thu hút lượng lớn khách vãng lai.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "specific_address",
+              "label_vi": "Địa chỉ chi tiết",
+              "status": "missing_signal",
+              "customer_copy_vi": "Chưa xác định rõ là chi nhánh tại số 68 Nguyễn Huệ hay chi nhánh Saigon Garden.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "outdoor_seating",
+              "label_vi": "Không gian ngoài trời",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Có thể có khu vực ngồi ngoài trời nhìn ra phố đi bộ tùy theo quy định từng mặt bằng.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 68,
+            "evidence_confidence": "medium",
+            "confidence_explanation_vi": "Điểm số cao nhờ sức mạnh thương hiệu Highlands, nhưng bị giảm do sự chồng chéo giữa các chi nhánh trong cùng một khu vực hẹp.",
+            "disclaimer_vi": "Đây là đánh giá dựa trên dữ liệu số hiện có, không phản ánh chất lượng dịch vụ thực tế."
+          },
+          "gap_questions": [
+            "Chi nhánh chính xác bạn muốn kiểm tra là số 68 Nguyễn Huệ hay tại tòa nhà Saigon Garden?",
+            "Cửa hàng hiện tại có áp dụng chương trình ưu đãi riêng nào cho khách du lịch không?",
+            "Bạn có muốn cập nhật hình ảnh mặt tiền mới nhất để AI dễ dàng nhận diện không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Điểm hẹn cà phê giữa lòng phố đi bộ Sài Gòn",
+            "summary_vi": "Highlands Coffee Nguyễn Huệ sở hữu vị trí vàng nhưng cần làm rõ tọa độ cụ thể để tối ưu hóa sự xuất hiện trên các nền tảng bản đồ và AI.",
+            "watermark_vi": "Dữ liệu được phân tích bởi Soi Gương AI"
+          },
+          "hallucination_guard_notes": [
+            "Không cung cấp số điện thoại cụ thể do có nhiều chi nhánh gần nhau.",
+            "Không khẳng định tình trạng chỗ đậu xe vì khu vực Nguyễn Huệ có quy định nghiêm ngặt.",
+            "Cần xác nhận lại giờ mở cửa thực tế vào các ngày có sự kiện tại phố đi bộ."
+          ]
+        },
+        "raw_text_excerpt": null
+      },
+      "option_a": {
+        "ok": true,
+        "latency_ms": 17975,
+        "usage": {
+          "promptTokenCount": 722,
+          "candidatesTokenCount": 1928,
+          "totalTokenCount": 5009,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 722
+            }
+          ],
+          "thoughtsTokenCount": 2359,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "Highlands Coffee",
+          "area_or_address": "66 Đường Nguyễn Huệ, P. Bến Nghé, Quận 1, TP. HCM",
+          "category_guess": "Trà, Cà Phê & Bánh",
+          "match_confidence": "high",
+          "resolve_reason_vi": "Thông tin về chi nhánh Highlands Coffee tại 66 Nguyễn Huệ, TP. HCM được xác nhận nhất quán qua nhiều nguồn công khai uy tín như website chính thức của Highlands Coffee, Foody.vn và ShopeeFood.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Vị trí & Không gian",
+              "example_query_vi": "Highlands Nguyễn Huệ có view đẹp không?",
+              "relevance": "high",
+              "inference_notice_vi": "Thông tin về vị trí đắc địa trên phố đi bộ Nguyễn Huệ được ghi nhận từ các nguồn công khai."
+            },
+            {
+              "label_vi": "Dịch vụ & Tiện ích",
+              "example_query_vi": "Highlands Nguyễn Huệ có wifi không?",
+              "relevance": "high",
+              "inference_notice_vi": "Các tiện ích như Wifi miễn phí và thanh toán thẻ được xác nhận từ website chính thức."
+            },
+            {
+              "label_vi": "Đánh giá & Mức độ yêu thích",
+              "example_query_vi": "Highlands Nguyễn Huệ có được khách hàng yêu thích không?",
+              "relevance": "medium",
+              "inference_notice_vi": "ShopeeFood ghi nhận là 'Quán Yêu Thích', tuy nhiên Foody.vn chưa có đánh giá cụ thể."
+            },
+            {
+              "label_vi": "Thông tin liên hệ & Giờ hoạt động",
+              "example_query_vi": "Highlands Nguyễn Huệ mở cửa mấy giờ?",
+              "relevance": "high",
+              "inference_notice_vi": "Giờ hoạt động được xác nhận từ website chính thức, số điện thoại có mâu thuẫn giữa các nguồn."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "location_identification",
+              "label_vi": "Địa chỉ kinh doanh",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Nhiều nguồn công khai, bao gồm Foody.vn, ShopeeFood và website chính thức của Highlands Coffee, xác nhận chi nhánh tại 66 Nguyễn Huệ, P. Bến Nghé, Quận 1, TP. HCM.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "operating_hours_amenities",
+              "label_vi": "Giờ hoạt động và tiện ích",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Website chính thức của Highlands Coffee liệt kê giờ hoạt động 6:00 – 23:00 hàng ngày, có Wifi miễn phí và chấp nhận thanh toán thẻ.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "contact_phone_official",
+              "label_vi": "Số điện thoại chính thức",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Website chính thức của Highlands Coffee cung cấp số điện thoại (028 7109 2195) cho chi nhánh này.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "location_description",
+              "label_vi": "Mô tả vị trí",
+              "status": "public_observation",
+              "customer_copy_vi": "Một video YouTube (tháng 8/2024) mô tả vị trí là 'đắc địa' trên phố đi bộ Nguyễn Huệ.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "customer_preference",
+              "label_vi": "Mức độ yêu thích của khách hàng",
+              "status": "public_observation",
+              "customer_copy_vi": "ShopeeFood gắn nhãn chi nhánh này là 'Quán Yêu Thích', cho thấy chất lượng dịch vụ và sự ưa chuộng của khách hàng.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "phone_number_conflict",
+              "label_vi": "Mâu thuẫn thông tin số điện thoại",
+              "status": "conflict",
+              "customer_copy_vi": "Foody.vn ghi nhận số điện thoại 'Đang cập nhật', mâu thuẫn với số điện thoại cụ thể (028 7109 2195) được cung cấp trên website chính thức.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "public_engagement_inconsistency",
+              "label_vi": "Tính nhất quán của tương tác công khai",
+              "status": "missing_signal",
+              "customer_copy_vi": "Trong khi ShopeeFood chỉ ra sự ưa chuộng, Foody.vn lại hiển thị 0 đánh giá/bình luận, cho thấy sự không nhất quán trong báo cáo tương tác công khai.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "detailed_info_missing",
+              "label_vi": "Thông tin chi tiết còn thiếu",
+              "status": "missing_signal",
+              "customer_copy_vi": "Thông tin chi tiết về menu, giá cả hiện tại và chỗ đậu xe cụ thể chưa có sẵn trong kết quả tìm kiếm ban đầu.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 85,
+            "evidence_confidence": "high",
+            "confidence_explanation_vi": "Điểm số cao do có nhiều thông tin xác nhận từ các nguồn đáng tin cậy và nhất quán về địa chỉ, giờ hoạt động và tiện ích cơ bản. Tuy nhiên, điểm số bị ảnh hưởng nhẹ bởi một số mâu thuẫn nhỏ về số điện thoại và thiếu thông tin chi tiết về menu, giá cả.",
+            "disclaimer_vi": "Điểm số này là một đánh giá nội bộ của AI Passport, không phải điểm chính thức từ Google hoặc bất kỳ nền tảng AI nào khác."
+          },
+          "gap_questions": [
+            "Vui lòng xác nhận số điện thoại chính thức và cập nhật nhất của chi nhánh Highlands Coffee tại 66 Nguyễn Huệ.",
+            "Có bất kỳ dịch vụ hoặc đặc điểm độc đáo nào của chi nhánh này không được quảng cáo rộng rãi không?",
+            "Bạn có thể cung cấp thông tin chi tiết về menu và mức giá hiện tại không?",
+            "Chi nhánh có cung cấp chỗ đậu xe cho khách hàng không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Highlands Coffee Nguyễn Huệ: Vị trí đắc địa, trải nghiệm cà phê chuẩn vị.",
+            "summary_vi": "Highlands Coffee tại 66 Nguyễn Huệ, Quận 1, TP. HCM là một chi nhánh được nhiều nguồn xác nhận, nổi bật với vị trí trung tâm phố đi bộ và giờ hoạt động linh hoạt (6:00 – 23:00). Cung cấp Wifi miễn phí và chấp nhận thanh toán thẻ, đây là điểm đến yêu thích của nhiều khách hàng.",
+            "watermark_vi": "Dữ liệu được tổng hợp bởi AI Passport."
+          },
+          "hallucination_guard_notes": [
+            "Đảm bảo không bịa đặt thông tin về số điện thoại, giá cả, menu, giờ mở cửa, chứng nhận, chỗ đậu xe hoặc quyền hình ảnh.",
+            "Tách biệt rõ ràng các loại tín hiệu (confirmed_fact, public_observation, inference_needs_confirmation, missing_signal, conflict) theo yêu cầu.",
+            "Không hứa hẹn về việc tăng doanh số, lên top Google hay AI chắc chắn nhắc tên business.",
+            "Score là checklist nội bộ, không phải điểm chính thức của Google hoặc nền tảng AI."
+          ]
+        },
+        "raw_text_excerpt": null,
+        "discovery_ok": true,
+        "discovery_latency_ms": 9179,
+        "discovery_usage": {
+          "promptTokenCount": 235,
+          "candidatesTokenCount": 526,
+          "totalTokenCount": 2193,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 235
+            }
+          ],
+          "toolUsePromptTokenCount": 525,
+          "toolUsePromptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 525
+            }
+          ],
+          "thoughtsTokenCount": 907,
+          "serviceTier": "standard"
+        },
+        "discovery_grounding_count": 11,
+        "discovery_excerpt": "**Pass 1 Discovery: Highlands Coffee Nguyễn Huệ Hồ Chí Minh**\n\n*   **Candidate(s):** Highlands Coffee, 66 Đường Nguyễn Huệ, P. Bến Nghé, Quận 1, TP. HCM. Category: Trà, Cà Phê & Bánh (Tea, Coffee & Cakes).\n*   **Evidence signals:**\n    *   **confirmed_fact:** Multiple public sources, including Foody.vn, ShopeeFood, and the official Highlands Coffee website, consistently identify a Highlands Coffee branch at 66 Nguyễn Huệ, P. Bến Nghé, Quận 1, TP. HCM.\n    *   **confirmed_fact:** The official Highlands Coffee website lists the operating hours as 6:00 – 23:00, 7 days/week, and confirms services like free Wifi and card payment options.\n    *   **confirmed_fact:** A phone number (028 7109 2195) is provided on the official Highlands Coffee website.\n    *   **public_observation:** The location is described as \"đắc địa\" (prime) on Nguyễn Huệ pedestrian street in a YouTube video from August 2024",
+        "total_latency_ms": 27154
+      }
+    },
+    {
+      "fixture": {
+        "id": "F07",
+        "industry": "spa",
+        "input_type": "name_area",
+        "seed": "Mộc Kim Spa Quận 1 Thành phố Hồ Chí Minh",
+        "expected_behavior": "resolve_or_low_confidence",
+        "notes": "Spa category with possible thin/inconsistent public footprint."
+      },
+      "option_b": {
+        "ok": true,
+        "latency_ms": 18518,
+        "usage": {
+          "promptTokenCount": 218,
+          "candidatesTokenCount": 1075,
+          "totalTokenCount": 3739,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 218
+            }
+          ],
+          "thoughtsTokenCount": 2446,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "disambiguation",
+          "business_name": "Mộc Kim Spa",
+          "area_or_address": "Quận 1, Thành phố Hồ Chí Minh",
+          "category_guess": "Spa & Chăm sóc sắc đẹp",
+          "match_confidence": "low",
+          "resolve_reason_vi": "Hệ thống nhận diện thương hiệu Mộc Kim Spa có sự hiện diện mạnh tại Quận 7, nhưng thông tin về chi nhánh tại Quận 1 chưa đủ rõ ràng hoặc có thể bị nhầm lẫn về địa giới hành chính.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Dịch vụ Spa và Chăm sóc da",
+              "example_query_vi": "Mộc Kim Spa có dịch vụ nặn mụn không?",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên tên thương hiệu và các kết quả tìm kiếm liên quan đến ngành làm đẹp."
+            },
+            {
+              "label_vi": "Địa điểm làm đẹp tại TP.HCM",
+              "example_query_vi": "Spa uy tín tại Quận 1",
+              "relevance": "medium",
+              "inference_notice_vi": "Cần xác định chính xác tọa độ để AI có thể đề xuất trong các truy vấn theo khu vực."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "location_conflict",
+              "label_vi": "Xung đột vị trí địa lý",
+              "status": "conflict",
+              "customer_copy_vi": "Dữ liệu công khai phổ biến nhất của Mộc Kim Spa nằm tại Quận 7 (đường Tân Mỹ), trong khi thông tin nhập vào là Quận 1.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "brand_presence",
+              "label_vi": "Hiện diện thương hiệu",
+              "status": "public_observation",
+              "customer_copy_vi": "Thương hiệu có xuất hiện trên các nền tảng mạng xã hội và trang đánh giá dịch vụ làm đẹp.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "industry_verification",
+              "label_vi": "Xác minh ngành nghề",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Xác nhận doanh nghiệp hoạt động trong lĩnh vực chăm sóc sức khỏe và sắc đẹp.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "branch_info",
+              "label_vi": "Thông tin chi nhánh",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Cần làm rõ liệu đây là chi nhánh mới tại Quận 1 hay có sự nhầm lẫn với cơ sở tại Quận 7.",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 35,
+            "evidence_confidence": "low",
+            "confidence_explanation_vi": "Điểm số thấp do sự không đồng nhất về địa chỉ giữa dữ liệu thực tế và thông tin cung cấp, gây khó khăn cho việc định danh thực thể duy nhất.",
+            "disclaimer_vi": "Đây là điểm số đánh giá dựa trên checklist nội bộ của AI Passport, không phản ánh thứ hạng trên Google Search hay các nền tảng khác."
+          },
+          "gap_questions": [
+            "Địa chỉ chính xác (số nhà, tên đường) của spa tại Quận 1 là gì?",
+            "Spa có đang sử dụng tên gọi khác trên Google Maps cho chi nhánh Quận 1 không?",
+            "Bạn có thể cung cấp link Fanpage hoặc Website chính thức của chi nhánh Quận 1 không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Mộc Kim Spa - Cần xác thực vị trí để tối ưu hóa AI",
+            "summary_vi": "Thương hiệu có tiềm năng nhận diện nhưng đang gặp lỗi xung đột địa chỉ giữa Quận 1 và Quận 7, cần chuẩn hóa dữ liệu để AI ghi nhớ chính xác.",
+            "watermark_vi": "AI Passport Analysis"
+          },
+          "hallucination_guard_notes": [
+            "Không tự ý lấy thông tin liên hệ của cơ sở Quận 7 để gán cho Quận 1.",
+            "Không giả định các dịch vụ cụ thể nếu không có menu công khai cho chi nhánh này.",
+            "Cảnh báo về việc trùng tên hoặc nhầm lẫn địa giới hành chính."
+          ]
+        },
+        "raw_text_excerpt": null
+      },
+      "option_a": {
+        "ok": true,
+        "latency_ms": 20180,
+        "usage": {
+          "promptTokenCount": 776,
+          "candidatesTokenCount": 1787,
+          "totalTokenCount": 5402,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 776
+            }
+          ],
+          "thoughtsTokenCount": 2839,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "Mộc Kim Spa",
+          "area_or_address": "12L Nguyễn Thị Minh Khai, Đa Kao, Quận 1, TP. Hồ Chí Minh",
+          "category_guess": "Spa, Massage, Gội đầu dưỡng sinh, Chăm sóc da mặt, Kids Spa",
+          "match_confidence": "medium",
+          "resolve_reason_vi": "Doanh nghiệp Mộc Kim Spa được xác định rõ ràng tại Quận 1, TP. Hồ Chí Minh với các dịch vụ và địa chỉ nhất quán. Tuy nhiên, có sự khác biệt nhỏ trong tên gọi ('Mộc Kim Spa' và 'Mộc Kim Spa & Beauty') cần được chủ doanh nghiệp xác nhận chính thức.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Dịch vụ Spa & Massage đa dạng",
+              "example_query_vi": "Mộc Kim Spa có những loại massage nào?",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên các dịch vụ được công bố công khai như massage body, foot, hot stone, couple, 4-hand."
+            },
+            {
+              "label_vi": "Gội đầu dưỡng sinh & Chăm sóc da",
+              "example_query_vi": "Mộc Kim Spa có gội đầu dưỡng sinh không?",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên thông tin về gội đầu dưỡng sinh và chăm sóc da mặt được liệt kê trong các dịch vụ."
+            },
+            {
+              "label_vi": "Không gian thư giãn & Dịch vụ chuyên nghiệp",
+              "example_query_vi": "Không gian Mộc Kim Spa có yên tĩnh không?",
+              "relevance": "medium",
+              "inference_notice_vi": "Dựa trên các mô tả công khai về không gian yên tĩnh, tự nhiên, phong cách Nhật Bản và chất lượng dịch vụ chuyên nghiệp."
+            },
+            {
+              "label_vi": "Hiện diện trực tuyến mạnh mẽ",
+              "example_query_vi": "Mộc Kim Spa có website không?",
+              "relevance": "medium",
+              "inference_notice_vi": "Dựa trên sự hiện diện của website và các kênh mạng xã hội như Facebook, YouTube, TikTok, LinkedIn."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "business_location",
+              "label_vi": "Vị trí doanh nghiệp",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Mộc Kim Spa tọa lạc tại 12L Nguyễn Thị Minh Khai, Đa Kao, Quận 1, TP. Hồ Chí Minh.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "service_offerings",
+              "label_vi": "Dịch vụ cung cấp",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Spa cung cấp đa dạng dịch vụ như massage (body, foot, hot stone, couple, 4-hand), gội đầu dưỡng sinh, chăm sóc da mặt và Kids Spa.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "online_presence",
+              "label_vi": "Hiện diện trực tuyến",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Mộc Kim Spa có website (duongsinhspa.vn) và các kênh mạng xã hội (Facebook, YouTube, TikTok, LinkedIn) hoạt động tích cực.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "ambiance_description",
+              "label_vi": "Mô tả không gian",
+              "status": "public_observation",
+              "customer_copy_vi": "Không gian spa được mô tả là yên tĩnh, gần gũi thiên nhiên, mang phong cách Nhật Bản với nội thất gỗ và hương thảo mộc.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "service_quality",
+              "label_vi": "Chất lượng dịch vụ",
+              "status": "public_observation",
+              "customer_copy_vi": "Dịch vụ tại spa được đánh giá cao về sự chuyên nghiệp và tận tâm (Omotenashi).",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "contact_hotline",
+              "label_vi": "Số điện thoại liên hệ",
+              "status": "public_observation",
+              "customer_copy_vi": "Số hotline 0968 459 618 được công khai để liên hệ.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "business_name_consistency",
+              "label_vi": "Tính nhất quán tên doanh nghiệp",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Tên 'Mộc Kim Spa' và 'Mộc Kim Spa & Beauty' có thể cùng chỉ một doanh nghiệp, dựa trên địa chỉ và dịch vụ tương đồng.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "operating_hours",
+              "label_vi": "Giờ hoạt động",
+              "status": "missing_signal",
+              "customer_copy_vi": "Thông tin về giờ mở cửa và đóng cửa cụ thể chưa được tìm thấy.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 75,
+            "evidence_confidence": "medium",
+            "confidence_explanation_vi": "Thông tin về địa điểm, dịch vụ và hiện diện trực tuyến của Mộc Kim Spa được xác nhận rõ ràng. Tuy nhiên, có một số chi tiết như giờ hoạt động và bảng giá cần được chủ doanh nghiệp xác nhận để có cái nhìn đầy đủ hơn.",
+            "disclaimer_vi": "Điểm số này là đánh giá nội bộ của AI Passport về mức độ hoàn thiện thông tin công khai, không phải xếp hạng chính thức từ Google hay các nền tảng AI khác."
+          },
+          "gap_questions": [
+            "Giờ mở cửa và đóng cửa chính xác của spa là gì?",
+            "Spa có thể cung cấp bảng giá chi tiết và danh sách dịch vụ đầy đủ không?",
+            "Tên chính thức của doanh nghiệp là 'Mộc Kim Spa' hay 'Mộc Kim Spa & Beauty'?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Mộc Kim Spa: Nơi thư giãn và chăm sóc sức khỏe toàn diện tại Quận 1.",
+            "summary_vi": "Mộc Kim Spa tại Quận 1, TP.HCM, nổi bật với không gian yên tĩnh, dịch vụ massage, gội đầu dưỡng sinh và chăm sóc da chuyên nghiệp. Spa có sự hiện diện trực tuyến mạnh mẽ và được đánh giá cao về chất lượng dịch vụ.",
+            "watermark_vi": "AI Passport / Soi Gương AI"
+          },
+          "hallucination_guard_notes": [
+            "Không bịa đặt thông tin về giá, giờ mở cửa, số điện thoại, menu, chứng nhận, chỗ đậu xe hoặc quyền hình ảnh.",
+            "Không hứa hẹn về việc tăng doanh số hay vị trí trên công cụ tìm kiếm.",
+            "Đảm bảo tách biệt rõ ràng giữa thông tin xác nhận, quan sát công khai, suy luận cần xác nhận và tín hiệu thiếu."
+          ]
+        },
+        "raw_text_excerpt": null,
+        "discovery_ok": true,
+        "discovery_latency_ms": 8977,
+        "discovery_usage": {
+          "promptTokenCount": 239,
+          "candidatesTokenCount": 579,
+          "totalTokenCount": 2368,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 239
+            }
+          ],
+          "toolUsePromptTokenCount": 549,
+          "toolUsePromptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 549
+            }
+          ],
+          "thoughtsTokenCount": 1001,
+          "serviceTier": "standard"
+        },
+        "discovery_grounding_count": 9,
+        "discovery_excerpt": "**Pass 1 Discovery: Mộc Kim Spa Quận 1 Thành phố Hồ Chí Minh**\n\n*   **Candidate(s):** Mộc Kim Spa / Mộc Kim Spa & Beauty\n*   **Area/Address/Category:**\n    *   **Area:** Quận 1, Thành phố Hồ Chí Minh\n    *   **Address:** 12L Nguyễn Thị Minh Khai, Đa Kao, Quận 1, TP. Hồ Chí Minh\n    *   **Category:** Spa, Massage (body, foot, hot stone, couple, 4-hand), Gội đầu dưỡng sinh, Chăm sóc da mặt, Kids Spa.\n\n*   **Evidence Signals and Uncertainty:**\n    *   **confirmed_fact:** A business named \"Mộc Kim Spa\" or \"Mộc Kim Spa & Beauty\" is located at 12L Nguyễn Thị Minh Khai, Đa Kao, Quận 1, TP. Hồ Chí Minh.\n    *   **confirmed_fact:** The business offers a range of spa services including various massages, facial care, and traditional herbal hair wash.\n    *   **confirmed_fact:** The business has an active online presence with a website (duongsinhspa.vn) and social media channels (Facebook, YouTube, ",
+        "total_latency_ms": 29157
+      }
+    },
+    {
+      "fixture": {
+        "id": "F08",
+        "industry": "spa",
+        "input_type": "name_area",
+        "seed": "Thu Cúc Clinics spa Quận 1 Hồ Chí Minh",
+        "expected_behavior": "resolve_or_disambiguate",
+        "notes": "Beauty/clinic brand; should separate public observation from medical/service claims."
+      },
+      "option_b": {
+        "ok": true,
+        "latency_ms": 10898,
+        "usage": {
+          "promptTokenCount": 217,
+          "candidatesTokenCount": 1344,
+          "totalTokenCount": 2461,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 217
+            }
+          ],
+          "thoughtsTokenCount": 900,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "Thu Cúc Clinics (Hệ thống Thẩm mỹ Thu Cúc)",
+          "area_or_address": "Quận 1 & lân cận, TP. Hồ Chí Minh",
+          "category_guess": "Thẩm mỹ viện & Chăm sóc da cao cấp",
+          "match_confidence": "high",
+          "resolve_reason_vi": "Xác định được thực thể kinh doanh thuộc hệ thống Thẩm mỹ Thu Cúc (Zinnia Corp) có độ phủ thương hiệu lớn tại TP.HCM. Mặc dù cơ sở chính thường được ghi nhận tại Quận 3 và Quận 10, nhưng dữ liệu tìm kiếm cho thấy sự hiện diện mạnh mẽ tại khu vực trung tâm.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Điều trị da công nghệ cao",
+              "example_query_vi": "trị nám công nghệ Picosure Thu Cúc Quận 1",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên danh mục dịch vụ phổ biến của thương hiệu Thu Cúc Clinics trên toàn hệ thống."
+            },
+            {
+              "label_vi": "Phẫu thuật thẩm mỹ",
+              "example_query_vi": "nâng mũi Thu Cúc Hồ Chí Minh",
+              "relevance": "high",
+              "inference_notice_vi": "Thu Cúc nổi tiếng với các dịch vụ đại phẫu và tiểu phẫu thẩm mỹ có chứng nhận y khoa."
+            },
+            {
+              "label_vi": "Chăm sóc da mặt & Body",
+              "example_query_vi": "spa thư giãn Thu Cúc Clinics",
+              "relevance": "medium",
+              "inference_notice_vi": "Phân khúc Clinics tập trung nhiều vào trị liệu chuyên sâu hơn là spa thư giãn thuần túy."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "brand_identity",
+              "label_vi": "Nhận diện thương hiệu",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Thu Cúc là thương hiệu thẩm mỹ có lịch sử lâu đời từ năm 1996, có độ tin cậy cao trên môi trường số.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "location_presence",
+              "label_vi": "Vị trí địa lý",
+              "status": "public_observation",
+              "customer_copy_vi": "Hệ thống có các cơ sở lớn tại đường Ba Huyện Thanh Quan (Q3) và đường 3/2 (Q10), rất gần khu vực Quận 1.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "service_standard",
+              "label_vi": "Tiêu chuẩn dịch vụ",
+              "status": "public_observation",
+              "customer_copy_vi": "Mô hình Clinic kết hợp giữa chăm sóc da và phác đồ điều trị y khoa chuyên sâu.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "digital_footprint",
+              "label_vi": "Dấu chân số",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Sở hữu website bài bản, fanpage tích xanh và lượng đánh giá lớn trên Google Maps.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "specific_address_q1",
+              "label_vi": "Địa chỉ cụ thể Quận 1",
+              "status": "missing_signal",
+              "customer_copy_vi": "Cần xác nhận lại địa chỉ chính xác tại Quận 1 vì các cơ sở chính nằm ở các quận giáp ranh.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 92,
+            "evidence_confidence": "high",
+            "confidence_explanation_vi": "Điểm số cao nhờ vào sự minh bạch thông tin thương hiệu, giấy phép hoạt động công khai và khối lượng dữ liệu người dùng thảo luận lớn.",
+            "disclaimer_vi": "Điểm số này phản ánh mức độ sẵn sàng của dữ liệu doanh nghiệp trên hệ thống AI Passport, không thay thế cho xếp hạng chuyên môn y tế."
+          },
+          "gap_questions": [
+            "Bạn đang đề cập đến cơ sở tại số 55A Ba Huyện Thanh Quan (giáp Quận 1) hay một địa điểm mới?",
+            "Bạn có muốn kiểm tra mức độ hiển thị của các dịch vụ cụ thể như 'Cắt mí' hay 'Trị nám' không?",
+            "Bạn là quản lý thương hiệu hay khách hàng đang tìm kiếm thông tin tại chi nhánh này?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Thu Cúc Clinics - Đẳng cấp thẩm mỹ y khoa tại trung tâm Sài Gòn",
+            "summary_vi": "Một trong những đơn vị dẫn đầu ngành thẩm mỹ với dữ liệu số cực kỳ vững chắc, sẵn sàng tối ưu hóa sự hiện diện trên các nền tảng AI thế hệ mới.",
+            "watermark_vi": "Verified by AI Passport Analyst"
+          },
+          "hallucination_guard_notes": [
+            "Không tự ý gán địa chỉ số nhà cụ thể tại Quận 1 nếu chưa có dữ liệu Maps xác thực.",
+            "Tránh khẳng định các chương trình khuyến mãi hiện tại mà không có link nguồn.",
+            "Phân biệt rõ giữa 'Thu Cúc Clinics' (chăm sóc da) và 'Thu Cúc Mega Beauty Center' (phẫu thuật)."
+          ]
+        },
+        "raw_text_excerpt": null
+      },
+      "option_a": {
+        "ok": true,
+        "latency_ms": 12925,
+        "usage": {
+          "promptTokenCount": 738,
+          "candidatesTokenCount": 1060,
+          "totalTokenCount": 3726,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 738
+            }
+          ],
+          "thoughtsTokenCount": 1928,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "disambiguation",
+          "business_name": "Thu Cúc Clinics",
+          "area_or_address": "Quận 1 Hồ Chí Minh",
+          "category_guess": "Thẩm mỹ, Spa, Chăm sóc da",
+          "match_confidence": "low",
+          "resolve_reason_vi": "Không tìm thấy thông tin công khai về chi nhánh Thu Cúc Clinics spa tại Quận 1, TP.HCM. Các chi nhánh được tìm thấy nằm ở Quận 3 và Quận 10.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Thẩm mỹ công nghệ cao",
+              "example_query_vi": "Tìm Thu Cúc Clinics công nghệ cao",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên các dịch vụ được quảng bá rộng rãi của thương hiệu."
+            },
+            {
+              "label_vi": "Chăm sóc da chuyên sâu",
+              "example_query_vi": "Spa chăm sóc da Thu Cúc",
+              "relevance": "medium",
+              "inference_notice_vi": "Là một phần dịch vụ chính của Thu Cúc Clinics, phù hợp với từ khóa 'spa'."
+            },
+            {
+              "label_vi": "Bệnh viện Thẩm mỹ",
+              "example_query_vi": "Bệnh viện Thẩm mỹ Thu Cúc",
+              "relevance": "medium",
+              "inference_notice_vi": "Thu Cúc cũng hoạt động dưới mô hình bệnh viện thẩm mỹ với các dịch vụ phức tạp hơn."
+            },
+            {
+              "label_vi": "Dịch vụ Spa",
+              "example_query_vi": "Thu Cúc có dịch vụ spa không?",
+              "relevance": "low",
+              "inference_notice_vi": "Từ khóa 'spa' trong truy vấn của khách hàng, cần xác nhận cụ thể dịch vụ và địa điểm."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "brand_reputation",
+              "label_vi": "Thương hiệu uy tín",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Thu Cúc Clinics là thương hiệu thẩm mỹ và chăm sóc da uy tín tại Việt Nam với nhiều năm kinh nghiệm.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "hcmc_locations_found",
+              "label_vi": "Có chi nhánh tại TP.HCM (Q3, Q10)",
+              "status": "public_observation",
+              "customer_copy_vi": "Chúng tôi tìm thấy các chi nhánh Thu Cúc Clinics tại Quận 3 và Quận 10, TP.HCM.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "service_range",
+              "label_vi": "Đa dạng dịch vụ thẩm mỹ",
+              "status": "public_observation",
+              "customer_copy_vi": "Thu Cúc Clinics cung cấp nhiều dịch vụ từ chăm sóc da cơ bản đến các liệu trình công nghệ cao và phẫu thuật thẩm mỹ.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "q1_location_missing",
+              "label_vi": "Không tìm thấy chi nhánh Quận 1",
+              "status": "missing_signal",
+              "customer_copy_vi": "Hiện tại, chúng tôi chưa tìm thấy thông tin công khai về chi nhánh Thu Cúc Clinics spa tại Quận 1, TP.HCM.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "location_conflict",
+              "label_vi": "Mâu thuẫn địa điểm",
+              "status": "conflict",
+              "customer_copy_vi": "Yêu cầu về Quận 1 mâu thuẫn với các địa chỉ công khai được tìm thấy (Quận 3, Quận 10).",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 35,
+            "evidence_confidence": "low",
+            "confidence_explanation_vi": "Điểm số thấp do không tìm thấy thông tin xác nhận về chi nhánh Thu Cúc Clinics spa tại Quận 1, TP.HCM, mặc dù thương hiệu có mặt tại các quận khác.",
+            "disclaimer_vi": "Đây là điểm số nội bộ của AI Passport, không phải điểm đánh giá chính thức từ Google hoặc các nền tảng AI khác."
+          },
+          "gap_questions": [
+            "Thu Cúc Clinics có chi nhánh hoặc cơ sở spa nào tại Quận 1, Hồ Chí Minh không?",
+            "Nếu có, vui lòng cung cấp địa chỉ chính xác và thông tin liên hệ của cơ sở tại Quận 1.",
+            "Các dịch vụ cụ thể nào được cung cấp tại chi nhánh Quận 1 (ví dụ: dịch vụ spa, da công nghệ cao, phẫu thuật thẩm mỹ)?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Thu Cúc Clinics: Thương hiệu thẩm mỹ uy tín, cần xác nhận chi nhánh Quận 1.",
+            "summary_vi": "Thu Cúc Clinics là chuỗi thẩm mỹ viện và bệnh viện thẩm mỹ lớn, cung cấp đa dạng dịch vụ từ chăm sóc da đến phẫu thuật. Tuy nhiên, chúng tôi chưa tìm thấy thông tin cụ thể về chi nhánh spa tại Quận 1, TP.HCM.",
+            "watermark_vi": "AI Passport / Soi Gương AI"
+          },
+          "hallucination_guard_notes": [
+            "Không bịa địa chỉ Quận 1.",
+            "Không bịa thông tin liên hệ, giá cả, giờ mở cửa hoặc menu.",
+            "Không khẳng định có chi nhánh Quận 1 nếu không có bằng chứng công khai."
+          ]
+        },
+        "raw_text_excerpt": null,
+        "discovery_ok": true,
+        "discovery_latency_ms": 8908,
+        "discovery_usage": {
+          "promptTokenCount": 238,
+          "candidatesTokenCount": 541,
+          "totalTokenCount": 2364,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 238
+            }
+          ],
+          "toolUsePromptTokenCount": 543,
+          "toolUsePromptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 543
+            }
+          ],
+          "thoughtsTokenCount": 1042,
+          "serviceTier": "standard"
+        },
+        "discovery_grounding_count": 7,
+        "discovery_excerpt": "**Pass 1 Discovery: Thu Cúc Clinics spa Quận 1 Hồ Chí Minh**\n\n*   **Candidate(s):** Thu Cúc Clinics (Thẩm mỹ™ Công nghệ cao, Bệnh viện Thẩm mỹ)\n    *   **Publicly observed locations in Ho Chi Minh City (not Quận 1):**\n        *   218 Điện Biên Phủ, Q. 3, TP. HCM (also listed as Phường Xuân Hòa, Thành phố Hồ Chí Minh)\n        *   55A – Đường 3/2 – Phường 11 – Quận 10 – TP. Hồ Chí Minh (Thu Cúc Sài Gòn)\n    *   **Category:** Thẩm mỹ (Aesthetics), Spa, Chăm sóc da (Skincare), Bệnh viện Thẩm mỹ (Aesthetic Hospital)\n\n*   **Evidence Signals and Uncertainty:**\n    *   **Confirmed_fact:** Thu Cúc Clinics is a prominent and reputable brand offering aesthetic and skincare services in Vietnam, with multiple locations, including in Ho Chi Minh City.\n    *   **Public_observation:** The search results consistently show Thu Cúc Clinics locations in Ho Chi Minh City, but specifically in Quận 3 and Quận ",
+        "total_latency_ms": 21833
+      }
+    },
+    {
+      "fixture": {
+        "id": "F09",
+        "industry": "spa",
+        "input_type": "facebook_url_hint",
+        "seed": "Facebook page Seoul Spa Hồ Chí Minh",
+        "expected_behavior": "resolve_or_disambiguate",
+        "notes": "Social-page style seed; should surface URL readability limitations if any."
+      },
+      "option_b": {
+        "ok": true,
+        "latency_ms": 15662,
+        "usage": {
+          "promptTokenCount": 213,
+          "candidatesTokenCount": 1378,
+          "totalTokenCount": 3133,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 213
+            }
+          ],
+          "thoughtsTokenCount": 1542,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 1,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "Thẩm mỹ viện Seoul Center (Hệ thống Seoul Spa cũ)",
+          "area_or_address": "Nhiều chi nhánh tại TP.HCM (Trụ sở chính: 375 Nguyễn Thượng Hiền, Quận 10)",
+          "category_guess": "Thẩm mỹ viện / Spa làm đẹp",
+          "match_confidence": "high",
+          "resolve_reason_vi": "Thương hiệu Seoul Spa đã chính thức tái định vị và đổi tên thành Seoul Center trên toàn hệ thống từ năm 2023, với sự hiện diện mạnh mẽ tại TP.HCM.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Dịch vụ Thẩm mỹ & Chăm sóc da",
+              "example_query_vi": "Seoul Center có những dịch vụ trị mụn và nâng mũi nào?",
+              "relevance": "high",
+              "inference_notice_vi": "Các dịch vụ cụ thể thường được AI trích xuất từ website và fanpage chính thức."
+            },
+            {
+              "label_vi": "Hệ thống chi nhánh tại TP.HCM",
+              "example_query_vi": "Địa chỉ Seoul Center gần nhất tại Quận 10 hoặc Tân Bình.",
+              "relevance": "high",
+              "inference_notice_vi": "AI có thể nhầm lẫn giữa các chi nhánh nếu không có thông tin địa chỉ cụ thể trong câu lệnh."
+            },
+            {
+              "label_vi": "Nhận diện thương hiệu Seoul Center",
+              "example_query_vi": "Seoul Spa đổi tên thành gì?",
+              "relevance": "medium",
+              "inference_notice_vi": "Dữ liệu cũ về Seoul Spa vẫn còn tồn tại trên internet, cần đồng bộ để AI nhận diện đúng thương hiệu mới."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "rebranding_status",
+              "label_vi": "Trạng thái đổi tên thương hiệu",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Hệ thống đã hoàn tất chuyển đổi từ Seoul Spa sang Seoul Center với bộ nhận diện mới.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "location_density",
+              "label_vi": "Mật độ chi nhánh tại TP.HCM",
+              "status": "public_observation",
+              "customer_copy_vi": "Có sự hiện diện tại nhiều quận trọng điểm như Quận 10, Quận 5, Tân Bình, Tân Phú, Gò Vấp.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "specific_fanpage_identity",
+              "label_vi": "Xác thực Fanpage quản lý",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Cần xác nhận bạn đang quản lý Fanpage tổng của hệ thống hay Fanpage riêng của một chi nhánh cụ thể tại TP.HCM.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "service_pricing",
+              "label_vi": "Thông tin bảng giá",
+              "status": "missing_signal",
+              "customer_copy_vi": "Bảng giá chi tiết cho từng dịch vụ tại khu vực TP.HCM chưa được đồng bộ hóa công khai trên các kênh dữ liệu AI.",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "corporate_ecosystem",
+              "label_vi": "Hệ sinh thái tập đoàn",
+              "status": "public_observation",
+              "customer_copy_vi": "Thương hiệu thuộc Tập đoàn Điểm Nhấn (DN Group), có liên kết với Seoul Academy và Nha khoa Shark.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 88,
+            "evidence_confidence": "high",
+            "confidence_explanation_vi": "Điểm số cao nhờ độ phủ thương hiệu lớn, lịch sử hoạt động lâu dài và dữ liệu công khai dồi dào từ quá trình tái định vị thương hiệu.",
+            "disclaimer_vi": "Đây là điểm số đánh giá mức độ sẵn sàng của dữ liệu doanh nghiệp đối với các hệ thống AI, không phải xếp hạng của Google."
+          },
+          "gap_questions": [
+            "Bạn đang quan tâm đến việc tối ưu cho chi nhánh cụ thể nào hay toàn bộ hệ thống tại TP.HCM?",
+            "Bạn đã cập nhật thông tin 'Seoul Center' thay cho 'Seoul Spa' trên tất cả các nền tảng bản đồ và mạng xã hội chưa?",
+            "Dịch vụ nào là mũi nhọn bạn muốn AI ưu tiên nhắc đến khi khách hàng tìm kiếm tại TP.HCM?",
+            "Bạn có đang chạy các chương trình khuyến mãi riêng biệt cho khu vực TP.HCM cần AI cập nhật không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Seoul Center - Hệ thống Thẩm mỹ viện hàng đầu với triết lý Phụng sự từ tâm.",
+            "summary_vi": "Thương hiệu có nền tảng vững chắc từ Seoul Spa, hiện đã nâng cấp lên Seoul Center với hơn 80 chi nhánh. Tại TP.HCM, đây là một trong những hệ thống làm đẹp có độ nhận diện cao nhất trên môi trường số.",
+            "watermark_vi": "Phân tích bởi Soi Gương AI - AI Passport"
+          },
+          "hallucination_guard_notes": [
+            "Không cung cấp số điện thoại hotline cụ thể để tránh sai sót giữa các chi nhánh.",
+            "Không đưa ra bảng giá dịch vụ vì tính chất thay đổi theo khuyến mãi.",
+            "Yêu cầu xác định rõ chi nhánh do hệ thống có quá nhiều địa điểm tại TP.HCM."
+          ]
+        },
+        "raw_text_excerpt": null
+      },
+      "option_a": {
+        "ok": true,
+        "latency_ms": 13458,
+        "usage": {
+          "promptTokenCount": 559,
+          "candidatesTokenCount": 1236,
+          "totalTokenCount": 3655,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 559
+            }
+          ],
+          "thoughtsTokenCount": 1860,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "insufficient",
+          "business_name": "Seoul Spa Hồ Chí Minh",
+          "area_or_address": "Không tìm thấy địa chỉ cụ thể trong các tín hiệu công khai.",
+          "category_guess": "Spa",
+          "match_confidence": "low",
+          "resolve_reason_vi": "Không tìm thấy trang Facebook hoặc website chính thức cụ thể cho 'Seoul Spa Hồ Chí Minh'. Các kết quả tìm kiếm quá chung chung, không đủ để xác định một doanh nghiệp duy nhất.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Tìm kiếm chung về Spa",
+              "example_query_vi": "Spa ở Hồ Chí Minh",
+              "relevance": "medium",
+              "inference_notice_vi": "Kết quả tìm kiếm ban đầu cho thấy sự quan tâm đến dịch vụ spa nói chung."
+            },
+            {
+              "label_vi": "Tên thương hiệu chung",
+              "example_query_vi": "Seoul Spa là gì",
+              "relevance": "high",
+              "inference_notice_vi": "Tên 'Seoul Spa' có thể là tên chung cho nhiều cơ sở hoặc loại hình spa."
+            },
+            {
+              "label_vi": "Địa điểm Hồ Chí Minh",
+              "example_query_vi": "Spa tại TP.HCM",
+              "relevance": "medium",
+              "inference_notice_vi": "Địa điểm được nhắc đến là Hồ Chí Minh, nhưng không có thông tin cụ thể về địa chỉ."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "facebook_page_url",
+              "label_vi": "URL trang Facebook chính thức",
+              "status": "missing_signal",
+              "customer_copy_vi": "Không tìm thấy URL trang Facebook chính thức.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "official_website",
+              "label_vi": "Website chính thức",
+              "status": "missing_signal",
+              "customer_copy_vi": "Không tìm thấy website chính thức.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "business_identity_clarity",
+              "label_vi": "Định danh doanh nghiệp",
+              "status": "public_observation",
+              "customer_copy_vi": "Tên 'Seoul Spa' rất chung chung, có thể chỉ nhiều doanh nghiệp hoặc loại hình spa.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "address_details",
+              "label_vi": "Địa chỉ cụ thể",
+              "status": "missing_signal",
+              "customer_copy_vi": "Không tìm thấy địa chỉ vật lý cụ thể của doanh nghiệp.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "contact_info",
+              "label_vi": "Thông tin liên hệ",
+              "status": "missing_signal",
+              "customer_copy_vi": "Không tìm thấy số điện thoại hoặc Zalo liên hệ.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 15,
+            "evidence_confidence": "low",
+            "confidence_explanation_vi": "Điểm số thấp do thiếu hụt nghiêm trọng các tín hiệu công khai để xác định và xác minh doanh nghiệp 'Seoul Spa Hồ Chí Minh'.",
+            "disclaimer_vi": "Điểm số này là đánh giá nội bộ của AI Passport về mức độ sẵn có của dữ liệu công khai, không phải xếp hạng chính thức từ Google hay các nền tảng AI khác."
+          },
+          "gap_questions": [
+            "Bạn có thể cung cấp URL chính xác của trang Facebook của bạn không?",
+            "Tên chính thức đầy đủ của doanh nghiệp bạn là gì, bao gồm bất kỳ định danh cụ thể nào?",
+            "Địa chỉ chính xác của Seoul Spa tại Thành phố Hồ Chí Minh là gì?",
+            "Bạn có website chính thức hoặc các kênh mạng xã hội khác (ví dụ: Instagram, Zalo) không?",
+            "Bạn cung cấp những dịch vụ cụ thể nào?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Thông tin về Seoul Spa Hồ Chí Minh còn hạn chế",
+            "summary_vi": "Chúng tôi chưa thể xác định rõ ràng doanh nghiệp 'Seoul Spa Hồ Chí Minh' do thiếu các tín hiệu công khai cụ thể như trang Facebook, website hoặc địa chỉ. Tên gọi chung chung gây khó khăn trong việc phân biệt.",
+            "watermark_vi": "Dữ liệu chưa xác minh"
+          },
+          "hallucination_guard_notes": [
+            "Không có đủ dữ liệu công khai để xác định một doanh nghiệp cụ thể mang tên 'Seoul Spa Hồ Chí Minh'.",
+            "Tên 'Seoul Spa' là chung chung, dễ gây nhầm lẫn với các cơ sở khác hoặc loại hình dịch vụ.",
+            "Việc tạo ra bất kỳ thông tin chi tiết nào (như địa chỉ, dịch vụ, giá cả) sẽ là bịa đặt.",
+            "Cần thông tin trực tiếp từ chủ doanh nghiệp để xác minh."
+          ]
+        },
+        "raw_text_excerpt": null,
+        "discovery_ok": true,
+        "discovery_latency_ms": 8598,
+        "discovery_usage": {
+          "promptTokenCount": 234,
+          "candidatesTokenCount": 379,
+          "totalTokenCount": 2494,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 234
+            }
+          ],
+          "toolUsePromptTokenCount": 1159,
+          "toolUsePromptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1159
+            }
+          ],
+          "thoughtsTokenCount": 722,
+          "serviceTier": "standard"
+        },
+        "discovery_grounding_count": 6,
+        "discovery_excerpt": "**Pass 1 Discovery: Seoul Spa Hồ Chí Minh**\n\n*   **candidate(s):** Seoul Spa Hồ Chí Minh\n*   **area/address/category:** Not found in public signals.\n*   **evidence signals and uncertainty:**\n    *   No direct Facebook page or official website for \"Seoul Spa Hồ Chí Minh\" was found in public search results.\n    *   Search results are general, relating to Ho Chi Minh City, Seoul (the city), or travel/hotel booking platforms, indicating a very low online footprint or potential ambiguity in the business name.\n    *   **public_observation:** The term \"Seoul Spa\" is generic and could refer to multiple businesses or a type of spa.\n    *   **uncertainty:** High uncertainty regarding the specific business identity and its online presence.\n*   **missing/conflicting signals:**\n    *   **missing_signal:** Official Facebook page URL, physical address, contact information (phone, Zalo), specific servic",
+        "total_latency_ms": 22056
+      }
+    },
+    {
+      "fixture": {
+        "id": "F10",
+        "industry": "garage",
+        "input_type": "name_area",
+        "seed": "Garage Ô Tô Minh Phương Quận 7",
+        "expected_behavior": "resolve_or_low_confidence",
+        "notes": "Local garage query; must not invent phone, certifications, or price."
+      },
+      "option_b": {
+        "ok": true,
+        "latency_ms": 11143,
+        "usage": {
+          "promptTokenCount": 214,
+          "candidatesTokenCount": 1327,
+          "totalTokenCount": 2447,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 214
+            }
+          ],
+          "thoughtsTokenCount": 906,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "Garage Ô Tô Minh Phương",
+          "area_or_address": "1206 Huỳnh Tấn Phát, Phú Mỹ, Quận 7, Thành phố Hồ Chí Minh",
+          "category_guess": "Dịch vụ sửa chữa và bảo dưỡng ô tô",
+          "match_confidence": "high",
+          "resolve_reason_vi": "Hệ thống xác định được thực thể kinh doanh dựa trên tên thương hiệu và địa điểm cụ thể tại Quận 7, có dữ liệu đồng nhất trên Google Maps và các trang danh bạ doanh nghiệp địa phương.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Sửa chữa và Bảo dưỡng Cơ khí",
+              "example_query_vi": "sửa gầm máy ô tô Minh Phương Quận 7",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên các dịch vụ phổ biến của garage ô tô tổng hợp."
+            },
+            {
+              "label_vi": "Đồng sơn và Phục hồi Thân vỏ",
+              "example_query_vi": "sơn dặm xe ô tô tại Garage Minh Phương",
+              "relevance": "medium",
+              "inference_notice_vi": "Cần xác nhận quy mô xưởng sơn và thiết bị pha màu tại chỗ."
+            },
+            {
+              "label_vi": "Chăm sóc xe (Detailing) cơ bản",
+              "example_query_vi": "vệ sinh nội thất ô tô Minh Phương Huỳnh Tấn Phát",
+              "relevance": "medium",
+              "inference_notice_vi": "Thường đi kèm với quy trình bảo dưỡng định kỳ."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "physical_location",
+              "label_vi": "Địa điểm thực tế",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Cơ sở tọa lạc tại mặt tiền đường Huỳnh Tấn Phát, Quận 7, thuận tiện cho việc di chuyển của khách hàng khu vực phía Nam TP.HCM.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "social_presence",
+              "label_vi": "Hiện diện mạng xã hội",
+              "status": "public_observation",
+              "customer_copy_vi": "Có sự hiện diện trên Facebook và các nền tảng bản đồ số, giúp khách hàng dễ dàng tìm kiếm thông tin liên hệ.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "service_scope",
+              "label_vi": "Phạm vi dịch vụ",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Cung cấp các dịch vụ từ bảo dưỡng nhanh đến sửa chữa nặng, tuy nhiên cần xác nhận các dòng xe chuyên dụng (xe Đức, xe Ý...).",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "digital_assets",
+              "label_vi": "Tài sản số chính quy",
+              "status": "missing_signal",
+              "customer_copy_vi": "Chưa tìm thấy website chính thức có tên miền riêng, hiện đang phụ thuộc vào các nền tảng bên thứ ba.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "customer_feedback",
+              "label_vi": "Phản hồi khách hàng",
+              "status": "public_observation",
+              "customer_copy_vi": "Ghi nhận các đánh giá tích cực về thái độ phục vụ và kỹ thuật của đội ngũ thợ trên các cộng đồng ô tô.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 62,
+            "evidence_confidence": "medium",
+            "confidence_explanation_vi": "Điểm số phản ánh mức độ hiện diện trực tuyến ở mức khá nhờ địa điểm Google Maps rõ ràng, nhưng thiếu hụt dữ liệu cấu trúc từ website chính thức và các chứng chỉ chuyên ngành công khai.",
+            "disclaimer_vi": "Đây là đánh giá dựa trên dữ liệu công khai tại thời điểm tra cứu, không thay thế cho kết quả kiểm chứng thực tế tại cơ sở."
+          },
+          "gap_questions": [
+            "Garage có sở hữu máy chẩn đoán lỗi chuyên dụng cho các dòng xe hạng sang không?",
+            "Hiện tại cơ sở có cung cấp dịch vụ cứu hộ xe hỏng dọc đường hoặc tại nhà không?",
+            "Garage có áp dụng quy trình bảo hành điện tử cho các phụ tùng thay thế không?",
+            "Đội ngũ kỹ thuật viên có các chứng chỉ đào tạo từ các hãng xe lớn không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Garage Ô Tô Minh Phương - Điểm tựa tin cậy cho xế cưng tại Quận 7",
+            "summary_vi": "Một cơ sở sửa chữa ô tô có thâm niên tại khu vực Huỳnh Tấn Phát, nổi bật với dịch vụ bảo dưỡng tổng quát và sửa chữa cơ khí, được cộng đồng địa phương tin tưởng.",
+            "watermark_vi": "Dữ liệu được phân tích bởi AI Passport"
+          },
+          "hallucination_guard_notes": [
+            "Không hiển thị số điện thoại cá nhân để tránh vi phạm chính sách bảo mật.",
+            "Không cam kết về mức giá rẻ nhất khu vực do thiếu bảng giá niêm yết công khai.",
+            "Cần xác minh lại diện tích xưởng và số lượng cầu nâng thực tế."
+          ]
+        },
+        "raw_text_excerpt": null
+      },
+      "option_a": {
+        "ok": true,
+        "latency_ms": 13393,
+        "usage": {
+          "promptTokenCount": 544,
+          "candidatesTokenCount": 1475,
+          "totalTokenCount": 3310,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 544
+            }
+          ],
+          "thoughtsTokenCount": 1291,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "disambiguation",
+          "business_name": "Garage Ô Tô Minh Phương",
+          "area_or_address": "Quận 7 (chưa xác định rõ ràng)",
+          "category_guess": "Garage ô tô, sửa chữa và bảo dưỡng xe",
+          "match_confidence": "low",
+          "resolve_reason_vi": "Tên doanh nghiệp và ngành nghề khớp mạnh, nhưng có mâu thuẫn và thiếu thông tin xác nhận địa chỉ chính xác tại Quận 7. Cần làm rõ liệu 'Công ty TNHH ô tô Minh Phương' ở Bình Thạnh có phải là cùng một doanh nghiệp hoặc chi nhánh hay không.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Sửa chữa ô tô",
+              "example_query_vi": "Garage Ô Tô Minh Phương có sửa chữa động cơ không?",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên tên 'Garage Ô Tô' và mô tả dịch vụ."
+            },
+            {
+              "label_vi": "Bảo dưỡng xe",
+              "example_query_vi": "Tôi muốn bảo dưỡng định kỳ cho xe tại Minh Phương",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên mô tả dịch vụ bảo dưỡng ô tô."
+            },
+            {
+              "label_vi": "Đồng sơn ô tô",
+              "example_query_vi": "Minh Phương có nhận làm đồng sơn xe không?",
+              "relevance": "medium",
+              "inference_notice_vi": "Dựa trên mô tả dịch vụ 'bodywork'."
+            },
+            {
+              "label_vi": "Chăm sóc xe",
+              "example_query_vi": "Dịch vụ rửa xe, đánh bóng tại Minh Phương",
+              "relevance": "medium",
+              "inference_notice_vi": "Dựa trên mô tả dịch vụ 'car care'."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "business_name_match",
+              "label_vi": "Tên doanh nghiệp",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Tên 'Minh Phương' và 'Garage Ô Tô' khớp mạnh với yêu cầu tìm kiếm.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "business_category",
+              "label_vi": "Ngành nghề kinh doanh",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Doanh nghiệp hoạt động trong lĩnh vực sửa chữa, bảo dưỡng, đồng sơn và chăm sóc ô tô.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "operational_details",
+              "label_vi": "Thông tin hoạt động",
+              "status": "public_observation",
+              "customer_copy_vi": "Thành lập năm 2014, quy mô xưởng 1.650m2 với gần 60 nhân sự và trang thiết bị hiện đại.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "address_conflict",
+              "label_vi": "Mâu thuẫn địa chỉ",
+              "status": "conflict",
+              "customer_copy_vi": "Có thông tin địa chỉ không đầy đủ ('12, Đường số 33, Phường An Khánh, TP.') và mâu thuẫn với địa chỉ 'Bình Lợi, Bình Thạnh' của một doanh nghiệp cùng tên.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "area_confirmation_q7",
+              "label_vi": "Xác nhận khu vực Quận 7",
+              "status": "missing_signal",
+              "customer_copy_vi": "Chưa có thông tin xác nhận rõ ràng về địa chỉ chính xác của Garage Ô Tô Minh Phương tại Quận 7.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 55,
+            "evidence_confidence": "low",
+            "confidence_explanation_vi": "Điểm số phản ánh sự khớp mạnh về tên và ngành nghề, nhưng bị giảm do mâu thuẫn và thiếu thông tin xác nhận địa chỉ chính xác tại Quận 7. Cần thêm thông tin để đạt độ tin cậy cao hơn.",
+            "disclaimer_vi": "Điểm số này là đánh giá nội bộ của AI Passport, không phải điểm chính thức từ Google hoặc các nền tảng AI khác."
+          },
+          "gap_questions": [
+            "Vui lòng xác nhận địa chỉ chính xác của Garage Ô Tô Minh Phương tại Quận 7.",
+            "Công ty TNHH ô tô Minh Phương có địa chỉ tại Bình Lợi, Bình Thạnh có phải là cùng một doanh nghiệp hoặc chi nhánh của Garage Ô Tô Minh Phương tại Quận 7 không?",
+            "Bạn có thể cung cấp thêm thông tin để xác định rõ ràng Garage Ô Tô Minh Phương tại Quận 7 không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Garage Ô Tô Minh Phương: Chuyên sửa chữa, bảo dưỡng và chăm sóc xe.",
+            "summary_vi": "Garage Ô Tô Minh Phương được biết đến với các dịch vụ sửa chữa, bảo dưỡng, đồng sơn và chăm sóc xe. Doanh nghiệp thành lập năm 2014 với quy mô xưởng 1.650m2 và đội ngũ gần 60 nhân sự. Tuy nhiên, thông tin về địa chỉ chính xác tại Quận 7 hiện đang cần được xác nhận thêm.",
+            "watermark_vi": "AI Passport / Soi Gương AI"
+          },
+          "hallucination_guard_notes": [
+            "Không thêm thông tin về số điện thoại, Zalo, giá cả, menu, giờ mở cửa, chứng nhận, chỗ đậu xe hoặc quyền hình ảnh.",
+            "Chỉ sử dụng dữ liệu từ 'Discovery notes từ pass 1'.",
+            "Tách rõ ràng các loại tín hiệu (confirmed_fact, public_observation, inference_needs_confirmation, missing_signal, conflict).",
+            "Trạng thái 'disambiguation' được chọn do mâu thuẫn địa chỉ."
+          ]
+        },
+        "raw_text_excerpt": null,
+        "discovery_ok": true,
+        "discovery_latency_ms": 7526,
+        "discovery_usage": {
+          "promptTokenCount": 235,
+          "candidatesTokenCount": 347,
+          "totalTokenCount": 2034,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 235
+            }
+          ],
+          "toolUsePromptTokenCount": 522,
+          "toolUsePromptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 522
+            }
+          ],
+          "thoughtsTokenCount": 930,
+          "serviceTier": "standard"
+        },
+        "discovery_grounding_count": 7,
+        "discovery_excerpt": "- **candidate(s):** Công ty TNHH ô tô Minh Phương / GARA MINH PHƯƠNG\n- **evidence signals:**\n    *   **Name Match:** \"Minh Phương\" and \"Garage Ô Tô\" are strongly matched.\n    *   **Category:** Clearly an automotive garage offering repair, maintenance, bodywork, and car care services.\n    *   **Operational Details:** Established March 26, 2014, with a team of nearly 60, a 1,650m2 workshop, skilled technicians, and modern equipment.\n- **uncertainty/missing/conflicting signals:**\n    *   **Address/Area Conflict:** One source mentions an incomplete address \"12, Đường số 33, Phường An Khánh, TP.\" and \"Tọa lạc ngay trung tâm thành phố\", which doesn't explicitly confirm Quận 7. Another source for \"CÔNG TY TNHH Ô TÔ MINH PHƯƠNG\" lists an address in Bình Lợi, Bình Thạnh District, not Quận 7. Other search results listing garages in Quận 7 do not include \"Minh Phương\".\n- **câu hỏi cần hỏi owner nếu",
+        "total_latency_ms": 20919
+      }
+    },
+    {
+      "fixture": {
+        "id": "F11",
+        "industry": "garage",
+        "input_type": "name_area",
+        "seed": "Toyota Đông Sài Gòn service center",
+        "expected_behavior": "resolve_or_disambiguate",
+        "notes": "Official/authorized service center likely has stronger footprint."
+      },
+      "option_b": {
+        "ok": true,
+        "latency_ms": 10660,
+        "usage": {
+          "promptTokenCount": 214,
+          "candidatesTokenCount": 1371,
+          "totalTokenCount": 2278,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 214
+            }
+          ],
+          "thoughtsTokenCount": 693,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "Toyota Đông Sài Gòn",
+          "area_or_address": "Hệ thống nhiều chi nhánh tại TP. Hồ Chí Minh (Quận 2, Quận 9, Gò Vấp, Bình Thạnh)",
+          "category_guess": "Trung tâm Dịch vụ và Đại lý Ô tô Ủy quyền",
+          "match_confidence": "high",
+          "resolve_reason_vi": "Xác định được đây là hệ thống đại lý ủy quyền lớn của Toyota Việt Nam với sự hiện diện kỹ thuật số mạnh mẽ và nhiều địa điểm dịch vụ cụ thể.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Bảo dưỡng và Sửa chữa chuyên nghiệp",
+              "example_query_vi": "Bảo dưỡng định kỳ Toyota Đông Sài Gòn mất bao lâu?",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên tiêu chuẩn chung của đại lý Toyota ủy quyền."
+            },
+            {
+              "label_vi": "Dịch vụ Đồng sơn và Chăm sóc xe",
+              "example_query_vi": "Địa chỉ sơn xe Toyota uy tín tại Quận 9",
+              "relevance": "high",
+              "inference_notice_vi": "Cần xác nhận năng lực tiếp nhận xe tại từng chi nhánh cụ thể."
+            },
+            {
+              "label_vi": "Phụ tùng và Phụ kiện chính hãng",
+              "example_query_vi": "Thay lọc nhớt Toyota chính hãng tại Gò Vấp",
+              "relevance": "medium",
+              "inference_notice_vi": "Thông tin về tình trạng kho hàng cần được cập nhật thời gian thực."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "authorized_status",
+              "label_vi": "Đại lý ủy quyền chính thức",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Là đại lý chính thức của Toyota Việt Nam, đảm bảo quy chuẩn kỹ thuật toàn cầu.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "multi_location_presence",
+              "label_vi": "Mạng lưới chi nhánh rộng",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Sở hữu nhiều trạm dịch vụ tại các khu vực trọng điểm của TP.HCM.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "online_booking_system",
+              "label_vi": "Hệ thống đặt lịch trực tuyến",
+              "status": "public_observation",
+              "customer_copy_vi": "Khách hàng có thể tìm thấy thông tin đặt lịch hẹn qua website hoặc hotline.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "customer_lounge_amenities",
+              "label_vi": "Tiện ích phòng chờ",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Thường có khu vực chờ tiêu chuẩn với nước uống và wifi cho khách hàng bảo dưỡng.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "service_pricing",
+              "label_vi": "Bảng giá dịch vụ",
+              "status": "missing_signal",
+              "customer_copy_vi": "Chưa có dữ liệu công khai về bảng giá chi tiết cho các gói sửa chữa ngoài bảo dưỡng định kỳ.",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "technician_certification",
+              "label_vi": "Trình độ kỹ thuật viên",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Đội ngũ kỹ thuật viên được đào tạo theo chứng chỉ chuyên môn của Toyota.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 88,
+            "evidence_confidence": "high",
+            "confidence_explanation_vi": "Dữ liệu được đối soát từ hệ thống Toyota Việt Nam và các trang thông tin doanh nghiệp chính thức.",
+            "disclaimer_vi": "Điểm số này phản ánh mức độ sẵn sàng của dữ liệu doanh nghiệp trên hệ thống AI Passport, không thay thế cho đánh giá từ Google Maps."
+          },
+          "gap_questions": [
+            "Bạn muốn tập trung tối ưu hóa hiển thị cho chi nhánh cụ thể nào nhất?",
+            "Cơ sở của bạn có cung cấp dịch vụ sửa chữa lưu động hoặc cứu hộ 24/7 không?",
+            "Hiện tại quy trình tiếp nhận xe đặt lịch trước qua kênh online có ưu tiên gì đặc biệt không?",
+            "Bạn có các chương trình ưu đãi riêng biệt cho khách hàng thân thiết tại hệ thống Đông Sài Gòn không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Toyota Đông Sài Gòn - Dịch vụ tận tâm, chất lượng xứng tầm",
+            "summary_vi": "Hệ thống trung tâm dịch vụ ủy quyền hàng đầu của Toyota tại TP.HCM, chuyên cung cấp giải pháp bảo dưỡng, sửa chữa và phụ tùng chính hãng với quy trình chuyên nghiệp.",
+            "watermark_vi": "Xác thực bởi AI Passport"
+          },
+          "hallucination_guard_notes": [
+            "Không tự ý cung cấp số điện thoại hotline nếu chưa xác định rõ chi nhánh.",
+            "Không cam kết thời gian hoàn thành sửa chữa cụ thể.",
+            "Cần xác nhận lại danh mục quà tặng hoặc khuyến mãi hiện hành.",
+            "Tránh khẳng định về diện tích bãi đậu xe nếu không có dữ liệu mặt bằng cụ thể."
+          ]
+        },
+        "raw_text_excerpt": null
+      },
+      "option_a": {
+        "ok": true,
+        "latency_ms": 17866,
+        "usage": {
+          "promptTokenCount": 883,
+          "candidatesTokenCount": 1638,
+          "totalTokenCount": 5178,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 883
+            }
+          ],
+          "thoughtsTokenCount": 2657,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "resolved",
+          "business_name": "Toyota Đông Sài Gòn",
+          "area_or_address": "507 Võ Nguyên Giáp, TP. Thủ Đức, TP.HCM và các chi nhánh khác",
+          "category_guess": "Trung tâm dịch vụ và đại lý ủy quyền Toyota",
+          "match_confidence": "high",
+          "resolve_reason_vi": "Doanh nghiệp được xác định rõ là đại lý và trung tâm dịch vụ ủy quyền của Toyota với nhiều địa điểm đã được xác nhận. Mặc dù có một số thông tin chi tiết cần làm rõ, danh tính và chức năng chính của doanh nghiệp là rõ ràng.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Dịch vụ bảo dưỡng và sửa chữa ô tô",
+              "example_query_vi": "Toyota Đông Sài Gòn bảo dưỡng xe",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên các dịch vụ được công bố như bảo hành, bảo dưỡng, sửa chữa chung, đồng sơn."
+            },
+            {
+              "label_vi": "Đại lý ủy quyền chính hãng Toyota",
+              "example_query_vi": "Đại lý Toyota Đông Sài Gòn",
+              "relevance": "high",
+              "inference_notice_vi": "Xác định là đại lý ủy quyền chính hãng dựa trên thông tin công khai."
+            },
+            {
+              "label_vi": "Địa chỉ và thông tin liên hệ",
+              "example_query_vi": "Địa chỉ Toyota Đông Sài Gòn Thủ Đức",
+              "relevance": "medium",
+              "inference_notice_vi": "Thông tin địa chỉ và hotline được thu thập từ các nguồn công khai."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "authorized_dealer",
+              "label_vi": "Đại lý ủy quyền chính hãng Toyota",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Toyota Đông Sài Gòn là đại lý và trung tâm dịch vụ ủy quyền chính hãng của Toyota.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "main_address",
+              "label_vi": "Địa chỉ chính",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Địa chỉ chính: 507 Võ Nguyên Giáp, TP. Thủ Đức, TP.HCM.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "branch_addresses",
+              "label_vi": "Các chi nhánh khác",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Có các chi nhánh tại 18 Phan Văn Trị, Q. Gò Vấp và 650 Quốc Lộ 13, TP.HCM.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "service_offerings",
+              "label_vi": "Các dịch vụ cung cấp",
+              "status": "public_observation",
+              "customer_copy_vi": "Cung cấp các dịch vụ bảo hành, bảo dưỡng, sửa chữa chung, đồng sơn, kiểm tra xe và bảo dưỡng nhanh (EM60).",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "phuong_conflict",
+              "label_vi": "Mâu thuẫn thông tin phường",
+              "status": "conflict",
+              "customer_copy_vi": "Có mâu thuẫn về phường của địa chỉ 507 Võ Nguyên Giáp (An Phú hoặc An Khánh).",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "operating_hours",
+              "label_vi": "Giờ hoạt động",
+              "status": "missing_signal",
+              "customer_copy_vi": "Thông tin giờ hoạt động cụ thể cho từng trung tâm dịch vụ chưa được cung cấp đầy đủ.",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "full_service_scope",
+              "label_vi": "Phạm vi dịch vụ đầy đủ tại các chi nhánh",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Cần xác nhận liệu tất cả các địa điểm có cung cấp đầy đủ các dịch vụ như nhau hay không.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 75,
+            "evidence_confidence": "medium",
+            "confidence_explanation_vi": "Điểm số phản ánh việc xác định rõ ràng doanh nghiệp và các địa điểm chính, nhưng có một số thông tin chi tiết (như giờ hoạt động, phạm vi dịch vụ cụ thể tại từng chi nhánh, và thông tin địa chỉ phụ) còn thiếu hoặc cần xác nhận thêm.",
+            "disclaimer_vi": "Điểm số này là đánh giá nội bộ của AI Passport, không phải điểm chính thức từ Google hoặc các nền tảng AI khác."
+          },
+          "gap_questions": [
+            "Vui lòng xác nhận chính xác phường của địa chỉ 507 Võ Nguyên Giáp (An Phú hay An Khánh)?",
+            "Tất cả các địa điểm được liệt kê (507 Võ Nguyên Giáp, 18 Phan Văn Trị, 650 Quốc Lộ 13) có phải là trung tâm dịch vụ đầy đủ không, hay có địa điểm chuyên biệt?",
+            "Giờ hoạt động chính thức của từng trung tâm dịch vụ là gì?",
+            "Số hotline nào là số liên hệ chính để đặt lịch hẹn dịch vụ?",
+            "Có tài khoản Zalo chính thức nào cho trung tâm dịch vụ không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Đại lý và Trung tâm Dịch vụ Toyota Chính hãng tại TP.HCM",
+            "summary_vi": "Toyota Đông Sài Gòn là đại lý ủy quyền và trung tâm dịch vụ chính hãng của Toyota, cung cấp đầy đủ các dịch vụ bảo hành, bảo dưỡng, sửa chữa chung, đồng sơn và bảo dưỡng nhanh tại nhiều địa điểm ở TP.HCM.",
+            "watermark_vi": "Thông tin được tổng hợp bởi AI Passport"
+          },
+          "hallucination_guard_notes": [
+            "Không bịa đặt thông tin về số điện thoại, Zalo, giá cả, menu, giờ mở cửa, chứng nhận, chỗ đậu xe hoặc quyền hình ảnh.",
+            "Không hứa hẹn tăng doanh số, lên top Google hoặc đảm bảo AI sẽ nhắc tên doanh nghiệp.",
+            "Tách biệt rõ ràng các loại tín hiệu (confirmed_fact, public_observation, inference_needs_confirmation, missing_signal, conflict).",
+            "Đảm bảo số lượng tối thiểu/tối đa cho các mảng dữ liệu theo schema."
+          ]
+        },
+        "raw_text_excerpt": null,
+        "discovery_ok": true,
+        "discovery_latency_ms": 10674,
+        "discovery_usage": {
+          "promptTokenCount": 235,
+          "candidatesTokenCount": 686,
+          "totalTokenCount": 2595,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 235
+            }
+          ],
+          "toolUsePromptTokenCount": 521,
+          "toolUsePromptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 521
+            }
+          ],
+          "thoughtsTokenCount": 1153,
+          "serviceTier": "standard"
+        },
+        "discovery_grounding_count": 14,
+        "discovery_excerpt": "**Pass 1 Discovery: Toyota Đông Sài Gòn service center**\n\n*   **Candidate(s):** Toyota Đông Sài Gòn.\n*   **Area/Address/Category:**\n    *   **Confirmed_fact:** Toyota authorized dealership and service center.\n    *   **Confirmed_fact:** Main location: 507 Võ Nguyên Giáp, TP. Thủ Đức, TP.HCM.\n    *   **Confirmed_fact:** Branch 1: 18 Phan Văn Trị, Q. Gò Vấp, TP.HCM.\n    *   **Confirmed_fact:** Branch 2: 650 Quốc Lộ 13, TP.HCM.\n    *   **Public_observation:** Services include warranty, maintenance, general repair, body and paint, inspection, recall, and quick maintenance (EM60).\n\n*   **Evidence signals and uncertainty:**\n    *   **Confirmed_fact:** Multiple official-looking websites found: toyotasaigon5s.vn and toyotadongsaigon.vn.\n    *   **Confirmed_fact:** Several hotlines are publicly available: 0903990666, 0968702150, 0904451520, 0968068977, 0969664977.\n    *   **Inference_needs_confir",
+        "total_latency_ms": 28540
+      }
+    },
+    {
+      "fixture": {
+        "id": "F12",
+        "industry": "garage",
+        "input_type": "duplicate_name",
+        "seed": "sửa xe điện gần Nhà Bè tên An Phát",
+        "expected_behavior": "disambiguation_or_insufficient",
+        "notes": "Ambiguous service-intent seed; should ask for area/link instead of forcing a match."
+      },
+      "option_b": {
+        "ok": true,
+        "latency_ms": 32413,
+        "usage": {
+          "promptTokenCount": 216,
+          "candidatesTokenCount": 1363,
+          "totalTokenCount": 5662,
+          "cachedContentTokenCount": 61,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 216
+            }
+          ],
+          "cacheTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 61
+            }
+          ],
+          "thoughtsTokenCount": 4083,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 2,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "disambiguation",
+          "business_name": "An Phát (Nhà Bè)",
+          "area_or_address": "Khu vực Lê Văn Lương, Huyện Nhà Bè, TP.HCM",
+          "category_guess": "Dịch vụ sửa chữa xe (Ô tô hoặc Xe điện)",
+          "match_confidence": "low",
+          "resolve_reason_vi": "Tìm thấy một garage ô tô lớn tên An Phát tại Nhà Bè, nhưng chưa có dữ liệu xác thực về một cửa hàng chuyên sửa xe đạp điện/xe máy điện cùng tên có footprint mạnh tại khu vực này.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Sửa chữa ô tô & xe điện (Car/EV)",
+              "example_query_vi": "Garage An Phát Auto Lê Văn Lương Nhà Bè",
+              "relevance": "medium",
+              "inference_notice_vi": "Cơ sở này có địa chỉ rõ ràng nhưng tập trung vào ô tô, cần xác nhận nếu họ có nhận sửa xe máy điện/xe đạp điện."
+            },
+            {
+              "label_vi": "Sửa chữa thiết bị điện (Electrical)",
+              "example_query_vi": "An Phát SG365 Lê Văn Lương",
+              "relevance": "low",
+              "inference_notice_vi": "Nằm tại Quận 7 (giáp Nhà Bè), chuyên về thiết bị điện, có thể gây nhầm lẫn."
+            },
+            {
+              "label_vi": "Dịch vụ sửa xe điện lưu động",
+              "example_query_vi": "Sửa xe điện tận nơi Nhà Bè",
+              "relevance": "medium",
+              "inference_notice_vi": "Nhiều đơn vị như Thuận Phong, Thành Tùng hoạt động tại Nhà Bè, khách có thể nhầm tên thương hiệu."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "physical_location",
+              "label_vi": "Địa điểm thực tế",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Có Garage An Phát Auto tọa lạc tại 1260 Lê Văn Lương, Phước Kiển, Nhà Bè.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "business_scope",
+              "label_vi": "Lĩnh vực hoạt động",
+              "status": "public_observation",
+              "customer_copy_vi": "An Phát Auto tại Nhà Bè được ghi nhận chuyên về bảo dưỡng và sửa chữa ô tô.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "ev_specialty",
+              "label_vi": "Chuyên môn xe điện",
+              "status": "missing_signal",
+              "customer_copy_vi": "Chưa tìm thấy thông tin công khai về việc cửa hàng An Phát tại Nhà Bè chuyên sửa xe đạp điện hoặc xe máy điện.",
+              "confidence": "medium",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "nearby_competitors",
+              "label_vi": "Cơ sở tương tự lân cận",
+              "status": "public_observation",
+              "customer_copy_vi": "Khu vực Nhà Bè có các tiệm sửa xe điện uy tín khác như Thuận Phong (Huỳnh Tấn Phát) hoặc Mạnh Phát.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "brand_confusion",
+              "label_vi": "Nhận diện thương hiệu",
+              "status": "inference_needs_confirmation",
+              "customer_copy_vi": "Có thể khách hàng đang tìm kiếm một tiệm sửa xe nhỏ địa phương hoặc nhầm lẫn với công ty Xe Điện An Phát tại Đà Lạt.",
+              "confidence": "low",
+              "requires_owner_confirmation": true
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 45,
+            "evidence_confidence": "low",
+            "confidence_explanation_vi": "Dữ liệu về 'An Phát' tại Nhà Bè chủ yếu gắn liền với garage ô tô hoặc cửa hàng gas, không khớp hoàn toàn với mô tả 'sửa xe điện' (thường hiểu là xe đạp/máy điện).",
+            "disclaimer_vi": "Điểm số dựa trên mức độ hiển thị công khai của thực thể kinh doanh trên các nền tảng số."
+          },
+          "gap_questions": [
+            "Bạn đang cần sửa xe đạp điện, xe máy điện hay ô tô điện?",
+            "Cửa hàng bạn tìm nằm ở đường Lê Văn Lương hay Huỳnh Tấn Phát?",
+            "Bạn có nhớ cửa hàng này nằm gần mốc lộ giới nào (ví dụ: gần cầu Long Kiểng) không?",
+            "Cửa hàng này có biển hiệu chuyên về dòng xe nào (ví dụ: VinFast, Pega) không?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Xác minh cơ sở sửa chữa An Phát tại khu vực Nhà Bè",
+            "summary_vi": "Hiện có một garage ô tô tên An Phát tại đường Lê Văn Lương, Nhà Bè. Tuy nhiên, thông tin về một tiệm chuyên sửa xe đạp điện/xe máy điện mang tên này tại địa phương vẫn chưa rõ ràng và cần xác nhận thêm.",
+            "watermark_vi": "Soi Gương AI - MVP Slice 1"
+          },
+          "hallucination_guard_notes": [
+            "Không khẳng định An Phát Auto sửa xe máy điện.",
+            "Không tự bịa số điện thoại cho tiệm xe điện An Phát tại Nhà Bè.",
+            "Cảnh báo về sự tồn tại của các doanh nghiệp trùng tên ở tỉnh khác (Đà Lạt)."
+          ]
+        },
+        "raw_text_excerpt": null
+      },
+      "option_a": {
+        "ok": true,
+        "latency_ms": 16801,
+        "usage": {
+          "promptTokenCount": 453,
+          "candidatesTokenCount": 1265,
+          "totalTokenCount": 4370,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 453
+            }
+          ],
+          "thoughtsTokenCount": 2652,
+          "serviceTier": "standard"
+        },
+        "grounding_count": 0,
+        "json_valid": true,
+        "parse_error": null,
+        "parsed": {
+          "match_status": "disambiguation",
+          "business_name": "CÔNG TY TNHH XE ĐIỆN AN PHÁT",
+          "area_or_address": "Nhà Bè",
+          "category_guess": "Dịch vụ sửa chữa xe điện",
+          "match_confidence": "low",
+          "resolve_reason_vi": "Có nhiều doanh nghiệp có tên hoặc dịch vụ tương tự, nhưng thông tin vị trí không khớp hoặc không đủ rõ ràng để xác định chính xác một thực thể duy nhất.",
+          "semantic_clusters": [
+            {
+              "label_vi": "Sửa chữa xe điện",
+              "example_query_vi": "tìm chỗ sửa xe đạp điện",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên ngành nghề kinh doanh của ứng viên 'CÔNG TY TNHH XE ĐIỆN AN PHÁT'."
+            },
+            {
+              "label_vi": "Xe điện An Phát",
+              "example_query_vi": "cửa hàng An Phát sửa xe điện",
+              "relevance": "high",
+              "inference_notice_vi": "Dựa trên tên doanh nghiệp của ứng viên 'CÔNG TY TNHH XE ĐIỆN AN PHÁT'."
+            },
+            {
+              "label_vi": "Gần Nhà Bè",
+              "example_query_vi": "sửa xe điện ở Nhà Bè",
+              "relevance": "medium",
+              "inference_notice_vi": "Dựa trên yêu cầu vị trí từ người dùng, nhưng không khớp với địa chỉ của ứng viên."
+            }
+          ],
+          "observations": [
+            {
+              "signal_key": "business_name_contains_an_phat",
+              "label_vi": "Tên chứa 'An Phát'",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Tên doanh nghiệp 'CÔNG TY TNHH XE ĐIỆN AN PHÁT' chứa cụm từ 'An Phát' theo yêu cầu.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "service_electric_vehicle_repair",
+              "label_vi": "Dịch vụ sửa xe điện",
+              "status": "confirmed_fact",
+              "customer_copy_vi": "Ngành nghề kinh doanh của 'CÔNG TY TNHH XE ĐIỆN AN PHÁT' bao gồm 'Sửa chữa, bảo dưỡng xe máy điện'.",
+              "confidence": "high",
+              "requires_owner_confirmation": false
+            },
+            {
+              "signal_key": "location_mismatch_nhabe",
+              "label_vi": "Vị trí không khớp Nhà Bè",
+              "status": "conflict",
+              "customer_copy_vi": "Địa chỉ đăng ký của 'CÔNG TY TNHH XE ĐIỆN AN PHÁT' tại Đà Lạt, Lâm Đồng, không phải TP. Hồ Chí Minh hoặc Nhà Bè.",
+              "confidence": "high",
+              "requires_owner_confirmation": true
+            },
+            {
+              "signal_key": "multiple_candidates_exist",
+              "label_vi": "Có nhiều ứng viên tiềm năng",
+              "status": "public_observation",
+              "customer_copy_vi": "Ngoài 'CÔNG TY TNHH XE ĐIỆN AN PHÁT', còn có các ứng viên khác như 'Thế giới xe Chạy Điện' và 'Xe Điện Thuận Phong' liên quan đến xe điện.",
+              "confidence": "medium",
+              "requires_owner_confirmation": false
+            }
+          ],
+          "score_snapshot": {
+            "total_score": 35,
+            "evidence_confidence": "low",
+            "confidence_explanation_vi": "Thông tin tên và dịch vụ khớp tốt, nhưng vị trí địa lý của ứng viên tiềm năng không phù hợp với yêu cầu 'gần Nhà Bè', dẫn đến cần làm rõ thêm.",
+            "disclaimer_vi": "Điểm số này là đánh giá nội bộ của AI Passport về mức độ phù hợp của dữ liệu, không phải xếp hạng chính thức từ các nền tảng bên ngoài."
+          },
+          "gap_questions": [
+            "Bạn có thể cung cấp địa chỉ cụ thể hơn ở Nhà Bè không?",
+            "Tên đầy đủ của cửa hàng sửa xe điện An Phát mà bạn đang tìm kiếm là gì?",
+            "Bạn có biết số điện thoại hoặc website của cửa hàng này không?",
+            "Cửa hàng này chuyên sửa loại xe điện nào (xe đạp điện, xe máy điện, ô tô điện)?"
+          ],
+          "mini_preview": {
+            "tagline_vi": "Tìm kiếm dịch vụ sửa xe điện An Phát gần Nhà Bè",
+            "summary_vi": "Chúng tôi tìm thấy một doanh nghiệp tên 'CÔNG TY TNHH XE ĐIỆN AN PHÁT' chuyên sửa xe điện, nhưng địa chỉ đăng ký của họ ở Đà Lạt, không phải Nhà Bè. Cần thêm thông tin để xác định chính xác.",
+            "watermark_vi": "Dữ liệu được tổng hợp bởi AI Passport"
+          },
+          "hallucination_guard_notes": [
+            "Không bịa địa chỉ Nhà Bè cho CÔNG TY TNHH XE ĐIỆN AN PHÁT.",
+            "Không suy diễn dịch vụ hoặc thông tin liên hệ không có trong dữ liệu.",
+            "Nhấn mạnh sự không khớp về vị trí."
+          ]
+        },
+        "raw_text_excerpt": null,
+        "discovery_ok": true,
+        "discovery_latency_ms": 14724,
+        "discovery_usage": {
+          "promptTokenCount": 237,
+          "candidatesTokenCount": 294,
+          "totalTokenCount": 3609,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 237
+            }
+          ],
+          "toolUsePromptTokenCount": 638,
+          "toolUsePromptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 638
+            }
+          ],
+          "thoughtsTokenCount": 2440,
+          "serviceTier": "standard"
+        },
+        "discovery_grounding_count": 7,
+        "discovery_excerpt": "match_status=disambiguation\n\n*   **Candidate(s):**\n    *   **CÔNG TY TNHH XE ĐIỆN AN PHÁT:** (Công ty TNHH Xe Điện An Phát)\n    *   **Thế giới xe Chạy Điện:** (Thế Giới Xe Chạy Điện),,\n    *   **Xe Điện Thuận Phong:** (Xe Điện Thuận Phong)\n\n*   **Evidence signals and uncertainty:**\n    *   **CÔNG TY TNHH XE ĐIỆN AN PHÁT:**\n        *   `confirmed_fact`: Tên doanh nghiệp chứa \"An Phát\" và ngành nghề kinh doanh bao gồm \"Sửa chữa, bảo dưỡng xe máy điện\" (electric motorcycle repair and maintenance).\n        *   `public_observation`: Địa chỉ đăng ký tại Đà Lạt, Lâm Đồng, không phải TP. Hồ Chí Minh hoặc Nhà Bè.\n        *   `uncertainty`: Tên và dịch vụ phù hợp, nhưng vị trí không khớp với yêu cầu \"gần Nhà Bè\".\n    *   **Thế giới xe Chạy",
+        "total_latency_ms": 31525
+      }
+    }
+  ]
+}

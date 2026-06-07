@@ -1,0 +1,50 @@
+{
+  "open_mirror": {
+    "session_id": null,
+    "client_state": "COLLECT_SEED",
+    "user_action": "open_mirror",
+    "payload": {},
+    "metadata": {
+      "page_url": "https://aipass.io.vn/",
+      "locale": "vi-VN",
+      "timezone": "Asia/Ho_Chi_Minh"
+    }
+  },
+  "submit_seed": {
+    "session_id": "replace-with-session-id",
+    "client_state": "COLLECT_SEED",
+    "user_action": "submit_seed",
+    "payload": {
+      "seed": "Quán Đồng Quê Ven Kênh Nhà Bè"
+    },
+    "metadata": {
+      "page_url": "https://aipass.io.vn/",
+      "locale": "vi-VN",
+      "timezone": "Asia/Ho_Chi_Minh"
+    }
+  },
+  "confirm_business": {
+    "session_id": "replace-with-session-id",
+    "client_state": "CONFIRM_BUSINESS",
+    "user_action": "confirm_business",
+    "payload": {
+      "seed": "Quán Đồng Quê Ven Kênh Nhà Bè",
+      "candidate": {
+        "match_status": "disambiguation",
+        "business_name": "Quán Đồng Quê Ven Kênh",
+        "area_or_address": "Nhà Bè, TP.HCM",
+        "category_guess": "Quán món đồng quê",
+        "match_confidence": "medium",
+        "evidence_summary": ["Tên + khu vực cần owner xác nhận"],
+        "public_urls": [],
+        "owner_confirmation_required": true,
+        "reason_vi": "Candidate cần xác nhận trước khi audit."
+      }
+    },
+    "metadata": {
+      "page_url": "https://aipass.io.vn/",
+      "locale": "vi-VN",
+      "timezone": "Asia/Ho_Chi_Minh"
+    }
+  }
+}
