@@ -333,3 +333,5 @@ Quyết định sau M0:
 - Dùng `gemini-3-flash-preview` single-pass làm primary pipeline cho M2.
 - Giữ `gemini-2.5-flash` two-pass làm fallback cho case mơ hồ, footprint mỏng, social URL khó đọc, JSON invalid hoặc timeout.
 - Backend M2 vẫn phải validate schema, hạ confidence cho case thiếu grounding/unique evidence và không auto-confirm critical facts.
+- M2 backend skeleton và Gemini integration đã được scaffold trong [`apps-script/soi-guong-ai`](../../apps-script/soi-guong-ai) với `doPost(e)` router, Sheets schema setup, primary/fallback Gemini pipeline và guardrail normalization.
+- M2 frontend adapter đã được nối ở mức optional endpoint: nếu cấu hình `aipass-mirror-endpoint` hoặc `localStorage.aipass_mirror_endpoint`, landing page sẽ gọi Apps Script; nếu không có endpoint thì giữ fixture fallback để demo UX an toàn.

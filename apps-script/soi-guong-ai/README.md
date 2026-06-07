@@ -95,7 +95,19 @@ Fallback is used when the primary call fails, returns invalid JSON, or fails the
 
 ## Frontend handoff
 
-The current M1 frontend shell can be connected by replacing fixture state transitions with POST calls to the deployed Apps Script URL. The backend response envelope already returns:
+The landing page now has an optional M2 live adapter. Configure the deployed Apps Script Web App URL in one of these ways:
+
+```html
+<meta name="aipass-mirror-endpoint" content="https://script.google.com/macros/s/.../exec" />
+```
+
+Or for local smoke testing without editing HTML:
+
+```js
+localStorage.setItem('aipass_mirror_endpoint', 'https://script.google.com/macros/s/.../exec')
+```
+
+When no endpoint is configured, the frontend stays in M1 fixture mode. The backend response envelope returns:
 
 ```text
 ok

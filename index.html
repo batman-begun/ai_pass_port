@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#fff8ec" />
+  <meta name="aipass-mirror-endpoint" content="" />
   <title>AI Passport — Soi hiện diện AI cho quán/business local</title>
   <meta name="description" content="AI Passport giúp business local dọn lại thông tin, menu, FAQ, CTA, QR và tracking để khách mới, Google Maps và AI hiểu rõ hơn." />
   <meta property="og:title" content="AI Passport — Soi hiện diện AI cho quán/business local" />
@@ -385,6 +386,7 @@
     .quick-replies { display: flex; flex-wrap: wrap; gap: 8px; padding: 2px 0 4px; }
     .quick-replies button, .mirror-action { min-height: 42px; border-radius: 999px; padding: 0 13px; background: rgba(190,90,36,.09); border: 1px solid rgba(190,90,36,.14); color: var(--orange-dark); font-weight: 950; }
     .quick-replies button.primary, .mirror-action.primary { background: linear-gradient(135deg,#b65320,#f06d2f); color: #fff; box-shadow: 0 14px 26px rgba(170,75,24,.20); }
+    .quick-replies button:disabled, .mirror-action:disabled { opacity: .58; cursor: wait; box-shadow: none; }
     .candidate-grid, .cluster-grid, .gap-grid, .score-grid { display: grid; gap: 8px; }
     .candidate-card, .mini-card, .gap-card { border-radius: 17px; padding: 11px; background: #fffdf8; border: 1px solid rgba(190,90,36,.12); }
     .candidate-card b, .mini-card b, .gap-card b { display: block; margin-bottom: 4px; letter-spacing: -.02em; }
@@ -1172,7 +1174,20 @@
       }
     };
 
-    const mirrorState = { step: 'collect_seed', seed: mirrorFixture.defaultSeed, completedSteps: 1 };
+    const mirrorState = {
+      step: 'collect_seed',
+      seed: mirrorFixture.defaultSeed,
+      completedSteps: 1,
+      sessionId: null,
+      serverState: 'COLLECT_SEED',
+      lastCandidate: null,
+      lastResult: null,
+      liveEnabled: Boolean(getMirrorEndpoint())
+    };
+
+    function getMirrorEndpoint() {
+      return (window.AIPASS_MIRROR_ENDPOINT || document.querySelector('meta[name="aipass-mirror-endpoint"]')?.content || localStorage.getItem('aipass_mirror_endpoint') || '').trim();
+    }
 
     function trackMirrorEvent(eventName, payload = {}) {
       window.dispatchEvent(new CustomEvent('aipass:mirror-event', { detail: { eventName, payload, at: new Date().toISOString() } }));
@@ -1189,6 +1204,16 @@
       while (node.firstChild) node.removeChild(node.firstChild);
     }
 
+    function updateMirrorModePills() {
+      const pills = [...document.querySelectorAll('.mirror-pill')];
+      const endpoint = getMirrorEndpoint();
+      mirrorState.liveEnabled = Boolean(endpoint);
+      const labels = mirrorState.liveEnabled
+        ? ['M2 live adapter', 'Apps Script endpoint đã cấu hình', 'API key không nằm frontend']
+        : ['M1 fixture shell', 'Không gọi Gemini live', 'Không Google Form'];
+      pills.forEach((pill, index) => { pill.textContent = labels[index] || pill.textContent; });
+    }
+
     function renderProgress(count) {
       clearNode(mirrorProgress);
       for (let i = 0; i < 4; i += 1) {
@@ -1198,9 +1223,9 @@
       }
     }
 
-    function addBlock(type, data) {
+    function addBlock(type, data = {}) {
       const allowlist = new Set([
-        'assistant_bubble', 'seed_input', 'business_candidate', 'simulation_progress', 'semantic_cluster_grid',
+        'assistant_bubble', 'quick_reply_group', 'seed_input', 'business_candidate', 'simulation_progress', 'semantic_cluster_grid',
         'example_query_carousel', 'public_footprint_mirror', 'score_ring', 'score_breakdown', 'confidence_badge',
         'priority_gap_list', 'before_after_preview', 'trust_footer', 'full_draft_cta', 'error_recovery'
       ]);
@@ -1211,14 +1236,28 @@
       if (type === 'assistant_bubble') {
         const bubble = el('div', 'assistant-bubble');
         bubble.appendChild(el('small', '', data.kicker || 'Soi Gương AI'));
-        bubble.appendChild(document.createTextNode(data.text));
+        bubble.appendChild(document.createTextNode(data.text || data.copy_vi || data.message || ''));
         block.appendChild(bubble);
+      }
+
+      if (type === 'quick_reply_group') {
+        const card = el('div', 'mirror-card');
+        card.appendChild(el('h4', '', data.title_vi || 'Chọn bước tiếp theo'));
+        const replies = el('div', 'quick-replies');
+        (data.replies || []).forEach(reply => {
+          const button = el('button', reply.primary ? 'primary' : '', reply.label || reply.label_vi || reply.id);
+          button.type = 'button';
+          button.addEventListener('click', () => handleQuickReply(reply.id));
+          replies.appendChild(button);
+        });
+        card.appendChild(replies);
+        block.appendChild(card);
       }
 
       if (type === 'seed_input') {
         const card = el('div', 'mirror-card');
-        card.appendChild(el('h3', '', data.title));
-        card.appendChild(el('p', '', data.copy));
+        card.appendChild(el('h3', '', data.title || data.title_vi || 'Nhập tên business hoặc link public'));
+        card.appendChild(el('p', '', data.copy || data.copy_vi || (mirrorState.liveEnabled ? 'Live mode sẽ gọi Apps Script backend để resolve candidate thật.' : 'Bản M1 chưa gọi Gemini live. Dữ liệu dưới đây dùng fixture để review UX.')));
         const row = el('div', 'seed-row');
         const input = el('input', 'seed-input');
         input.id = 'mirrorSeedInput';
@@ -1229,7 +1268,7 @@
         input.addEventListener('input', () => { mirrorState.seed = input.value; });
         input.addEventListener('keydown', event => { if (event.key === 'Enter') submitSeed(); });
         row.appendChild(input);
-        const button = el('button', 'mirror-action primary', 'Soi bằng fixture →');
+        const button = el('button', 'mirror-action primary', mirrorState.liveEnabled ? 'Soi live qua Apps Script →' : 'Soi bằng fixture →');
         button.type = 'button';
         button.addEventListener('click', submitSeed);
         row.appendChild(button);
@@ -1239,16 +1278,27 @@
 
       if (type === 'business_candidate') {
         const card = el('div', 'mirror-card');
-        card.appendChild(el('h3', '', data.name));
-        card.appendChild(el('p', '', data.area));
+        const name = data.name || data.business_name || 'Business cần xác nhận';
+        const area = data.area || data.area_or_address || '';
+        const category = data.category || data.category_guess || 'Chưa rõ ngành';
+        const confidence = data.confidence || data.match_confidence || 'medium';
+        const evidence = data.evidence || data.evidence_summary || [];
+        card.appendChild(el('h3', '', name));
+        card.appendChild(el('p', '', area));
         const badges = el('div', 'badge-row');
-        [data.category, `Match: ${data.confidence}`, 'Cần owner xác nhận'].forEach(item => badges.appendChild(el('span', 'status-badge', item)));
+        [category, `Match: ${confidence}`, data.requires_owner_confirmation === false ? 'Đã xác nhận' : 'Cần owner xác nhận'].forEach(item => badges.appendChild(el('span', 'status-badge', item)));
         card.appendChild(badges);
         const grid = el('div', 'candidate-grid');
-        data.evidence.forEach(item => {
+        evidence.forEach(item => {
           const mini = el('div', 'candidate-card');
           mini.appendChild(el('b', '', item));
           mini.appendChild(el('p', '', 'Tín hiệu này chỉ dùng để xác nhận bước tiếp theo, chưa public.'));
+          grid.appendChild(mini);
+        });
+        (data.public_urls || []).forEach(url => {
+          const mini = el('div', 'candidate-card');
+          mini.appendChild(el('b', '', 'Public URL'));
+          mini.appendChild(el('p', '', url));
           grid.appendChild(mini);
         });
         card.appendChild(grid);
@@ -1256,9 +1306,10 @@
       }
 
       if (type === 'simulation_progress') {
+        const items = Array.isArray(data) ? data : (data.items || data.steps || []);
         const card = el('div', 'mirror-card');
-        card.appendChild(el('h4', '', 'Đang chạy flow mô phỏng M1'));
-        data.items.forEach(item => {
+        card.appendChild(el('h4', '', data.title_vi || 'Đang chạy flow mô phỏng/live'));
+        items.forEach(item => {
           const line = el('div', 'progress-line');
           line.appendChild(el('span', 'pulse'));
           line.appendChild(el('span', '', item));
@@ -1268,14 +1319,15 @@
       }
 
       if (type === 'semantic_cluster_grid') {
+        const clusters = Array.isArray(data) ? data : (data.clusters || []);
         const card = el('div', 'mirror-card');
         card.appendChild(el('h4', '', 'Nhóm nhu cầu AI sẽ thử mô phỏng'));
         const grid = el('div', 'cluster-grid');
-        data.forEach(cluster => {
+        clusters.forEach(cluster => {
           const mini = el('div', 'mini-card');
-          mini.appendChild(el('b', '', cluster.label));
-          mini.appendChild(el('p', '', cluster.query));
-          mini.appendChild(el('span', 'status-badge', `relevance: ${cluster.relevance}`));
+          mini.appendChild(el('b', '', cluster.label || cluster.label_vi || 'Nhóm nhu cầu'));
+          mini.appendChild(el('p', '', cluster.query || (cluster.example_queries || [])[0] || cluster.why_relevant || 'Cần thêm dữ liệu.'));
+          mini.appendChild(el('span', 'status-badge', `relevance: ${cluster.relevance || 'medium'}`));
           grid.appendChild(mini);
         });
         card.appendChild(grid);
@@ -1283,56 +1335,64 @@
       }
 
       if (type === 'example_query_carousel') {
+        const queries = Array.isArray(data) ? data : (data.queries || data.example_queries || []);
         const card = el('div', 'mirror-card');
         card.appendChild(el('h4', '', 'Ví dụ câu khách có thể hỏi'));
         const strip = el('div', 'query-strip');
-        data.forEach(query => strip.appendChild(el('div', 'query-card', query)));
+        queries.forEach(query => strip.appendChild(el('div', 'query-card', query)));
         card.appendChild(strip);
         block.appendChild(card);
       }
 
       if (type === 'public_footprint_mirror') {
+        const observations = Array.isArray(data) ? data : (data.observations || []);
         const card = el('div', 'mirror-card');
         card.appendChild(el('h4', '', 'Footprint mirror — AI đang thấy gì?'));
-        data.forEach(signal => {
+        observations.forEach(signal => {
           const row = el('div', 'footprint-row');
           row.appendChild(el('span', 'signal-dot', signal.status === 'missing_signal' ? '!' : '✓'));
           const copy = el('div');
-          copy.appendChild(el('b', '', signal.label));
-          copy.appendChild(el('p', '', signal.copy));
+          copy.appendChild(el('b', '', signal.label || signal.label_vi || signal.signal_key || 'Tín hiệu'));
+          copy.appendChild(el('p', '', signal.copy || signal.customer_copy || signal.customer_copy_vi || 'Cần kiểm tra thêm.'));
           row.appendChild(copy);
-          row.appendChild(el('span', 'status-badge', signal.status));
+          row.appendChild(el('span', 'status-badge', signal.status || signal.confidence || 'unknown'));
           card.appendChild(row);
         });
         block.appendChild(card);
       }
 
       if (type === 'score_ring') {
+        const total = Number(data.total ?? data.total_score ?? 0);
+        const confidence = data.confidence || data.evidence_confidence || 'medium';
+        const disclaimer = data.disclaimer || data.disclaimer_vi || 'Đây là checklist nội bộ của AI Passport, không phải điểm chính thức của Google hoặc nền tảng AI.';
         const card = el('div', 'mirror-card');
         const wrap = el('div', 'score-wrap');
         const ring = el('div', 'score-ring');
-        ring.style.setProperty('--score', data.total);
-        ring.appendChild(el('span', '', `${data.total}/100`));
+        ring.style.setProperty('--score', Math.max(0, Math.min(100, total)));
+        ring.appendChild(el('span', '', `${total}/100`));
         wrap.appendChild(ring);
         const copy = el('div');
         copy.appendChild(el('h4', '', 'AI Passport score snapshot'));
-        copy.appendChild(el('p', '', data.disclaimer));
-        copy.appendChild(el('span', 'status-badge', `confidence: ${data.confidence}`));
+        copy.appendChild(el('p', '', disclaimer));
+        copy.appendChild(el('span', 'status-badge', `confidence: ${confidence}`));
         wrap.appendChild(copy);
         card.appendChild(wrap);
         block.appendChild(card);
       }
 
       if (type === 'score_breakdown') {
+        const factors = Array.isArray(data) ? data : (data.factors || []);
         const card = el('div', 'mirror-card');
         card.appendChild(el('h4', '', 'Breakdown nội bộ'));
         const grid = el('div', 'score-grid');
-        data.forEach(factor => {
+        factors.forEach(factor => {
+          const score = Number(factor.score || 0);
+          const max = Number(factor.max || factor.max_score || 1);
           const item = el('div', 'score-factor');
-          item.appendChild(el('b', '', `${factor.label}: ${factor.score}/${factor.max}`));
+          item.appendChild(el('b', '', `${factor.label || factor.label_vi || factor.key || 'Yếu tố'}: ${score}/${max}`));
           const bar = el('div', 'bar');
           const fill = el('span');
-          fill.style.setProperty('--pct', `${Math.round((factor.score / factor.max) * 100)}%`);
+          fill.style.setProperty('--pct', `${Math.round((score / max) * 100)}%`);
           bar.appendChild(fill);
           item.appendChild(bar);
           grid.appendChild(item);
@@ -1344,18 +1404,19 @@
       if (type === 'confidence_badge') {
         const card = el('div', 'mirror-card');
         card.appendChild(el('h4', '', 'Confidence khác với score'));
-        card.appendChild(el('p', '', data));
+        card.appendChild(el('p', '', typeof data === 'string' ? data : (data.copy_vi || data.copy || `Confidence: ${data.confidence || 'medium'}`)));
         block.appendChild(card);
       }
 
       if (type === 'priority_gap_list') {
+        const gaps = Array.isArray(data) ? data : (data.gaps || []);
         const card = el('div', 'mirror-card');
         card.appendChild(el('h4', '', 'Gap cần chủ business bổ sung'));
         const grid = el('div', 'gap-grid');
-        data.forEach(gap => {
+        gaps.forEach(gap => {
           const mini = el('div', 'gap-card');
-          mini.appendChild(el('b', '', gap.title));
-          mini.appendChild(el('p', '', gap.copy));
+          mini.appendChild(el('b', '', gap.title || gap.title_vi || 'Gap cần bổ sung'));
+          mini.appendChild(el('p', '', gap.copy || gap.reason_vi || gap.required_owner_input_vi || 'Cần owner xác nhận.'));
           grid.appendChild(mini);
         });
         card.appendChild(grid);
@@ -1368,10 +1429,10 @@
         const grid = el('div', 'before-after');
         const before = el('div', 'preview-panel');
         before.appendChild(el('b', '', 'Trước khi dọn'));
-        before.appendChild(el('p', '', data.before));
+        before.appendChild(el('p', '', data.before || 'Dữ liệu public còn rời rạc hoặc thiếu xác nhận.'));
         const after = el('div', 'preview-panel after');
-        after.appendChild(el('b', '', data.tagline));
-        after.appendChild(el('p', '', data.after));
+        after.appendChild(el('b', '', data.tagline || data.tagline_vi || data.business_name || 'Bản nháp AI Passport'));
+        after.appendChild(el('p', '', data.after || data.summary_vi || 'Bản nháp cần chủ business xác nhận trước khi public.'));
         grid.appendChild(before);
         grid.appendChild(after);
         card.appendChild(grid);
@@ -1379,26 +1440,27 @@
       }
 
       if (type === 'trust_footer') {
+        const items = Array.isArray(data) ? data : (data.items || []);
         const footer = el('div', 'trust-footer');
-        data.forEach(item => footer.appendChild(el('span', '', item)));
+        items.forEach(item => footer.appendChild(el('span', '', item)));
         block.appendChild(footer);
       }
 
       if (type === 'full_draft_cta') {
         const card = el('div', 'mirror-card');
-        card.appendChild(el('h4', '', 'Muốn dựng bản nháp đầy đủ?'));
-        card.appendChild(el('p', '', 'M1 chỉ là fixture shell. M2 mới nối Gemini live; M3/M4 mới bổ sung dữ liệu và approval.'));
+        card.appendChild(el('h4', '', data.label_vi || 'Muốn dựng bản nháp đầy đủ?'));
+        card.appendChild(el('p', '', data.copy_vi || 'M2 ghi nhận intent; M3/M4 sẽ hỏi gap questions, dựng full draft và cho owner duyệt.'));
         const button = el('button', 'mirror-action primary', 'Tôi muốn dựng full draft →');
         button.type = 'button';
-        button.addEventListener('click', () => renderIntentState());
+        button.addEventListener('click', renderIntentState);
         card.appendChild(button);
         block.appendChild(card);
       }
 
       if (type === 'error_recovery') {
         const card = el('div', 'mirror-card error-note');
-        card.appendChild(el('h4', '', data.title));
-        card.appendChild(el('p', '', data.copy));
+        card.appendChild(el('h4', '', data.title || data.title_vi || 'Chưa thể soi tiếp'));
+        card.appendChild(el('p', '', data.copy || data.copy_vi || 'Anh/chị thử lại hoặc thêm link public giúp em nhé.'));
         block.appendChild(card);
       }
 
@@ -1408,33 +1470,80 @@
     function renderReplies(replies) {
       clearNode(mirrorReplies);
       replies.forEach(reply => {
-        const button = el('button', reply.primary ? 'primary' : '', reply.label);
+        const button = el('button', reply.primary ? 'primary' : '', reply.label || reply.label_vi || reply.id);
         button.type = 'button';
-        button.addEventListener('click', reply.action);
+        button.addEventListener('click', reply.action || (() => handleQuickReply(reply.id)));
         mirrorReplies.appendChild(button);
       });
     }
 
+    function setRepliesBusy(isBusy) {
+      mirrorReplies.querySelectorAll('button').forEach(button => { button.disabled = isBusy; });
+    }
+
+    function renderLoading(message, progressCount = 2) {
+      clearNode(mirrorChat);
+      renderProgress(progressCount);
+      addBlock('assistant_bubble', { text: message });
+      addBlock('simulation_progress', { items: ['Gửi request tới Apps Script Web App', 'Backend gọi Gemini bằng Script Properties', 'Validate schema và guardrails trước khi render'] });
+      renderReplies([]);
+    }
+
     function renderCollectSeed() {
+      updateMirrorModePills();
       mirrorState.step = 'collect_seed';
       mirrorState.completedSteps = 1;
       clearNode(mirrorChat);
       renderProgress(1);
-      addBlock('assistant_bubble', { text: 'Em sẽ soi bằng fixture M1 trước: nhận diện business, xác nhận candidate, mô phỏng nhu cầu khách hỏi AI rồi dựng infographic snapshot.' });
-      addBlock('seed_input', { title: 'Nhập tên business hoặc link public', copy: 'Bản M1 chưa gọi Gemini live. Dữ liệu dưới đây dùng fixture đã rút ra từ M0 để review UX.' });
+      addBlock('assistant_bubble', { text: mirrorState.liveEnabled ? 'Live mode đã bật. Em sẽ gọi Apps Script backend để resolve candidate thật, rồi chỉ chạy audit sau khi anh/chị xác nhận business.' : 'Em sẽ soi bằng fixture M1 trước: nhận diện business, xác nhận candidate, mô phỏng nhu cầu khách hỏi AI rồi dựng infographic snapshot.' });
+      addBlock('seed_input', { title: 'Nhập tên business hoặc link public' });
       renderReplies([
-        { label: 'Dùng quán demo', primary: true, action: submitSeed },
+        { label: mirrorState.liveEnabled ? 'Soi live' : 'Dùng quán demo', primary: true, action: submitSeed },
         { label: 'Xem flow lỗi / recovery', action: renderErrorState },
         { label: 'Để tao xem tiếp story', action: closeAuditPanel }
       ]);
       setTimeout(() => document.getElementById('mirrorSeedInput')?.focus(), 80);
-      trackMirrorEvent('open_mirror_shell', { state: mirrorState.step });
+      trackMirrorEvent('open_mirror_shell', { state: mirrorState.step, live: mirrorState.liveEnabled });
     }
 
-    function submitSeed() {
+    async function initLiveSession() {
+      if (!mirrorState.liveEnabled || mirrorState.sessionId) return;
+      try {
+        const response = await postMirror(ACTIONS.OPEN_MIRROR, {}, 'COLLECT_SEED');
+        mirrorState.sessionId = response.session_id || mirrorState.sessionId;
+        mirrorState.serverState = response.server_state || mirrorState.serverState;
+        trackMirrorEvent('open_mirror_live_ok', { session_id: mirrorState.sessionId });
+      } catch (error) {
+        addBlock('error_recovery', { title_vi: 'Live backend chưa sẵn sàng', copy_vi: 'Đang fallback về fixture shell để vẫn review được UX. Kiểm tra Apps Script endpoint/CORS/deploy sau.' });
+        mirrorState.liveEnabled = false;
+        updateMirrorModePills();
+        trackMirrorEvent('open_mirror_live_failed', { message: error.message });
+      }
+    }
+
+    async function submitSeed() {
       mirrorState.seed = mirrorState.seed.trim() || mirrorFixture.defaultSeed;
+      if (mirrorState.liveEnabled) {
+        setRepliesBusy(true);
+        renderLoading(`Em đang resolve candidate live cho “${mirrorState.seed}”…`, 2);
+        try {
+          const response = await postMirror(ACTIONS.SUBMIT_SEED, { seed: mirrorState.seed }, mirrorState.serverState || 'COLLECT_SEED');
+          renderBackendEnvelope(response, 2);
+        } catch (error) {
+          renderLiveError(error, 'Không gọi được live backend. Em chuyển về fixture để anh/chị vẫn xem được flow UX.');
+          mirrorState.liveEnabled = false;
+          updateMirrorModePills();
+          submitSeed();
+        }
+        return;
+      }
+      renderFixtureCandidate();
+    }
+
+    function renderFixtureCandidate() {
       mirrorState.step = 'confirm_business';
       mirrorState.completedSteps = 2;
+      mirrorState.lastCandidate = toBackendCandidate(mirrorFixture.candidate);
       clearNode(mirrorChat);
       renderProgress(2);
       addBlock('assistant_bubble', { text: `Em tìm thấy candidate gần nhất cho “${mirrorState.seed}”. Anh/chị xác nhận đúng business trước khi em dựng snapshot nhé.` });
@@ -1448,6 +1557,10 @@
     }
 
     function renderSimulation() {
+      if (mirrorState.liveEnabled) {
+        confirmLiveBusiness();
+        return;
+      }
       mirrorState.step = 'simulation';
       mirrorState.completedSteps = 3;
       clearNode(mirrorChat);
@@ -1461,9 +1574,22 @@
       trackMirrorEvent('confirm_business_fixture', { candidate: mirrorFixture.candidate.name });
     }
 
+    async function confirmLiveBusiness() {
+      const candidate = mirrorState.lastCandidate || toBackendCandidate(mirrorFixture.candidate);
+      renderLoading('Business đã được xác nhận. Em đang chạy semantic mirror live qua Gemini…', 3);
+      try {
+        const response = await postMirror(ACTIONS.CONFIRM_BUSINESS, { seed: mirrorState.seed, candidate }, mirrorState.serverState || 'CONFIRM_BUSINESS');
+        renderBackendEnvelope(response, 4);
+      } catch (error) {
+        renderLiveError(error, 'Live audit chưa trả được kết quả hợp lệ. Anh/chị thử lại hoặc dùng fixture fallback để review UX.');
+        renderReplies([{ label: 'Thử lại live', primary: true, action: confirmLiveBusiness }, { label: 'Dùng fixture result', action: renderResult }, { label: 'Nhập lại', action: renderCollectSeed }]);
+      }
+    }
+
     function renderResult() {
       mirrorState.step = 'show_result';
       mirrorState.completedSteps = 4;
+      mirrorState.lastResult = { score: mirrorFixture.score.total, evidence_confidence: mirrorFixture.score.confidence, business_name: mirrorFixture.candidate.name };
       clearNode(mirrorChat);
       renderProgress(4);
       addBlock('assistant_bubble', { text: 'Đây là rich-content snapshot M1: chatbot chỉ dẫn đường, còn kết quả chính là infographic blocks dễ đọc. Fixture path đã đi từ N01 đến N11 mà không reload page.' });
@@ -1485,7 +1611,23 @@
       trackMirrorEvent('show_fixture_result', { score: mirrorFixture.score.total });
     }
 
-    function renderIntentState() {
+    async function renderIntentState() {
+      if (mirrorState.liveEnabled) {
+        renderLoading('Em đang ghi nhận intent dựng full draft…', 4);
+        try {
+          const payload = {
+            business_name: mirrorState.lastResult?.business_name || mirrorState.lastCandidate?.business_name || mirrorState.seed,
+            quick_score: mirrorState.lastResult?.score || mirrorState.lastResult?.total_score || '',
+            evidence_confidence: mirrorState.lastResult?.evidence_confidence || '',
+            cta_source: 'mirror_result'
+          };
+          const response = await postMirror(ACTIONS.REQUEST_FULL_DRAFT, payload, mirrorState.serverState || 'SHOW_RESULT');
+          renderBackendEnvelope(response, 4);
+        } catch (error) {
+          renderLiveError(error, 'Chưa ghi nhận được intent live. Dữ liệu bản nháp vẫn chưa public.');
+        }
+        return;
+      }
       addBlock('assistant_bubble', { text: 'Đã ghi nhận qualified intent ở mức fixture. M3/M4 sau này sẽ hỏi gap questions, dựng full draft và cho owner duyệt ngay trong landing page.' });
       addBlock('trust_footer', ['Dữ liệu bản nháp chưa public', 'Không chuyển qua Google Form', 'Payment chưa build ở M1']);
       renderReplies([{ label: 'Quay lại kết quả', primary: true, action: renderResult }, { label: 'Đóng', action: closeAuditPanel }]);
@@ -1502,6 +1644,139 @@
       renderReplies([{ label: 'Nhập lại seed', primary: true, action: renderCollectSeed }, { label: 'Đóng', action: closeAuditPanel }]);
       trackMirrorEvent('show_error_recovery_fixture', { reason: 'ambiguous_or_thin_footprint' });
     }
+
+    function renderLiveError(error, copy) {
+      clearNode(mirrorChat);
+      renderProgress(1);
+      addBlock('error_recovery', { title_vi: 'Live backend chưa sẵn sàng', copy_vi: copy || error.message });
+      trackMirrorEvent('mirror_live_error', { message: error.message });
+    }
+
+    async function renderBackendEnvelope(response, progressCount = 2) {
+      mirrorState.sessionId = response.session_id || mirrorState.sessionId;
+      mirrorState.serverState = response.server_state || mirrorState.serverState;
+      mirrorState.step = response.server_state || mirrorState.step;
+      clearNode(mirrorChat);
+      renderProgress(progressCount);
+      if (response.assistant_message) addBlock('assistant_bubble', { text: response.assistant_message, kicker: response.ok ? 'Live backend' : 'Recovery' });
+      (response.render_blocks || []).forEach(renderBackendBlock);
+      captureBackendState(response);
+      renderBackendReplies(response.quick_replies || []);
+      trackMirrorEvent('mirror_backend_response', { ok: response.ok, state: response.server_state, next_action: response.next_action });
+    }
+
+    function renderBackendBlock(renderBlock) {
+      if (!renderBlock || !renderBlock.type) return;
+      addBlock(renderBlock.type, renderBlock.data || {});
+    }
+
+    function renderBackendReplies(replies) {
+      const normalized = replies.map(reply => ({ label: reply.label || reply.label_vi || reply.id, primary: ['confirm', 'request_full_draft', 'submit_seed'].includes(reply.id), action: () => handleQuickReply(reply.id) }));
+      if (!normalized.length) normalized.push({ label: 'Đóng', action: closeAuditPanel });
+      renderReplies(normalized);
+    }
+
+    function handleQuickReply(id) {
+      const actions = {
+        submit_seed: submitSeed,
+        confirm: confirmLiveBusiness,
+        reject: () => postAndRender(ACTIONS.REJECT_BUSINESS, {}, 'CONFIRM_BUSINESS', 1),
+        edit: renderCollectSeed,
+        edit_seed: renderCollectSeed,
+        expand_gap: () => postAndRender(ACTIONS.EXPAND_GAP, { gaps: mirrorState.lastResult?.gaps || [] }, 'SHOW_RESULT', 4),
+        request_full_draft: renderIntentState,
+        close: closeAuditPanel
+      };
+      (actions[id] || renderCollectSeed)();
+    }
+
+    async function postAndRender(action, payload, clientState, progressCount) {
+      renderLoading('Em đang cập nhật live flow…', progressCount || 2);
+      try {
+        const response = await postMirror(action, payload, clientState);
+        renderBackendEnvelope(response, progressCount || 2);
+      } catch (error) {
+        renderLiveError(error, 'Live backend chưa xử lý được bước này. Anh/chị thử lại sau ít phút.');
+      }
+    }
+
+    async function postMirror(userAction, payload = {}, clientState = mirrorState.serverState || 'COLLECT_SEED') {
+      const endpoint = getMirrorEndpoint();
+      if (!endpoint) throw new Error('Missing Apps Script endpoint.');
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          session_id: mirrorState.sessionId,
+          client_state: clientState,
+          user_action: userAction,
+          payload,
+          metadata: buildRequestMetadata()
+        })
+      });
+      if (!response.ok) throw new Error(`Backend HTTP ${response.status}`);
+      const data = await response.json();
+      if (data.session_id) mirrorState.sessionId = data.session_id;
+      return data;
+    }
+
+    function buildRequestMetadata() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        page_url: window.location.href,
+        referrer: document.referrer,
+        utm_source: params.get('utm_source') || '',
+        utm_medium: params.get('utm_medium') || '',
+        utm_campaign: params.get('utm_campaign') || '',
+        locale: navigator.language || 'vi-VN',
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Ho_Chi_Minh',
+        user_agent: navigator.userAgent
+      };
+    }
+
+    function captureBackendState(response) {
+      const blocks = response.render_blocks || [];
+      blocks.forEach(renderBlock => {
+        if (renderBlock.type === 'business_candidate') mirrorState.lastCandidate = toBackendCandidate(renderBlock.data || {});
+        if (renderBlock.type === 'score_ring') {
+          mirrorState.lastResult = mirrorState.lastResult || {};
+          mirrorState.lastResult.score = renderBlock.data.total_score || renderBlock.data.total || '';
+          mirrorState.lastResult.evidence_confidence = renderBlock.data.evidence_confidence || renderBlock.data.confidence || '';
+        }
+        if (renderBlock.type === 'priority_gap_list') {
+          mirrorState.lastResult = mirrorState.lastResult || {};
+          mirrorState.lastResult.gaps = Array.isArray(renderBlock.data) ? renderBlock.data : (renderBlock.data.gaps || []);
+        }
+      });
+      if (mirrorState.lastCandidate) {
+        mirrorState.lastResult = mirrorState.lastResult || {};
+        mirrorState.lastResult.business_name = mirrorState.lastCandidate.business_name;
+      }
+    }
+
+    function toBackendCandidate(data) {
+      return {
+        match_status: data.match_status || 'disambiguation',
+        business_name: data.business_name || data.name || mirrorState.seed || 'Business cần xác nhận',
+        area_or_address: data.area_or_address || data.area || '',
+        category_guess: data.category_guess || data.category || '',
+        match_confidence: data.match_confidence || data.confidence || 'medium',
+        evidence_summary: data.evidence_summary || data.evidence || ['Cần owner xác nhận business đúng trước khi audit.'],
+        public_urls: data.public_urls || [],
+        owner_confirmation_required: data.owner_confirmation_required !== false,
+        reason_vi: data.reason_vi || 'Candidate cần xác nhận trước khi audit.'
+      };
+    }
+
+    const ACTIONS = Object.freeze({
+      OPEN_MIRROR: 'open_mirror',
+      SUBMIT_SEED: 'submit_seed',
+      CONFIRM_BUSINESS: 'confirm_business',
+      REJECT_BUSINESS: 'reject_business',
+      EXPAND_GAP: 'expand_gap',
+      REQUEST_FULL_DRAFT: 'request_full_draft',
+      CLOSE_MIRROR: 'close_mirror'
+    });
 
     function openIntro() {
       introModal.classList.add('open');
@@ -1540,12 +1815,14 @@
       auditPanel.setAttribute('aria-hidden', 'false'); body.classList.add('audit-open');
       bottomCta.classList.add('hide');
       renderCollectSeed();
+      initLiveSession();
     }
     function closeAuditPanel() {
       auditPanel.classList.remove('open'); auditBackdrop.classList.remove('open');
       auditPanel.setAttribute('aria-hidden', 'true'); body.classList.remove('audit-open');
       bottomCta.classList.remove('hide');
-      trackMirrorEvent('close_mirror_shell', { state: mirrorState.step });
+      trackMirrorEvent('close_mirror_shell', { state: mirrorState.step, live: mirrorState.liveEnabled });
+      if (mirrorState.liveEnabled && mirrorState.sessionId) postMirror(ACTIONS.CLOSE_MIRROR, {}, mirrorState.serverState || 'END').catch(() => {});
     }
     introClose.addEventListener('click', closeIntro);
     introContinue.addEventListener('click', closeIntro);
