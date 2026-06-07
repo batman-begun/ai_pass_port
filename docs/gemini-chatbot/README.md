@@ -1,7 +1,7 @@
 # Bộ tài liệu planning — Gemini chatbot module “Soi Gương AI”
 
-> Trạng thái: **Planning blueprint đã sẵn sàng để review**
-> Ngày cập nhật: **2026-05-30**
+> Trạng thái: **Planning blueprint + M0 technical spike đã sẵn sàng để bắt đầu M1**
+> Ngày cập nhật: **2026-06-07**
 > Phạm vi: customer-facing mini application chạy trong landing page `aipass.io.vn`.
 
 ## 1. Mục tiêu của bộ tài liệu
@@ -35,6 +35,7 @@ Module là một **guided generative sales journey**: chatbot dẫn đường, G
 | [`01-product-blueprint-vi.md`](./01-product-blueprint-vi.md) | Product intent, UX principles, node map, infographic story, guardrails và definition of done. |
 | [`02-technical-architecture-vi.md`](./02-technical-architecture-vi.md) | Kiến trúc Apps Script + Sheets + Gemini, state machine, API contract, schemas, logging và technical spikes. |
 | [`03-implementation-roadmap-vi.md`](./03-implementation-roadmap-vi.md) | Milestone triển khai, acceptance criteria, test matrix và bước tiếp theo sau planning. |
+| [`04-technical-spike-report-vi.md`](./04-technical-spike-report-vi.md) | Kết quả M0 technical spike, fixture benchmark, quyết định model/pipeline và điều kiện bắt đầu M1. |
 
 ## 4. Cách review nhanh
 

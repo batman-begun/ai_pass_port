@@ -363,34 +363,55 @@
     .back-btn { font-size: 19px; }
     .audit-title b { display: block; font-size: 17px; letter-spacing: -.03em; }
     .audit-title small { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; font-weight: 800; }
-    .audit-body { overflow: auto; padding: 16px 14px calc(28px + var(--safe-bottom)); }
-    .audit-step { display: grid; gap: 14px; }
-    .audit-step h3 { margin: 0; font-size: clamp(29px, 9vw, 39px); line-height: 1.02; letter-spacing: -.055em; }
-    .field { display: grid; gap: 7px; }
-    .field label { color: #665c52; font-size: 13px; font-weight: 950; }
-    .field input, .field textarea {
-      width: 100%;
-      border: 1px solid rgba(190,90,36,.22);
-      border-radius: 17px;
-      background: #fff8ec;
-      outline: 0;
-      padding: 14px;
-      color: var(--ink);
-    }
-    .field textarea { min-height: 90px; resize: vertical; }
-    .field input:focus, .field textarea:focus { border-color: rgba(190,90,36,.62); box-shadow: 0 0 0 4px rgba(190,90,36,.10); }
-    .audit-actions { display: grid; gap: 10px; }
-    .audit-actions button { min-height: 54px; border-radius: 18px; font-weight: 950; }
-    .run-btn { color: white; background: linear-gradient(135deg,#b65320,#f06d2f); box-shadow: 0 16px 32px rgba(170,75,24,.25); }
-    .ghost-btn { color: var(--orange-dark); background: rgba(190,90,36,.09); border: 1px solid rgba(190,90,36,.14); }
-    .audit-result { display: none; gap: 10px; }
-    .audit-result.show { display: grid; }
-    .loading-row { display: flex; gap: 10px; align-items: center; padding: 13px; border-radius: 17px; background: rgba(255,242,220,.8); font-weight: 850; color: #665d53; }
-    .pulse { width: 10px; height: 10px; border-radius: 99px; background: var(--orange-2); box-shadow: 0 0 0 rgba(239,110,45,.42); animation: pulse 1.45s infinite; }
+    .audit-body { overflow: auto; padding: 13px 12px calc(28px + var(--safe-bottom)); }
+    .mirror-shell { display: grid; gap: 12px; }
+    .mirror-kicker { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+    .mirror-pill { border-radius: 999px; padding: 7px 10px; background: rgba(190,90,36,.09); color: var(--orange-dark); font-size: 11px; font-weight: 950; }
+    .mirror-progress { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .progress-dot { min-height: 6px; border-radius: 99px; background: rgba(190,90,36,.13); }
+    .progress-dot.done { background: linear-gradient(90deg,#b65320,#f06d2f); }
+    .mirror-chat { display: grid; gap: 10px; }
+    .mirror-block { border-radius: 22px; border: 1px solid rgba(190,90,36,.13); background: #fffaf1; box-shadow: 0 12px 30px rgba(95,52,20,.07); overflow: hidden; }
+    .assistant-bubble { padding: 13px 14px; line-height: 1.45; color: #3a332d; font-weight: 750; }
+    .assistant-bubble small { display: block; margin-bottom: 5px; color: var(--orange-dark); font-size: 10px; font-weight: 950; letter-spacing: .12em; text-transform: uppercase; }
+    .mirror-card { padding: 13px; display: grid; gap: 10px; }
+    .mirror-card h3, .mirror-card h4 { margin: 0; letter-spacing: -.035em; line-height: 1.08; }
+    .mirror-card h3 { font-size: clamp(22px, 6.2vw, 28px); }
+    .mirror-card h4 { font-size: 17px; }
+    .mirror-card p { margin: 0; color: var(--muted); line-height: 1.42; font-size: 13px; }
+    .seed-row { display: grid; gap: 8px; }
+    .seed-input { width: 100%; border: 1px solid rgba(190,90,36,.22); border-radius: 18px; background: #fff8ec; outline: 0; padding: 14px; color: var(--ink); font-weight: 750; }
+    .seed-input:focus { border-color: rgba(190,90,36,.62); box-shadow: 0 0 0 4px rgba(190,90,36,.10); }
+    .quick-replies { display: flex; flex-wrap: wrap; gap: 8px; padding: 2px 0 4px; }
+    .quick-replies button, .mirror-action { min-height: 42px; border-radius: 999px; padding: 0 13px; background: rgba(190,90,36,.09); border: 1px solid rgba(190,90,36,.14); color: var(--orange-dark); font-weight: 950; }
+    .quick-replies button.primary, .mirror-action.primary { background: linear-gradient(135deg,#b65320,#f06d2f); color: #fff; box-shadow: 0 14px 26px rgba(170,75,24,.20); }
+    .candidate-grid, .cluster-grid, .gap-grid, .score-grid { display: grid; gap: 8px; }
+    .candidate-card, .mini-card, .gap-card { border-radius: 17px; padding: 11px; background: #fffdf8; border: 1px solid rgba(190,90,36,.12); }
+    .candidate-card b, .mini-card b, .gap-card b { display: block; margin-bottom: 4px; letter-spacing: -.02em; }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .status-badge { border-radius: 999px; padding: 5px 8px; font-size: 10px; font-weight: 950; color: #7b421f; background: #fff0dc; }
+    .progress-line { display: flex; align-items: center; gap: 9px; padding: 10px 11px; border-radius: 16px; background: rgba(255,242,220,.72); color: #665d53; font-size: 12px; font-weight: 850; }
+    .pulse { width: 9px; height: 9px; border-radius: 99px; background: var(--orange-2); box-shadow: 0 0 0 rgba(239,110,45,.42); animation: pulse 1.45s infinite; flex: 0 0 auto; }
     @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(239,110,45,.42);} 70% { box-shadow: 0 0 0 12px rgba(239,110,45,0);} 100% { box-shadow: 0 0 0 0 rgba(239,110,45,0);} }
-    .prototype-card { border-radius: 18px; padding: 14px; background: #fff8ec; border: 1px solid rgba(190,90,36,.14); }
-    .prototype-card b { display: block; margin-bottom: 5px; }
-    .prototype-card p { margin: 0; color: var(--muted); line-height: 1.4; font-size: 13px; }
+    .query-strip { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(190px, 1fr); gap: 8px; overflow-x: auto; padding-bottom: 4px; scroll-snap-type: x mandatory; }
+    .query-card { scroll-snap-align: start; border-radius: 16px; padding: 11px; background: #fff8ec; color: #4a3f36; font-size: 13px; line-height: 1.35; font-weight: 800; }
+    .footprint-row { display: grid; grid-template-columns: 24px 1fr auto; gap: 8px; align-items: start; padding: 10px 0; border-top: 1px solid rgba(190,90,36,.10); }
+    .footprint-row:first-child { border-top: 0; }
+    .signal-dot { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 999px; background: #fff0dc; color: var(--orange-dark); font-size: 12px; font-weight: 950; }
+    .score-wrap { display: grid; grid-template-columns: 104px 1fr; gap: 12px; align-items: center; }
+    .score-ring { width: 104px; height: 104px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--orange-2) calc(var(--score) * 1%), #f5e4d1 0); position: relative; }
+    .score-ring::after { content: ''; position: absolute; inset: 10px; border-radius: 50%; background: #fffdf8; }
+    .score-ring span { position: relative; z-index: 1; font-size: 24px; font-weight: 950; letter-spacing: -.05em; }
+    .score-factor { display: grid; gap: 4px; }
+    .bar { height: 8px; border-radius: 99px; background: rgba(190,90,36,.12); overflow: hidden; }
+    .bar span { display: block; height: 100%; width: var(--pct); background: linear-gradient(90deg,#b65320,#f06d2f); border-radius: inherit; }
+    .before-after { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    .preview-panel { border-radius: 18px; padding: 12px; border: 1px solid rgba(190,90,36,.13); background: #fffdf8; }
+    .preview-panel.after { background: linear-gradient(180deg,#fff8ec,#fffdf8); }
+    .trust-footer { display: grid; gap: 7px; padding: 13px; border-radius: 20px; background: #2f2a25; color: #fff7ec; font-size: 12px; line-height: 1.35; }
+    .trust-footer span { display: block; }
+    .error-note { border-color: rgba(161,47,29,.18); background: #fff4ef; }
+    @media (min-width: 420px) { .before-after, .cluster-grid, .gap-grid { grid-template-columns: 1fr 1fr; } }
 
 
     /* Intro manifesto popup: appears on first visit, then hands off to the existing story page. */
@@ -677,7 +698,7 @@
         left: auto;
         right: max(18px, calc(50% - 590px + 18px));
         bottom: 24px;
-        width: 272px;
+        width: 380px;
         height: calc(100svh - 116px);
         border-radius: 30px;
         transform: translateY(112%);
@@ -691,8 +712,8 @@
       .audit-title b { font-size: 15px; }
       .audit-title small { font-size: 11px; }
       .audit-body { padding: 14px; }
-      .audit-step h2 { font-size: 25px; }
-      .field input, .field textarea, .run-btn { border-radius: 18px; }
+      .mirror-card h3 { font-size: 24px; }
+      .seed-input, .mirror-action { border-radius: 18px; }
 
       .intro-card {
         width: min(880px, calc(100vw - 64px));
@@ -709,7 +730,7 @@
       main, .bottom-cta { width: 680px; }
       .screen { padding-left: 28px; padding-right: 28px; }
       .drawer { width: 280px; }
-      .audit-panel { width: 292px; }
+      .audit-panel { width: 420px; }
     }
 
     @media (min-width: 900px) and (max-width: 1050px) {
@@ -1055,31 +1076,15 @@
       <button class="icon-btn" id="closeAuditX" aria-label="Đóng">×</button>
     </header>
     <div class="audit-body">
-      <div class="audit-step">
-        <span class="eyebrow" aria-hidden="true"></span>
-        <h3>Nhập vài thông tin public để AI soi thử.</h3>
-        <p class="lead small">Phase sau sẽ nối Gemini API/search/backend để tạo: hiện trạng mờ → score thấp → bản dọn sạch → score tốt hơn, tất cả ngay tại đây.</p>
-        <div class="field">
-          <label for="bizName">Tên quán / business</label>
-          <input id="bizName" placeholder="Ví dụ: Quán Đồng Quê Ven Kênh" autocomplete="organization" />
+      <div class="mirror-shell" data-state="collect_seed">
+        <div class="mirror-kicker" aria-label="Trạng thái Soi Gương AI">
+          <span class="mirror-pill">M1 fixture shell</span>
+          <span class="mirror-pill">Không gọi Gemini live</span>
+          <span class="mirror-pill">Không Google Form</span>
         </div>
-        <div class="field">
-          <label for="bizLink">Link Google Maps/Facebook nếu có</label>
-          <input id="bizLink" placeholder="Dán link public để AI đọc dấu hiệu hiện diện" inputmode="url" />
-        </div>
-        <div class="field">
-          <label for="bizNotes">Món/dịch vụ chính hoặc điều khách hay hỏi</label>
-          <textarea id="bizNotes" placeholder="Ví dụ: quán nhậu đồng quê, khách hay hỏi đường đi, giá, chỗ đậu xe"></textarea>
-        </div>
-        <div class="audit-actions">
-          <button class="run-btn" id="runDemo">Chạy demo flow →</button>
-          <button class="ghost-btn" id="laterBtn">Để tao xem tiếp story</button>
-        </div>
-        <div class="audit-result" id="auditResult">
-          <div class="loading-row"><span class="pulse"></span> Đang đọc dữ liệu public & dấu hiệu hiện diện...</div>
-          <div class="prototype-card"><b>Prototype note</b><p>V1 này mới là UI shell. Bản thật sẽ trả về “hiện trạng mờ”, AI score thấp, rồi dựng demo “dọn lại sạch đẹp” ngay trong site.</p></div>
-          <div class="prototype-card"><b>Backend hook sau này</b><p>/api/audit/start → Gemini Search/Maps/Facebook parsing → staging preview → owner approval.</p></div>
-        </div>
+        <div class="mirror-progress" id="mirrorProgress" aria-label="Tiến độ soi gương AI"></div>
+        <div class="mirror-chat" id="mirrorChat" aria-live="polite"></div>
+        <div class="quick-replies" id="mirrorReplies" aria-label="Chọn bước tiếp theo"></div>
       </div>
     </div>
   </section>
@@ -1094,16 +1099,409 @@
     const auditBackdrop = document.getElementById('auditBackdrop');
     const closeAudit = document.getElementById('closeAudit');
     const closeAuditX = document.getElementById('closeAuditX');
-    const laterBtn = document.getElementById('laterBtn');
     const bottomCta = document.getElementById('bottomCta');
     const ctaText = document.getElementById('ctaText');
-    const runDemo = document.getElementById('runDemo');
-    const auditResult = document.getElementById('auditResult');
+    const mirrorChat = document.getElementById('mirrorChat');
+    const mirrorReplies = document.getElementById('mirrorReplies');
+    const mirrorProgress = document.getElementById('mirrorProgress');
     const introModal = document.getElementById('introModal');
     const introClose = document.getElementById('introClose');
     const introContinue = document.getElementById('introContinue');
     const introStartAudit = document.getElementById('introStartAudit');
 
+    const mirrorFixture = {
+      defaultSeed: 'Quán Đồng Quê Ven Kênh Nhà Bè',
+      candidate: {
+        name: 'Quán Đồng Quê Ven Kênh',
+        area: 'Nhà Bè, TP.HCM',
+        category: 'Quán món đồng quê / sân vườn',
+        confidence: 'medium',
+        evidence: ['Tên + khu vực có vẻ khớp', 'Footprint public còn mỏng', 'Cần chủ quán xác nhận link Maps/Facebook']
+      },
+      progress: [
+        'Nhận diện business và khu vực',
+        'Mô phỏng câu hỏi khách có thể hỏi AI',
+        'Soi dấu vết public: menu, CTA, địa chỉ, FAQ',
+        'Dựng bản preview cần chủ quán xác nhận'
+      ],
+      nodePath: [
+        'N01 Open mirror',
+        'N02 Collect seed',
+        'N03 Resolve candidate',
+        'N04 Confirm business',
+        'N05 Simulation progress',
+        'N06 Semantic clusters',
+        'N07 Example queries',
+        'N08 Footprint mirror',
+        'N09 Score snapshot',
+        'N10 Gap cards',
+        'N11 Full draft CTA'
+      ],
+      clusters: [
+        { label: 'Nhóm bạn đi ăn cuối tuần', query: 'Cuối tuần gần Quận 7 đi ăn món đồng quê ở đâu?', relevance: 'high' },
+        { label: 'Gia đình tìm quán dễ đi', query: 'Nhà Bè có quán nào hợp gia đình, có món quê và dễ chỉ đường không?', relevance: 'medium' },
+        { label: 'Khách cần đặt bàn nhanh', query: 'Quán đồng quê nào có số/Zalo đặt bàn rõ ràng?', relevance: 'medium' }
+      ],
+      footprint: [
+        { label: 'Tên + khu vực', status: 'public_observation', copy: 'Có tín hiệu tên và khu vực, nhưng cần xác nhận đúng chi nhánh/quán.', confidence: 'medium' },
+        { label: 'Menu dạng chữ', status: 'missing_signal', copy: 'Chưa thấy menu dạng chữ đủ rõ để AI/khách đọc nhanh.', confidence: 'low' },
+        { label: 'CTA gọi/Zalo/chỉ đường', status: 'missing_signal', copy: 'Dấu vết public chưa cho thấy CTA thống nhất.', confidence: 'low' },
+        { label: 'Chỗ đậu xe / nhóm đông', status: 'inference_needs_confirmation', copy: 'Đây là nhu cầu khách hay hỏi, chưa được xem là fact.', confidence: 'low' }
+      ],
+      score: {
+        total: 47,
+        confidence: 'medium',
+        factors: [
+          { label: 'Tên, địa chỉ, liên hệ', score: 9, max: 15 },
+          { label: 'Menu / dịch vụ đọc được', score: 8, max: 25 },
+          { label: 'FAQ cho nhu cầu thật', score: 6, max: 20 },
+          { label: 'CTA & tracking', score: 7, max: 15 }
+        ],
+        disclaimer: 'Score là checklist nội bộ AI Passport, không phải điểm chính thức của Google hoặc nền tảng AI.'
+      },
+      gaps: [
+        { title: 'Xác nhận link chính chủ', copy: 'Dán Google Maps/Facebook/website đúng của quán để tránh nhầm business.' },
+        { title: 'Menu dạng chữ', copy: 'Gửi món chính, mức giá hoặc nhóm món để dựng nội dung máy đọc được.' },
+        { title: 'CTA nên public', copy: 'Chọn gọi, Zalo, chỉ đường, đặt bàn — cái nào được phép đưa ra ngoài.' },
+        { title: 'Thông tin cần owner duyệt', copy: 'Chỗ đậu xe, giờ mở cửa, phòng riêng, hình ảnh và ưu đãi không auto-public.' }
+      ],
+      preview: {
+        before: 'Tên quán có thể xuất hiện rời rạc, menu nằm trong ảnh, CTA chưa rõ, FAQ chưa trả lời đúng câu khách hỏi.',
+        after: 'Bản nháp AI Passport gom tên, khu vực, món chính, FAQ và CTA thành hồ sơ dễ đọc — cần chủ quán duyệt trước khi public.',
+        tagline: 'Món đồng quê vùng ven Nhà Bè cho nhóm bạn muốn đổi vị cuối tuần.'
+      }
+    };
+
+    const mirrorState = { step: 'collect_seed', seed: mirrorFixture.defaultSeed, completedSteps: 1 };
+
+    function trackMirrorEvent(eventName, payload = {}) {
+      window.dispatchEvent(new CustomEvent('aipass:mirror-event', { detail: { eventName, payload, at: new Date().toISOString() } }));
+    }
+
+    function el(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined) node.textContent = text;
+      return node;
+    }
+
+    function clearNode(node) {
+      while (node.firstChild) node.removeChild(node.firstChild);
+    }
+
+    function renderProgress(count) {
+      clearNode(mirrorProgress);
+      for (let i = 0; i < 4; i += 1) {
+        const dot = el('span', 'progress-dot');
+        if (i < count) dot.classList.add('done');
+        mirrorProgress.appendChild(dot);
+      }
+    }
+
+    function addBlock(type, data) {
+      const allowlist = new Set([
+        'assistant_bubble', 'seed_input', 'business_candidate', 'simulation_progress', 'semantic_cluster_grid',
+        'example_query_carousel', 'public_footprint_mirror', 'score_ring', 'score_breakdown', 'confidence_badge',
+        'priority_gap_list', 'before_after_preview', 'trust_footer', 'full_draft_cta', 'error_recovery'
+      ]);
+      if (!allowlist.has(type)) return;
+      const block = el('article', 'mirror-block');
+      block.dataset.blockType = type;
+
+      if (type === 'assistant_bubble') {
+        const bubble = el('div', 'assistant-bubble');
+        bubble.appendChild(el('small', '', data.kicker || 'Soi Gương AI'));
+        bubble.appendChild(document.createTextNode(data.text));
+        block.appendChild(bubble);
+      }
+
+      if (type === 'seed_input') {
+        const card = el('div', 'mirror-card');
+        card.appendChild(el('h3', '', data.title));
+        card.appendChild(el('p', '', data.copy));
+        const row = el('div', 'seed-row');
+        const input = el('input', 'seed-input');
+        input.id = 'mirrorSeedInput';
+        input.type = 'text';
+        input.autocomplete = 'organization';
+        input.value = mirrorState.seed;
+        input.setAttribute('aria-label', 'Tên business hoặc link public');
+        input.addEventListener('input', () => { mirrorState.seed = input.value; });
+        input.addEventListener('keydown', event => { if (event.key === 'Enter') submitSeed(); });
+        row.appendChild(input);
+        const button = el('button', 'mirror-action primary', 'Soi bằng fixture →');
+        button.type = 'button';
+        button.addEventListener('click', submitSeed);
+        row.appendChild(button);
+        card.appendChild(row);
+        block.appendChild(card);
+      }
+
+      if (type === 'business_candidate') {
+        const card = el('div', 'mirror-card');
+        card.appendChild(el('h3', '', data.name));
+        card.appendChild(el('p', '', data.area));
+        const badges = el('div', 'badge-row');
+        [data.category, `Match: ${data.confidence}`, 'Cần owner xác nhận'].forEach(item => badges.appendChild(el('span', 'status-badge', item)));
+        card.appendChild(badges);
+        const grid = el('div', 'candidate-grid');
+        data.evidence.forEach(item => {
+          const mini = el('div', 'candidate-card');
+          mini.appendChild(el('b', '', item));
+          mini.appendChild(el('p', '', 'Tín hiệu này chỉ dùng để xác nhận bước tiếp theo, chưa public.'));
+          grid.appendChild(mini);
+        });
+        card.appendChild(grid);
+        block.appendChild(card);
+      }
+
+      if (type === 'simulation_progress') {
+        const card = el('div', 'mirror-card');
+        card.appendChild(el('h4', '', 'Đang chạy flow mô phỏng M1'));
+        data.items.forEach(item => {
+          const line = el('div', 'progress-line');
+          line.appendChild(el('span', 'pulse'));
+          line.appendChild(el('span', '', item));
+          card.appendChild(line);
+        });
+        block.appendChild(card);
+      }
+
+      if (type === 'semantic_cluster_grid') {
+        const card = el('div', 'mirror-card');
+        card.appendChild(el('h4', '', 'Nhóm nhu cầu AI sẽ thử mô phỏng'));
+        const grid = el('div', 'cluster-grid');
+        data.forEach(cluster => {
+          const mini = el('div', 'mini-card');
+          mini.appendChild(el('b', '', cluster.label));
+          mini.appendChild(el('p', '', cluster.query));
+          mini.appendChild(el('span', 'status-badge', `relevance: ${cluster.relevance}`));
+          grid.appendChild(mini);
+        });
+        card.appendChild(grid);
+        block.appendChild(card);
+      }
+
+      if (type === 'example_query_carousel') {
+        const card = el('div', 'mirror-card');
+        card.appendChild(el('h4', '', 'Ví dụ câu khách có thể hỏi'));
+        const strip = el('div', 'query-strip');
+        data.forEach(query => strip.appendChild(el('div', 'query-card', query)));
+        card.appendChild(strip);
+        block.appendChild(card);
+      }
+
+      if (type === 'public_footprint_mirror') {
+        const card = el('div', 'mirror-card');
+        card.appendChild(el('h4', '', 'Footprint mirror — AI đang thấy gì?'));
+        data.forEach(signal => {
+          const row = el('div', 'footprint-row');
+          row.appendChild(el('span', 'signal-dot', signal.status === 'missing_signal' ? '!' : '✓'));
+          const copy = el('div');
+          copy.appendChild(el('b', '', signal.label));
+          copy.appendChild(el('p', '', signal.copy));
+          row.appendChild(copy);
+          row.appendChild(el('span', 'status-badge', signal.status));
+          card.appendChild(row);
+        });
+        block.appendChild(card);
+      }
+
+      if (type === 'score_ring') {
+        const card = el('div', 'mirror-card');
+        const wrap = el('div', 'score-wrap');
+        const ring = el('div', 'score-ring');
+        ring.style.setProperty('--score', data.total);
+        ring.appendChild(el('span', '', `${data.total}/100`));
+        wrap.appendChild(ring);
+        const copy = el('div');
+        copy.appendChild(el('h4', '', 'AI Passport score snapshot'));
+        copy.appendChild(el('p', '', data.disclaimer));
+        copy.appendChild(el('span', 'status-badge', `confidence: ${data.confidence}`));
+        wrap.appendChild(copy);
+        card.appendChild(wrap);
+        block.appendChild(card);
+      }
+
+      if (type === 'score_breakdown') {
+        const card = el('div', 'mirror-card');
+        card.appendChild(el('h4', '', 'Breakdown nội bộ'));
+        const grid = el('div', 'score-grid');
+        data.forEach(factor => {
+          const item = el('div', 'score-factor');
+          item.appendChild(el('b', '', `${factor.label}: ${factor.score}/${factor.max}`));
+          const bar = el('div', 'bar');
+          const fill = el('span');
+          fill.style.setProperty('--pct', `${Math.round((factor.score / factor.max) * 100)}%`);
+          bar.appendChild(fill);
+          item.appendChild(bar);
+          grid.appendChild(item);
+        });
+        card.appendChild(grid);
+        block.appendChild(card);
+      }
+
+      if (type === 'confidence_badge') {
+        const card = el('div', 'mirror-card');
+        card.appendChild(el('h4', '', 'Confidence khác với score'));
+        card.appendChild(el('p', '', data));
+        block.appendChild(card);
+      }
+
+      if (type === 'priority_gap_list') {
+        const card = el('div', 'mirror-card');
+        card.appendChild(el('h4', '', 'Gap cần chủ business bổ sung'));
+        const grid = el('div', 'gap-grid');
+        data.forEach(gap => {
+          const mini = el('div', 'gap-card');
+          mini.appendChild(el('b', '', gap.title));
+          mini.appendChild(el('p', '', gap.copy));
+          grid.appendChild(mini);
+        });
+        card.appendChild(grid);
+        block.appendChild(card);
+      }
+
+      if (type === 'before_after_preview') {
+        const card = el('div', 'mirror-card');
+        card.appendChild(el('h4', '', 'Before / After mini preview'));
+        const grid = el('div', 'before-after');
+        const before = el('div', 'preview-panel');
+        before.appendChild(el('b', '', 'Trước khi dọn'));
+        before.appendChild(el('p', '', data.before));
+        const after = el('div', 'preview-panel after');
+        after.appendChild(el('b', '', data.tagline));
+        after.appendChild(el('p', '', data.after));
+        grid.appendChild(before);
+        grid.appendChild(after);
+        card.appendChild(grid);
+        block.appendChild(card);
+      }
+
+      if (type === 'trust_footer') {
+        const footer = el('div', 'trust-footer');
+        data.forEach(item => footer.appendChild(el('span', '', item)));
+        block.appendChild(footer);
+      }
+
+      if (type === 'full_draft_cta') {
+        const card = el('div', 'mirror-card');
+        card.appendChild(el('h4', '', 'Muốn dựng bản nháp đầy đủ?'));
+        card.appendChild(el('p', '', 'M1 chỉ là fixture shell. M2 mới nối Gemini live; M3/M4 mới bổ sung dữ liệu và approval.'));
+        const button = el('button', 'mirror-action primary', 'Tôi muốn dựng full draft →');
+        button.type = 'button';
+        button.addEventListener('click', () => renderIntentState());
+        card.appendChild(button);
+        block.appendChild(card);
+      }
+
+      if (type === 'error_recovery') {
+        const card = el('div', 'mirror-card error-note');
+        card.appendChild(el('h4', '', data.title));
+        card.appendChild(el('p', '', data.copy));
+        block.appendChild(card);
+      }
+
+      mirrorChat.appendChild(block);
+    }
+
+    function renderReplies(replies) {
+      clearNode(mirrorReplies);
+      replies.forEach(reply => {
+        const button = el('button', reply.primary ? 'primary' : '', reply.label);
+        button.type = 'button';
+        button.addEventListener('click', reply.action);
+        mirrorReplies.appendChild(button);
+      });
+    }
+
+    function renderCollectSeed() {
+      mirrorState.step = 'collect_seed';
+      mirrorState.completedSteps = 1;
+      clearNode(mirrorChat);
+      renderProgress(1);
+      addBlock('assistant_bubble', { text: 'Em sẽ soi bằng fixture M1 trước: nhận diện business, xác nhận candidate, mô phỏng nhu cầu khách hỏi AI rồi dựng infographic snapshot.' });
+      addBlock('seed_input', { title: 'Nhập tên business hoặc link public', copy: 'Bản M1 chưa gọi Gemini live. Dữ liệu dưới đây dùng fixture đã rút ra từ M0 để review UX.' });
+      renderReplies([
+        { label: 'Dùng quán demo', primary: true, action: submitSeed },
+        { label: 'Xem flow lỗi / recovery', action: renderErrorState },
+        { label: 'Để tao xem tiếp story', action: closeAuditPanel }
+      ]);
+      setTimeout(() => document.getElementById('mirrorSeedInput')?.focus(), 80);
+      trackMirrorEvent('open_mirror_shell', { state: mirrorState.step });
+    }
+
+    function submitSeed() {
+      mirrorState.seed = mirrorState.seed.trim() || mirrorFixture.defaultSeed;
+      mirrorState.step = 'confirm_business';
+      mirrorState.completedSteps = 2;
+      clearNode(mirrorChat);
+      renderProgress(2);
+      addBlock('assistant_bubble', { text: `Em tìm thấy candidate gần nhất cho “${mirrorState.seed}”. Anh/chị xác nhận đúng business trước khi em dựng snapshot nhé.` });
+      addBlock('business_candidate', mirrorFixture.candidate);
+      renderReplies([
+        { label: 'Đúng rồi, soi tiếp', primary: true, action: renderSimulation },
+        { label: 'Không phải / sửa lại', action: renderCollectSeed },
+        { label: 'Footprint quá mỏng', action: renderErrorState }
+      ]);
+      trackMirrorEvent('submit_seed_fixture', { seed: mirrorState.seed });
+    }
+
+    function renderSimulation() {
+      mirrorState.step = 'simulation';
+      mirrorState.completedSteps = 3;
+      clearNode(mirrorChat);
+      renderProgress(3);
+      addBlock('assistant_bubble', { text: 'Em đang chạy mô phỏng theo đúng UX M1. Đây là progressive state để M2 sau này che latency Gemini khoảng 14 giây.' });
+      addBlock('simulation_progress', { items: mirrorFixture.progress });
+      renderReplies([
+        { label: 'Hiện infographic snapshot', primary: true, action: renderResult },
+        { label: 'Quay lại candidate', action: submitSeed }
+      ]);
+      trackMirrorEvent('confirm_business_fixture', { candidate: mirrorFixture.candidate.name });
+    }
+
+    function renderResult() {
+      mirrorState.step = 'show_result';
+      mirrorState.completedSteps = 4;
+      clearNode(mirrorChat);
+      renderProgress(4);
+      addBlock('assistant_bubble', { text: 'Đây là rich-content snapshot M1: chatbot chỉ dẫn đường, còn kết quả chính là infographic blocks dễ đọc. Fixture path đã đi từ N01 đến N11 mà không reload page.' });
+      addBlock('simulation_progress', { items: mirrorFixture.nodePath });
+      addBlock('semantic_cluster_grid', mirrorFixture.clusters);
+      addBlock('example_query_carousel', mirrorFixture.clusters.map(item => item.query));
+      addBlock('public_footprint_mirror', mirrorFixture.footprint);
+      addBlock('score_ring', mirrorFixture.score);
+      addBlock('score_breakdown', mirrorFixture.score.factors);
+      addBlock('confidence_badge', 'Confidence medium vì dữ liệu public đủ để demo hướng kể chuyện, nhưng critical facts vẫn cần chủ business xác nhận.');
+      addBlock('priority_gap_list', mirrorFixture.gaps);
+      addBlock('before_after_preview', mirrorFixture.preview);
+      addBlock('trust_footer', ['✓ Không hỏi mật khẩu / OTP / tài khoản ngân hàng', '✓ Không hứa lên top Google hoặc tăng doanh số', '✓ Chủ business duyệt critical facts trước khi public']);
+      addBlock('full_draft_cta', {});
+      renderReplies([
+        { label: 'Chạy lại từ đầu', action: renderCollectSeed },
+        { label: 'Đóng và xem story', action: closeAuditPanel }
+      ]);
+      trackMirrorEvent('show_fixture_result', { score: mirrorFixture.score.total });
+    }
+
+    function renderIntentState() {
+      addBlock('assistant_bubble', { text: 'Đã ghi nhận qualified intent ở mức fixture. M3/M4 sau này sẽ hỏi gap questions, dựng full draft và cho owner duyệt ngay trong landing page.' });
+      addBlock('trust_footer', ['Dữ liệu bản nháp chưa public', 'Không chuyển qua Google Form', 'Payment chưa build ở M1']);
+      renderReplies([{ label: 'Quay lại kết quả', primary: true, action: renderResult }, { label: 'Đóng', action: closeAuditPanel }]);
+      trackMirrorEvent('request_full_draft_fixture', { seed: mirrorState.seed });
+    }
+
+    function renderErrorState() {
+      mirrorState.step = 'error_recovery';
+      mirrorState.completedSteps = 1;
+      clearNode(mirrorChat);
+      renderProgress(1);
+      addBlock('assistant_bubble', { text: 'Nếu business trùng tên hoặc footprint quá mỏng, flow không được bịa. UX sẽ hỏi thêm khu vực/link public.' });
+      addBlock('error_recovery', { title: 'Em chưa nhận diện chắc đúng business', copy: 'Anh/chị thêm khu vực hoặc dán link Google Maps/Facebook/website public. Nếu vẫn mỏng, snapshot sẽ hiển thị confidence thấp và gap cần bổ sung.' });
+      renderReplies([{ label: 'Nhập lại seed', primary: true, action: renderCollectSeed }, { label: 'Đóng', action: closeAuditPanel }]);
+      trackMirrorEvent('show_error_recovery_fixture', { reason: 'ambiguous_or_thin_footprint' });
+    }
 
     function openIntro() {
       introModal.classList.add('open');
@@ -1141,12 +1539,13 @@
       auditPanel.classList.add('open'); auditBackdrop.classList.add('open');
       auditPanel.setAttribute('aria-hidden', 'false'); body.classList.add('audit-open');
       bottomCta.classList.add('hide');
-      setTimeout(() => document.getElementById('bizName').focus(), 180);
+      renderCollectSeed();
     }
     function closeAuditPanel() {
       auditPanel.classList.remove('open'); auditBackdrop.classList.remove('open');
       auditPanel.setAttribute('aria-hidden', 'true'); body.classList.remove('audit-open');
-      auditResult.classList.remove('show'); bottomCta.classList.remove('hide');
+      bottomCta.classList.remove('hide');
+      trackMirrorEvent('close_mirror_shell', { state: mirrorState.step });
     }
     introClose.addEventListener('click', closeIntro);
     introContinue.addEventListener('click', closeIntro);
@@ -1159,12 +1558,7 @@
     document.querySelectorAll('.js-open-audit').forEach(btn => btn.addEventListener('click', openAudit));
     closeAudit.addEventListener('click', closeAuditPanel);
     closeAuditX.addEventListener('click', closeAuditPanel);
-    laterBtn.addEventListener('click', closeAuditPanel);
     auditBackdrop.addEventListener('click', closeAuditPanel);
-    runDemo.addEventListener('click', () => {
-      auditResult.classList.add('show');
-      auditResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    });
 
     const screens = [...document.querySelectorAll('.screen')];
     const observer = new IntersectionObserver(entries => {
@@ -1174,13 +1568,15 @@
     }, { threshold: [.42, .58, .72] });
     screens.forEach(s => observer.observe(s));
 
-    document.querySelectorAll('input, textarea').forEach(el => {
-      el.addEventListener('focus', () => bottomCta.classList.add('hide'));
-      el.addEventListener('blur', () => { if (!body.classList.contains('audit-open')) bottomCta.classList.remove('hide'); });
+    document.addEventListener('focusin', e => {
+      if (e.target.matches('input, textarea')) bottomCta.classList.add('hide');
+    });
+    document.addEventListener('focusout', e => {
+      if (e.target.matches('input, textarea') && !body.classList.contains('audit-open')) bottomCta.classList.remove('hide');
     });
 
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') { closeIntro(true); closeDrawer(); closeAuditPanel(); }
+      if (e.key === 'Escape') { closeIntro(); closeDrawer(); closeAuditPanel(); }
     });
   </script>
 </body>

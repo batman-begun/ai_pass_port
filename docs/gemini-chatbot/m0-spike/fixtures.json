@@ -1,0 +1,98 @@
+[
+  {
+    "id": "F01",
+    "industry": "restaurant",
+    "input_type": "name_area",
+    "seed": "Pizza 4P's Ben Thanh Ho Chi Minh City",
+    "expected_behavior": "resolve",
+    "notes": "Known public restaurant branch; should resolve without inventing owner-only facts."
+  },
+  {
+    "id": "F02",
+    "industry": "restaurant",
+    "input_type": "name_area",
+    "seed": "Quán Bụi Original Ngô Văn Năm Quận 1",
+    "expected_behavior": "resolve",
+    "notes": "Vietnamese restaurant with public footprint and branch-specific address signals."
+  },
+  {
+    "id": "F03",
+    "industry": "restaurant",
+    "input_type": "thin_footprint",
+    "seed": "Quán Đồng Quê Ven Kênh Nhà Bè món đồng quê chỗ đậu xe",
+    "expected_behavior": "insufficient_or_low_confidence",
+    "notes": "Project demo-like seed; must not hallucinate critical contact/menu facts."
+  },
+  {
+    "id": "F04",
+    "industry": "cafe",
+    "input_type": "name_area",
+    "seed": "The Coffee House Cao Thắng Quận 3",
+    "expected_behavior": "resolve_or_disambiguate",
+    "notes": "Chain cafe; branch ambiguity should be handled cautiously."
+  },
+  {
+    "id": "F05",
+    "industry": "cafe",
+    "input_type": "website_url",
+    "seed": "https://congcaphe.com/ Cộng Cà Phê Hồ Chí Minh",
+    "expected_behavior": "resolve_or_disambiguate",
+    "notes": "Website URL plus brand-level query; should avoid choosing one branch without evidence."
+  },
+  {
+    "id": "F06",
+    "industry": "cafe",
+    "input_type": "duplicate_name",
+    "seed": "Highlands Coffee Nguyễn Huệ Hồ Chí Minh",
+    "expected_behavior": "disambiguation_or_resolve",
+    "notes": "Common brand and high-density area; branch matching may need clarification."
+  },
+  {
+    "id": "F07",
+    "industry": "spa",
+    "input_type": "name_area",
+    "seed": "Mộc Kim Spa Quận 1 Thành phố Hồ Chí Minh",
+    "expected_behavior": "resolve_or_low_confidence",
+    "notes": "Spa category with possible thin/inconsistent public footprint."
+  },
+  {
+    "id": "F08",
+    "industry": "spa",
+    "input_type": "name_area",
+    "seed": "Thu Cúc Clinics spa Quận 1 Hồ Chí Minh",
+    "expected_behavior": "resolve_or_disambiguate",
+    "notes": "Beauty/clinic brand; should separate public observation from medical/service claims."
+  },
+  {
+    "id": "F09",
+    "industry": "spa",
+    "input_type": "facebook_url_hint",
+    "seed": "Facebook page Seoul Spa Hồ Chí Minh",
+    "expected_behavior": "resolve_or_disambiguate",
+    "notes": "Social-page style seed; should surface URL readability limitations if any."
+  },
+  {
+    "id": "F10",
+    "industry": "garage",
+    "input_type": "name_area",
+    "seed": "Garage Ô Tô Minh Phương Quận 7",
+    "expected_behavior": "resolve_or_low_confidence",
+    "notes": "Local garage query; must not invent phone, certifications, or price."
+  },
+  {
+    "id": "F11",
+    "industry": "garage",
+    "input_type": "name_area",
+    "seed": "Toyota Đông Sài Gòn service center",
+    "expected_behavior": "resolve_or_disambiguate",
+    "notes": "Official/authorized service center likely has stronger footprint."
+  },
+  {
+    "id": "F12",
+    "industry": "garage",
+    "input_type": "duplicate_name",
+    "seed": "sửa xe điện gần Nhà Bè tên An Phát",
+    "expected_behavior": "disambiguation_or_insufficient",
+    "notes": "Ambiguous service-intent seed; should ask for area/link instead of forcing a match."
+  }
+]
