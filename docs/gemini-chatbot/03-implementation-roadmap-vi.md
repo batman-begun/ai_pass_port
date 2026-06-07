@@ -322,3 +322,16 @@ Báo cáo phải có:
 ### Sau khi M0 được duyệt
 
 Bắt đầu `M1 — Frontend guided shell` bằng fixture data. Đây là bước code customer-visible đầu tiên và cần chụp screenshot mobile + desktop để review UX trước khi nối Gemini live.
+
+## 13. Progress update — 2026-06-07
+
+`M0 — Technical spike` đã hoàn tất trong [`04-technical-spike-report-vi.md`](./04-technical-spike-report-vi.md).
+
+Quyết định sau M0:
+
+- Bắt đầu `M1 — Frontend guided shell` bằng fixture data.
+- Dùng `gemini-3-flash-preview` single-pass làm primary pipeline cho M2.
+- Giữ `gemini-2.5-flash` two-pass làm fallback cho case mơ hồ, footprint mỏng, social URL khó đọc, JSON invalid hoặc timeout.
+- Backend M2 vẫn phải validate schema, hạ confidence cho case thiếu grounding/unique evidence và không auto-confirm critical facts.
+- M2 backend skeleton và Gemini integration đã được scaffold trong [`apps-script/soi-guong-ai`](../../apps-script/soi-guong-ai) với `doPost(e)` router, Sheets schema setup, primary/fallback Gemini pipeline và guardrail normalization.
+- M2 frontend adapter đã được nối ở mức optional endpoint: nếu cấu hình `aipass-mirror-endpoint` hoặc `localStorage.aipass_mirror_endpoint`, landing page sẽ gọi Apps Script; nếu không có endpoint thì giữ fixture fallback để demo UX an toàn.
